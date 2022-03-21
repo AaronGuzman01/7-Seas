@@ -408,6 +408,7 @@
 "Assets/Scripts/Game/PlayerShip.cs"
 "Assets/Scripts/Game/PointsManager.cs"
 "Assets/Scripts/Game/Pulse.cs"
+"Assets/Scripts/Game/RandomPosition.cs"
 "Assets/Scripts/Game/ResultsManager.cs"
 "Assets/Scripts/Game/SceneChanger.cs"
 "Assets/Scripts/Game/scoreUpdate.cs"
