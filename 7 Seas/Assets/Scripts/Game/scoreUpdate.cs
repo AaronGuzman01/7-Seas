@@ -38,16 +38,23 @@ public class scoreUpdate : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        /*
         if (PlayerPrefs.GetString("Enemy").Equals("Player") && other.gameObject.layer == 9) // Target layer is 9
         {
             ShipCombatTarget teleporter = other.gameObject.GetComponentInParent<ShipCombatTarget>();
-            teleporter.MoveTargetToRandomPosition();
+            //teleporter.MoveTargetToRandomPosition();
         }
         if (PlayerPrefs.GetString("Enemy").Equals("Treasure") && other.gameObject.layer == 9)
         {
             ShipCombatTarget teleporter = other.gameObject.GetComponentInParent<ShipCombatTarget>();
             
         }
+        */
+        if (PlayerPrefs.GetString("Enemy").Equals("Monster"))
+        {
+            other.gameObject.GetComponentInParent<Monstermovement>().SetHit(other.tag.Substring(other.tag.Length - 1));
+        }
+
         if (other.CompareTag("+1") && (this.hit == false))
         {
             explosion.transform.position = transform.position;
@@ -60,7 +67,6 @@ public class scoreUpdate : MonoBehaviour
             score = score + 1;
             manager.AddPoints(score);
             Debug.Log(score + " hit registered");
-                     
         }
         else if (other.CompareTag("+2") && (this.hit == false))
         {
@@ -74,8 +80,7 @@ public class scoreUpdate : MonoBehaviour
             score = score + 2;
             manager.AddPoints(score);
             Debug.Log(score + " hit registered");
-          
-            
+            PlayerPrefs.SetInt("Hit", 2);
         }
         else if (other.CompareTag("+3") && (this.hit == false))
         {
@@ -89,8 +94,7 @@ public class scoreUpdate : MonoBehaviour
             score = score + 3;
             manager.AddPoints(score);
             Debug.Log(score + " hit registered");
-           
-            
+            PlayerPrefs.SetInt("Hit", 3);
         }
         else if (other.CompareTag("+4") && (this.hit == false))
         {
@@ -104,8 +108,7 @@ public class scoreUpdate : MonoBehaviour
             score = score + 4;
             manager.AddPoints(score);
             Debug.Log(score + " hit registered");
-            
-            
+            PlayerPrefs.SetInt("Hit", 4);
         }
         else { Debug.Log(" No Tag"); }
         PlayerPrefs.Save();
