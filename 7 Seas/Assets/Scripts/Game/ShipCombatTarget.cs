@@ -48,11 +48,6 @@ public class ShipCombatTarget : MonoBehaviour
         }
     }
 
-    public void SetStart()
-    {
-        started = false;
-    }
-
     public IEnumerator MoveTargetToRandomPosition()
     {
         if (started & !moving && count == 0)

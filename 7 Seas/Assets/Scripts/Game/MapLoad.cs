@@ -230,9 +230,9 @@ public class MapLoad : MonoBehaviour
                         }
                     }
                 }
-
-                shipInfo.Add(new PlayerShip(i + 1, players[i], masts, cannons, crew, treasure, damage));
             }
+
+            shipInfo.Add(new PlayerShip(i + 1, players[i], masts, cannons, crew, treasure, damage));
         }
 
         //Destroy inactive players
