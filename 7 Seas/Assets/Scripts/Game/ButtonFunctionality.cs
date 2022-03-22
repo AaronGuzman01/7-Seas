@@ -69,13 +69,13 @@ public class ButtonFunctionality : MonoBehaviour
         if (PlayerPrefs.GetString("Enemy").Equals("Player") || PlayerPrefs.GetString("Enemy").Equals("Treasure"))
         {
             enemy.GetComponent<ship_movement>().isMoving = true;
-            enemy.GetComponent<ShipCombatTarget>().SetStart();
+            enemy.GetComponentInChildren<ShipCombatTarget>().started = true;
             FX.GetComponent<ship_movement>().isMoving = true;
         }
         else
         {
             enemy.GetComponent<Monstermovement>().isMoving = true;
-            enemy.GetComponent<ShipCombatTarget>().SetStart();
+            enemy.GetComponentInChildren<ShipCombatTarget>().started = true;
             enemy.GetComponent<Monstermovement>().FX = FX;
             enemy.GetComponent<Monstermovement>().StartAnimation();
         }
