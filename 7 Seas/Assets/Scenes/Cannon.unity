@@ -2524,6 +2524,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c802ebb0d0c72b040a88932fe6ab3605, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  treasure: 0
+  started: 0
 --- !u!1001 &460851159
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2559,7 +2561,7 @@ PrefabInstance:
     - target: {fileID: 2094162935466922875, guid: e95e0e23c2095464bbcc86673b7ca0d9,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 2094162935466922875, guid: e95e0e23c2095464bbcc86673b7ca0d9,
         type: 3}
@@ -2626,6 +2628,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c802ebb0d0c72b040a88932fe6ab3605, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  treasure: 0
+  started: 1
 --- !u!4 &497317550 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 468396, guid: 8851ce2d97da15c4e9945230ec9cc4bf,
@@ -3962,13 +3966,27 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 965822864}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75b5be38e955b3b4c9c31b0ed6d0978f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   height: 1
   yCenter: 1012
+--- !u!114 &965822867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 965822864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c802ebb0d0c72b040a88932fe6ab3605, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  treasure: 1
+  started: 1
 --- !u!1 &981525221
 GameObject:
   m_ObjectHideFlags: 0
@@ -5654,7 +5672,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 163654, guid: 921c55d62dcffdf4b9001ee7ece649eb, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 414508, guid: 921c55d62dcffdf4b9001ee7ece649eb, type: 3}
       propertyPath: m_RootOrder
@@ -6407,6 +6425,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c802ebb0d0c72b040a88932fe6ab3605, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  treasure: 0
+  started: 0
 --- !u!1 &1836865806
 GameObject:
   m_ObjectHideFlags: 0

@@ -87,7 +87,7 @@ public class MapLoad : MonoBehaviour
 
     public static int maxCams;
 
-    private void Start()
+    void Start()
     {
         positions = new HashSet<Vector3Int>();
         validPos = new HashSet<Vector3Int>();
@@ -285,7 +285,7 @@ public class MapLoad : MonoBehaviour
         maxCams = maxPlayers;
     }
 
-    private void Update()
+    void Update()
     {
         MoveShip(players[playerIndex]);
 
