@@ -138,7 +138,101 @@ public class MapLoad : MonoBehaviour
         {
             players[i] = ships[playerNums[i] - 1];
 
-            shipInfo.Add(new PlayerShip(i + 1, players[i]));
+            int count = 0;
+            int crew = 0;
+            int damage = 0;
+            int treasure = 0;
+            int[] masts = new int[3];
+            int[] cannons = new int[5];
+            string[] lines = System.IO.File.ReadAllLines(Application.persistentDataPath + "/Player" + (i + 1).ToString() + ".txt");
+
+            foreach (string line in lines)
+            {
+                string temp;
+
+                if (line.Contains("mast"))
+                {
+                    if (line.Contains((count + 1).ToString()) && count < 3)
+                    {
+                        temp = line.Trim();
+
+                        if (temp.EndsWith("s"))
+                        {
+                            masts[count] = 1;
+                        }
+                        else if (temp.EndsWith("l"))
+                        {
+                            masts[count] = 2;
+                        }
+                        else
+                        {
+                            masts[count] = 0;
+                        }
+                    }
+                }
+
+                if (line.Contains("cannon"))
+                {
+                    if (line.Contains((count + 1).ToString()) && count < 5)
+                    {
+                        temp = line.Trim();
+
+                        if (temp.EndsWith("s"))
+                        {
+                            cannons[count] = 1;
+                        }
+                        else if (temp.EndsWith("l"))
+                        {
+                            cannons[count] = 2;
+                        }
+                        else
+                        {
+                            cannons[count] = 0;
+                        }
+                    }
+                }
+
+                if (line.Contains("crew"))
+                {
+                    if (line.Contains((count + 1).ToString()) && crew < 2)
+                    {
+                        temp = line.Trim();
+
+                        if (temp.EndsWith("t"))
+                        {
+                            crew++;
+                        }
+                    }
+                }
+
+                if (line.Contains("treasure"))
+                {
+                    if (line.Contains((count + 1).ToString()) && treasure < 3)
+                    {
+                        temp = line.Trim();
+
+                        if (temp.EndsWith("t"))
+                        {
+                            treasure++;
+                        }
+                    }
+                }
+
+                if (line.Contains("damage"))
+                {
+                    if (line.Contains((count + 1).ToString()) && damage < 2)
+                    {
+                        temp = line.Trim();
+
+                        if (temp.EndsWith("t"))
+                        {
+                            damage++;
+                        }
+                    }
+                }
+
+                shipInfo.Add(new PlayerShip(i + 1, players[i], masts, cannons, crew, treasure, damage));
+            }
         }
 
         //Destroy inactive players
