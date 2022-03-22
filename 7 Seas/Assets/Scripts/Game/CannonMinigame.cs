@@ -99,6 +99,13 @@ public class CannonMinigame : MonoBehaviour
 
                 monster.SetActive(true);
 
+                target = Instantiate(targets[0], monster.transform);
+
+                target.SetActive(true);
+
+                target.transform.RotateAround(monster.transform.position, Vector3.up, -90f);
+                target.transform.localScale = new Vector3(1, 2, 1);
+
                 monster.GetComponent<Monstermovement>().slider = healthSlider;
 
                 ButtonManager.GetComponent<ButtonFunctionality>().SetEnemy(monster);

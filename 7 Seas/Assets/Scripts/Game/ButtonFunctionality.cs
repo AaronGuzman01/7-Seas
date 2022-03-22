@@ -75,6 +75,9 @@ public class ButtonFunctionality : MonoBehaviour
         else
         {
             enemy.GetComponent<Monstermovement>().isMoving = true;
+            enemy.GetComponent<ShipCombatTarget>().SetStart();
+            enemy.GetComponent<Monstermovement>().FX = FX;
+            enemy.GetComponent<Monstermovement>().StartAnimation();
         }
     }
 

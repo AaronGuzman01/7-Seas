@@ -16,13 +16,20 @@ public class Monstermovement : MonoBehaviour
     private int timesMoved;//times the monster has moved to the left
     private int timesAttacked;//times the monster has used its attack
     private bool justHit;//check if monster was hit during in its current lane
-    float x;//the x vector of the monsters position
+    float x, z;//the x vector of the monsters position
     bool movingForward;
     bool movingBackward;
+    bool movingLeft;
+    bool movingRight;
+    bool attacking;
+    bool hiding;
+    bool standing;
+    bool hidden = false;
     public Animation anim;
     public float health;
     public float maxHealth;
     public Slider slider;
+    public GameObject FX;
 
     private GameObject explosion;
     private ParticleSystem explosionEffect;
@@ -30,9 +37,14 @@ public class Monstermovement : MonoBehaviour
     //public bool istriggered;
     Collider m_Collider;
     public int cannonDmg;//amount of damage cannons do with each hit
-   // Vector3 cameraInitialPosition;
-   // public float shakeMagnetude = 0.05f, shakeTime = 0.5f;
-   // public Camera mainCamera;
+    // Vector3 cameraInitialPosition;
+    // public float shakeMagnetude = 0.05f, shakeTime = 0.5f;
+    // public Camera mainCamera;
+
+    private bool hit = false;
+    private int multiplier = 1;
+    private int maxAttacks = 0, attacks = 0;
+    private int maxStands = 0, stands = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +52,8 @@ public class Monstermovement : MonoBehaviour
         anim = GetComponent<Animation>();
         movingForward = true;
         movingBackward = false;
+        movingLeft = true;
+        movingRight = true;
         timesMoved = 0;
         timesAttacked = 0;
         health = maxHealth;
@@ -47,7 +61,6 @@ public class Monstermovement : MonoBehaviour
         //istriggered = false;
         m_Collider = GetComponent<Collider>();
         justHit = false;
-        anim.Play("Appear");
         PlayerPrefs.SetInt("DamageDoneMonster", 0);
         PlayerPrefs.SetString("MonsterStatus", "Alive");
         PlayerPrefs.Save();
@@ -55,6 +68,13 @@ public class Monstermovement : MonoBehaviour
         explosion = GameObject.Find("ScoreExplosion");
         explosionEffect = explosion.transform.GetChild(0).gameObject.GetComponent<ParticleSystem>();
         explosionSFX = explosion.transform.GetChild(0).gameObject.GetComponent<AudioSource>();
+
+        FX.transform.position = new Vector3(this.transform.position.x, 1010, this.transform.position.z);
+    }
+
+    public void StartAnimation()
+    {
+        anim.Play("Appear");
     }
 
     // Update is called once per frame
@@ -66,28 +86,149 @@ public class Monstermovement : MonoBehaviour
             PlayerPrefs.SetString("MonsterStatus", "Dead");
             PlayerPrefs.Save();
             StartCoroutine(Wait());
-            SceneManager.LoadScene("MonsterBattleResults");
+            SceneManager.UnloadSceneAsync("Cannon");
+            SceneManager.LoadScene("CannonResults", LoadSceneMode.Additive);
+        }/*
+        else if (timesMoved >= 5) {
+            SceneManager.UnloadSceneAsync("Cannon");
+            SceneManager.LoadScene("CannonResults", LoadSceneMode.Additive);
         }
-        else if (timesMoved >= 5) { SceneManager.LoadScene("MonsterBattleResults"); }
+        */
+
         slider.value = health;
-       x = transform.position.x;
+        x = transform.position.x;
+        z = transform.position.z;
+
         if (isMoving)
         {
             //move monster towards ship
-            if (movingBackward==false && movingForward==true)
+            if (movingForward)
             {
-               
-                transform.Translate(0, 0, moveTowardspeed * Time.deltaTime);
-                transform.position = new Vector3(transform.position.x, height, transform.position.z);
-                if(x>=0)
+                if (!anim.isPlaying)
                 {
-                    movingBackward = false;
-                    movingForward = false;
+                    transform.Translate(0, 0, moveTowardspeed * Time.deltaTime);
+                    transform.position = new Vector3(transform.position.x, height, transform.position.z);
+
+                    if (x >= -5)
+                    {
+                        movingForward = false;
+                    }
                 }
-                
+
             }
-            else if (movingForward == false && movingBackward == false)
+            else if (movingBackward)
             {
+                if (!anim.isPlaying)
+                {
+                    transform.Translate(0, 0, -moveTowardspeed * Time.deltaTime);
+                    transform.position = new Vector3(transform.position.x, height, transform.position.z);
+
+                    if (x <= -10)
+                    {
+                        movingBackward = false;
+                    }
+                }
+            }
+            else if (movingLeft)
+            {
+                if (!anim.isPlaying)
+                {
+                    transform.Translate((moveTowardspeed / 3) * Time.deltaTime, 0, 0);
+                    transform.position = new Vector3(transform.position.x, height, transform.position.z);
+
+                    if (z <= 15)
+                    {
+                        movingLeft = false;
+                    }
+                }
+            }
+            else if (movingRight)
+            {
+                if (!anim.isPlaying)
+                {
+                    transform.Translate((-moveTowardspeed / 3) * Time.deltaTime, 0, 0);
+                    transform.position = new Vector3(transform.position.x, height, transform.position.z);
+
+                    if (z >= 35)
+                    {
+                        movingRight = false;
+                    }
+                }
+            }
+            else if (attacking)
+            {
+                if (maxAttacks == 0)
+                {
+                    maxAttacks = Random.Range(1, 3);
+                }
+                else
+                {
+                    if (!anim.IsPlaying("Attack1"))
+                    {
+                        anim.Play("Attack1");
+
+                        attacks++;
+
+                        if (attacks >= maxAttacks)
+                        {
+                            attacks = 0;
+                            maxAttacks = 0;
+
+                            attacking = false;
+                        }
+                    }
+                }
+            }
+            else if (hiding)
+            {
+                if (!hidden)
+                {
+                    anim.Play("Disappear");
+
+                    hidden = true;
+                }
+                else
+                {
+                    if (!anim.isPlaying)
+                    {
+                        float posX = 15 + (5 * Random.Range(0, 5));
+
+                        transform.position = new Vector3(transform.position.x, height, posX);
+
+                        anim.Play("Appear");
+
+                        hiding = false;
+                        hidden = false;
+                    }
+                }
+            }
+            else if (standing)
+            {
+                if (maxStands == 0)
+                {
+                    maxStands = Random.Range(1, 6);
+                }
+                else
+                {
+                    if (!anim.IsPlaying("Stand"))
+                    {
+                        anim.Play("Stand");
+
+                        stands++;
+
+                        if (stands >= maxStands)
+                        {
+                            stands = 0;
+                            maxStands = 0;
+
+                            standing = false;
+                        }
+                    }
+                }
+            }
+            else 
+            {
+                /*
                 if (timesAttacked == timesMoved)
                 {
                     if (justHit==false)
@@ -113,24 +254,13 @@ public class Monstermovement : MonoBehaviour
                     justHit = false;
                     anim.CrossFadeQueued("Stand");
                     timesMoved++;
-                    movingBackward = true;
-                    movingForward = false;
                 }
+                */
 
+                GenerateRandomMovement();
             }
-            else if(movingForward==false && movingBackward==true)
-            {
-                
-                
-                transform.Translate(0, 0, -moveTowardspeed * Time.deltaTime);
-                transform.position = new Vector3(transform.position.x, height, transform.position.z);
-                if (x <= -50)
-                {
-                    movingBackward = false;
-                    movingForward = true;
-                }
-                
-            }
+
+            FX.transform.position = new Vector3(this.transform.position.x, 1010, this.transform.position.z);
         }
         else
         { anim.Play("Appear");
@@ -138,24 +268,69 @@ public class Monstermovement : MonoBehaviour
         }
     }
 
+    void GenerateRandomMovement()
+    {
+        if (!anim.isPlaying)
+        {
+            int num = Random.Range(0, 7);
+
+            switch (num)
+            {
+                case 0:
+                    movingForward = true;
+                    break;
+                case 1:
+                    movingBackward = true;
+                    break;
+                case 2:
+                    movingLeft = true;
+                    break;
+                case 3:
+                    movingRight = true;
+                    break;
+                case 4:
+                    attacking = true;
+                    break;
+                case 5:
+                    standing = true;
+                    break;
+                default:
+                    hiding = true;
+                    break;
+            }
+        }
+    }
+
     void OnTriggerEnter(Collider other)
     {
-            if (other.CompareTag("Cannonball"))
-            {
+        if (other.CompareTag("Cannonball") && hit)
+        {
+            anim.Play("Hit1");
+            health = health - (multiplier * cannonDmg);
+            justHit=true;
 
-                anim.Play("Hit1");
-                health = health - cannonDmg;
-                justHit=true;
+            explosion.transform.position = transform.position;
+            explosionEffect.startSize = 9;
+            explosionSFX.Play();
+            explosionEffect.Stop();
+            explosionEffect.Clear();
+            explosionEffect.Play();
 
-                explosion.transform.position = transform.position;
-                explosionEffect.startSize = 9;
-                explosionSFX.Play();
-                explosionEffect.Stop();
-                explosionEffect.Clear();
-                explosionEffect.Play();
+            movingForward = false;
+            movingBackward = false;
+            movingLeft = false;
+            movingRight = false;
+            hiding = false;
+            standing = false;
         }
             //istriggered = true;
 
+    }
+
+    public void SetHit(string val)
+    {
+        multiplier = int.Parse(val);
+        hit = true;
     }
     
 
