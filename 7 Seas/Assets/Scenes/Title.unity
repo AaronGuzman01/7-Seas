@@ -24,7 +24,7 @@ RenderSettings:
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 0
+  m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: 435a2cef3ef99a44bb12bb45c2c9d3fe, type: 2}
   m_HaloStrength: 0.5
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.21757239, g: 0.26199505, b: 0.3270439, a: 1}
+  m_IndirectSpecularColor: {r: 0.2171799, g: 0.26108828, b: 0.3244777, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1065,6 +1065,10 @@ PrefabInstance:
       propertyPath: InitialModule.startRotationY.maxCurve.m_Curve.Array.data[1].value
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 19994010, guid: 6d50a1d6fd8010f4285c1eea8246fc12, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d50a1d6fd8010f4285c1eea8246fc12, type: 3}
 --- !u!4 &912104719 stripped
@@ -1866,6 +1870,10 @@ PrefabInstance:
       propertyPath: InitialModule.startRotationY.maxCurve.m_Curve.Array.data[1].value
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 19936134, guid: fa4bd8ce4152b9146a60c208d191cfdf, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa4bd8ce4152b9146a60c208d191cfdf, type: 3}
 --- !u!4 &1312897337 stripped
@@ -1969,7 +1977,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1635186325}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SetupMenu, Assembly-CSharp
         m_MethodName: ResetSetup
         m_Mode: 1
@@ -2295,7 +2303,6 @@ GameObject:
   - component: {fileID: 1635186322}
   - component: {fileID: 1635186323}
   - component: {fileID: 1635186324}
-  - component: {fileID: 1635186325}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -2520,24 +2527,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioclip: {fileID: 8300000, guid: 5743761322e970142956bd9e9a23c1ad, type: 3}
---- !u!114 &1635186325
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1635186317}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca866c9113639a040847ad2a147314c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  btn: {fileID: 0}
-  btnPressed: {fileID: 0}
-  btnNotPressed: {fileID: 0}
-  difficultyBtn: {fileID: 0}
-  gameLoop: {fileID: 0}
-  audioclip: {fileID: 0}
 --- !u!1 &1720378980
 GameObject:
   m_ObjectHideFlags: 0
