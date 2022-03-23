@@ -28,12 +28,6 @@ public class CannonMinigame : MonoBehaviour
     {
         PlayerPrefs.SetInt("Treasure Score", 0);
         PlayerPrefs.SetInt("score", 0);
-
-        ships[0].AddComponent<ship_movement>();
-        ships[1].AddComponent<ship_movement>();
-
-        ships[0].GetComponent<ship_movement>().height = 1010;
-        ships[1].GetComponent<ship_movement>().height = 1010;
     }
 
     void Update()
@@ -52,6 +46,9 @@ public class CannonMinigame : MonoBehaviour
 
             ButtonManager.GetComponent<ButtonFunctionality>().SetEnemy(ships[0]);
 
+            ships[0].AddComponent<ship_movement>();
+            ships[0].GetComponent<ship_movement>().height = 1010;
+
             ships[1].SetActive(false);
 
             PlayerPrefs.SetString("Enemy", "Player");
@@ -68,13 +65,12 @@ public class CannonMinigame : MonoBehaviour
 
             target = Instantiate(targets[0], ships[1].transform.GetChild(0));
 
-            target.transform.position = new Vector3(target.transform.position.x, 1, target.transform.position.y);
+            ships[1].AddComponent<ship_movement>();
+            ships[1].GetComponent<ship_movement>().height = 1010;
 
             target.SetActive(true);
 
             ButtonManager.GetComponent<ButtonFunctionality>().SetEnemy(ships[1]);
-
-            ships[0].SetActive(false);
 
             RenderSettings.skybox = skyBox[0];
         }
