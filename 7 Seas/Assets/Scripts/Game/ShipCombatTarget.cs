@@ -8,28 +8,48 @@ public class ShipCombatTarget : MonoBehaviour
     List<Vector3> positions = new List<Vector3>();
     int count = 0;
     public bool started = false;
+    public bool monster = false;
     bool moving = false;
     Vector3 position;
+    float time = 1;
 
     void Start()
     {
-        float x;
+        float x, y;
 
         if (treasure)
         {
             x = 2f;
+            y = 0;
         }
         else
         {
             x = 1.5f;
+            y = 1.5f;
         }
 
-        positions.Add(new Vector3(x, 2, 0));
-        positions.Add(new Vector3(x, 2, -2));
-        positions.Add(new Vector3(x, 2, 2));
-        positions.Add(new Vector3(x, 3.5f, 0));
-        positions.Add(new Vector3(x, 3.5f, -2));
-        positions.Add(new Vector3(x, 3.5f, 2));
+        if (monster)
+        {
+            time = 0.8f;
+
+            transform.localPosition = new Vector3(0, 1, y);
+
+            positions.Add(new Vector3(0, 1, y));
+            positions.Add(new Vector3(-1, 1, y));
+            positions.Add(new Vector3(1, 1, y));
+            positions.Add(new Vector3(-1, 1.5f, y));
+            positions.Add(new Vector3(1, 1.5f, y));
+            positions.Add(new Vector3(0, 1.5f, y));
+        }
+        else
+        {
+            positions.Add(new Vector3(x, 2, 0));
+            positions.Add(new Vector3(x, 2, -2));
+            positions.Add(new Vector3(x, 2, 2));
+            positions.Add(new Vector3(x, 3.5f, 0));
+            positions.Add(new Vector3(x, 3.5f, -2));
+            positions.Add(new Vector3(x, 3.5f, 2));
+        }
     }
 
     void Update()
@@ -38,7 +58,7 @@ public class ShipCombatTarget : MonoBehaviour
 
         if (moving)
         {
-            transform.localPosition = Vector3.MoveTowards(transform.localPosition, position, Time.deltaTime);
+            transform.localPosition = Vector3.MoveTowards(transform.localPosition, position, Time.deltaTime * time);
 
             if (Vector3.Distance(transform.localPosition, position) < 0.001f)
             {

@@ -68,6 +68,8 @@ public class CannonMinigame : MonoBehaviour
 
             target = Instantiate(targets[0], ships[1].transform.GetChild(0));
 
+            target.transform.position = new Vector3(target.transform.position.x, 1, target.transform.position.y);
+
             target.SetActive(true);
 
             ButtonManager.GetComponent<ButtonFunctionality>().SetEnemy(ships[1]);
@@ -99,7 +101,7 @@ public class CannonMinigame : MonoBehaviour
 
                 monster.SetActive(true);
 
-                target = Instantiate(targets[0], monster.transform);
+                target = Instantiate(targets[1], monster.transform);
 
                 target.SetActive(true);
 
