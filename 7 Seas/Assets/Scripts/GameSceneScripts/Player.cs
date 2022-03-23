@@ -176,10 +176,4 @@ public class Player : MonoBehaviour
             
         }
     }
-
-    
-
-
-
-
 }

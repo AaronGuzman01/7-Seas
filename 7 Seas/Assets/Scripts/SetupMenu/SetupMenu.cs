@@ -18,12 +18,13 @@ public class SetupMenu : MonoBehaviour {
     public GameLoop gameLoop;
     private static string[] players = { "f", "f", "f", "f", "f", "f", "f", "f" };
     public AudioClip audioclip;
+    //public static Button PlayBtn;
 
     // Use this for initialization
     void Start () {
         Screen.orientation = ScreenOrientation.Landscape;
 
-        if (resetSetup)
+        if (resetSetup && btn != null)
         {
             PlayerPrefs.SetInt(btn.name, 0);
             PlayerPrefs.SetFloat("End", 0f);
@@ -39,19 +40,21 @@ public class SetupMenu : MonoBehaviour {
 
         GameObject.Find("PlayGameButton").GetComponent<Button>().interactable = false;
 
-        if (PlayerPrefs.GetString("Difficulty").Equals("Easy") && difficultyBtn.name.Equals("EasyButton") && !resetSetup)
+        if (difficultyBtn != null)
         {
-            SelectDifficulty();
+            if (PlayerPrefs.GetString("Difficulty").Equals("Easy") && difficultyBtn.name.Equals("EasyButton") && !resetSetup)
+            {
+                SelectDifficulty();
+            }
+            else if (PlayerPrefs.GetString("Difficulty").Equals("Normal") && difficultyBtn.name.Equals("NormalButton") && !resetSetup)
+            {
+                SelectDifficulty();
+            }
+            else if (PlayerPrefs.GetString("Difficulty").Equals("Hard") && difficultyBtn.name.Equals("HardButton") && !resetSetup)
+            {
+                SelectDifficulty();
+            }
         }
-        else if (PlayerPrefs.GetString("Difficulty").Equals("Normal") && difficultyBtn.name.Equals("NormalButton") && !resetSetup)
-        {
-            SelectDifficulty();
-        }
-        else if (PlayerPrefs.GetString("Difficulty").Equals("Hard") && difficultyBtn.name.Equals("HardButton") && !resetSetup)
-        {
-            SelectDifficulty();
-        }
-
         /*
         PlayerPrefs.SetString("wheelSpun", "false");
         isPressed = false;
