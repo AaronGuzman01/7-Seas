@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
@@ -24,6 +25,7 @@ public class MapLoad : MonoBehaviour
     public Camera main;
     public GameObject[] mainGUI;
     public GameObject[] diceGUI;
+    public GameObject[] cameraGUI;
 
     public GameObject[] ships;
     public Sprite[] mapObjects;
@@ -292,10 +294,12 @@ public class MapLoad : MonoBehaviour
         if (!isMoving && !isRolling && !playerCombat && !shipCombat && !monsterCombat)
         {
             SetGUI(true, mainGUI);
+            SetGUI(true, cameraGUI);
         }
         else
         {
             SetGUI(false, mainGUI);
+            SetGUI(false, cameraGUI);
         }
 
         if (diceIndex >= 3)
@@ -465,6 +469,8 @@ public class MapLoad : MonoBehaviour
     {
         if (posSet)
         {
+            SetGUI(false, diceGUI);
+
             hiddenBtns[0].onClick.Invoke();
 
             ClearActiveTiles();
@@ -499,6 +505,8 @@ public class MapLoad : MonoBehaviour
 
                 if (Vector3.Distance(ship.transform.position, currPos) < 0.001f)
                 {
+                    SetGUI(true, diceGUI);
+
                     posSet = false;
 
                     isMoving = false;
@@ -575,6 +583,8 @@ public class MapLoad : MonoBehaviour
 
         positions.Clear();
         playerPos.Clear();
+        shipPos.Clear();
+        monsterPos.Clear();
         validPos.Clear();
         Destroy(currArrow);
     }
@@ -597,7 +607,7 @@ public class MapLoad : MonoBehaviour
     {
         GetMoves();
 
-        if (Input.GetMouseButtonDown(0) && clickable)
+        if (Input.GetMouseButtonDown(0) && clickable && !ButtonNotClicked())
         {
             Ray ray = main.ScreenPointToRay(Input.mousePosition);
 
@@ -653,6 +663,30 @@ public class MapLoad : MonoBehaviour
                 }
             }
         }
+    }
+
+    bool ButtonNotClicked()
+    {
+        if (EventSystem.current.currentSelectedGameObject)
+        {
+            foreach (GameObject comp in mainGUI)
+            {
+                if (EventSystem.current.currentSelectedGameObject.Equals(comp))
+                {
+                    return true;
+                }
+            }
+
+            foreach (GameObject button in cameraGUI[0].transform)
+            {
+                if (EventSystem.current.currentSelectedGameObject.Equals(button))
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     void GetMoves()
