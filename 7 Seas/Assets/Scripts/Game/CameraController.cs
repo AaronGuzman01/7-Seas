@@ -31,6 +31,7 @@ public class CameraController : MonoBehaviour
     public GameObject dummy;
     public GameObject[] ship;
     private int maxPlayers;
+    public GameObject ghostDummy;
 
     void Start()
     {
@@ -44,7 +45,7 @@ public class CameraController : MonoBehaviour
         CinemachineCore.GetInputAxis = this.GetCustomAxis;
 
         dummy.transform.position = ship[playerNum].transform.position;
-
+        
         maxPlayers = MapLoad.maxCams;
         Debug.Log(maxPlayers);
     }
@@ -79,6 +80,8 @@ public class CameraController : MonoBehaviour
         {
             buttons.SetActive(false);
         }
+
+        ghostDummy.transform.rotation = dummy.transform.rotation;
     }
 
     public void ChangeView()
@@ -109,6 +112,8 @@ public class CameraController : MonoBehaviour
 
     public void SetOverheadView()
     {
+        ResetDummy();
+
         playerDefault[playerNum].Priority = 0;
         playerOverhead[playerNum].Priority = 1;
 
@@ -187,61 +192,89 @@ public class CameraController : MonoBehaviour
 
             Debug.Log("Left Button");
 
-            if (dummy.transform.position.x - ship[playerNum].transform.position.x > -100)
+            ghostDummy.transform.Translate(-12.0f, 0.0f, 0.0f);
+
+            if (ghostDummy.transform.position.x > -403 && ghostDummy.transform.position.x < 547 && ghostDummy.transform.position.z > -559 && ghostDummy.transform.position.z < 391)
             {
-                dummy.transform.Translate(-10.0f, 0.0f, 0.0f);
+                if (dummy.transform.position.x - ship[playerNum].transform.position.x > -120)
+                {
+                    dummy.transform.Translate(-12.0f, 0.0f, 0.0f);
+                }
             }
+
+            ghostDummy.transform.position = dummy.transform.position;    
         }
     }
 
 
     public void RightButton()
     {
-        playerOverhead[playerNum].m_LookAt = null;
-
         if (overhead == true)
         {
+            playerOverhead[playerNum].m_LookAt = null;
+
             Debug.Log("Right Button");
 
-            if (dummy.transform.position.x - ship[playerNum].transform.position.x < 100)
+            ghostDummy.transform.Translate(12.0f, 0.0f, 0.0f);
+
+            if (ghostDummy.transform.position.x > -403 && ghostDummy.transform.position.x < 547 && ghostDummy.transform.position.z > -559 && ghostDummy.transform.position.z < 391)
             {
-                dummy.transform.Translate(10.0f, 0.0f, 0.0f);
+                if (dummy.transform.position.x - ship[playerNum].transform.position.x < 120)
+                {
+                    dummy.transform.Translate(12.0f, 0.0f, 0.0f);
+                }
             }
+
+            ghostDummy.transform.position = dummy.transform.position;
         }
     }
 
     public void UpButton()
     {
-        playerOverhead[playerNum].m_LookAt = null;
-
         if (overhead == true)
         {
+            playerOverhead[playerNum].m_LookAt = null;
+
             Debug.Log("Up Button");
 
-            if (dummy.transform.position.z - ship[playerNum].transform.position.z < 100)
+            ghostDummy.transform.Translate(0.0f, 0.0f, 12.0f);
+
+            if (ghostDummy.transform.position.x > -403 && ghostDummy.transform.position.x < 547 && ghostDummy.transform.position.z > -559 && ghostDummy.transform.position.z < 391)
             {
-                dummy.transform.Translate(0.0f, 0.0f, 10.0f);
+                if (dummy.transform.position.z - ship[playerNum].transform.position.z < 120)
+                {
+                    dummy.transform.Translate(0.0f, 0.0f, 12.0f);
+                }
             }
+
+            ghostDummy.transform.position = dummy.transform.position;
         }
-
-
     }
 
     public void DownButton()
     {
         if (overhead == true)
         {
-            Debug.Log("Down Button");
+            playerOverhead[playerNum].m_LookAt = null;
 
-            if (dummy.transform.position.z - ship[playerNum].transform.position.z > -100)
+            Debug.Log("Up Button");
+
+            ghostDummy.transform.Translate(0.0f, 0.0f, -12.0f);
+
+            if (ghostDummy.transform.position.x > -403 && ghostDummy.transform.position.x < 547 && ghostDummy.transform.position.z > -559 && ghostDummy.transform.position.z < 391)
             {
-                dummy.transform.Translate(0.0f, 0.0f, -10.0f);
+                if (dummy.transform.position.z - ship[playerNum].transform.position.z > -120)
+                {
+                    dummy.transform.Translate(0.0f, 0.0f, -12.0f);
+                }
             }
+
+            ghostDummy.transform.position = dummy.transform.position;
         }
 
     }
 
-    public void ZoomIn()
+public void ZoomIn()
     {
         Zoom(1.0f);
     }
@@ -255,9 +288,9 @@ public class CameraController : MonoBehaviour
     {
         Debug.Log("Pedestal Up");
 
-        if (dummy.transform.position.y - ship[playerNum].transform.position.y < 50)
+        if (dummy.transform.position.y - ship[playerNum].transform.position.y < 60)
         {
-            dummy.transform.Translate(0.0f, 10.0f, 0.0f);
+            dummy.transform.Translate(0.0f, 12.0f, 0.0f);
         }
     }
 
@@ -265,9 +298,9 @@ public class CameraController : MonoBehaviour
     {
         Debug.Log("Pedestal Down");
 
-        if (dummy.transform.position.y - ship[playerNum].transform.position.y > -10)
+        if (dummy.transform.position.y - ship[playerNum].transform.position.y > -12)
         {
-            dummy.transform.Translate(0.0f, -10.0f, 0.0f);
+            dummy.transform.Translate(0.0f, -12.0f, 0.0f);
         }
     }
 
