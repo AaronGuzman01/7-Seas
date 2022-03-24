@@ -43,12 +43,14 @@ public class ShipCombatTarget : MonoBehaviour
         }
         else
         {
-            positions.Add(new Vector3(x, 2, 0));
-            positions.Add(new Vector3(x, 2, -2));
-            positions.Add(new Vector3(x, 2, 2));
-            positions.Add(new Vector3(x, 3.5f, 0));
-            positions.Add(new Vector3(x, 3.5f, -2));
-            positions.Add(new Vector3(x, 3.5f, 2));
+            transform.localPosition = new Vector3(x, 2 - transform.parent.localPosition.y, 0);
+
+            positions.Add(new Vector3(x, transform.localPosition.y, 0));
+            positions.Add(new Vector3(x, transform.localPosition.y, -2));
+            positions.Add(new Vector3(x, transform.localPosition.y, 2));
+            positions.Add(new Vector3(x, transform.localPosition.y + 1.5f, 0));
+            positions.Add(new Vector3(x, transform.localPosition.y + 3.5f, -2));
+            positions.Add(new Vector3(x, transform.localPosition.y + 3.5f, 2));
         }
     }
 

@@ -113,7 +113,7 @@ public class MapLoad : MonoBehaviour
         //Sets ships that need position modification
         for (int i = 4; i < 7; i++)
         {
-            modifyNames.Add(ships[i].name);
+            //modifyNames.Add(ships[i].name);
         }
 
         //Gets selected players
@@ -520,6 +520,7 @@ public class MapLoad : MonoBehaviour
                     if (playerCombat)
                     {
                         CannonMinigame.setPlayer = true;
+                        CannonMinigame.currShip = 1;
                         CannonMinigame.SetShips(GetEnemeyShip(), ship);
 
                         PlayerPrefs.SetString("Enemy", "Player");
