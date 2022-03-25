@@ -18,7 +18,7 @@ public class CameraController : MonoBehaviour
 
     public float touchSensitivity = 10f;
     public float minZoom = 30f;
-    public float maxZoom = 80f;
+    public float maxZoom = 145f;
     public float zoomSpeed = 0.05f;
 
     //GUI
@@ -99,6 +99,8 @@ public class CameraController : MonoBehaviour
             playerOverhead[playerNum].Priority = 1;
 
             overhead = true;
+
+            DetermineZoom();
         }
     }
 
@@ -118,6 +120,8 @@ public class CameraController : MonoBehaviour
         playerOverhead[playerNum].Priority = 1;
 
         overhead = true;
+
+        DetermineZoom();
     }
 
     public void SetDiceAndCups()
@@ -141,6 +145,8 @@ public class CameraController : MonoBehaviour
         diceAndCups.Priority = 0;
 
         GUI = true;
+
+        DetermineZoom();
     }
 
     //Manages Camera Movement
@@ -304,7 +310,6 @@ public void ZoomIn()
         }
     }
 
-
     public void PanLeft()
     {
         playerOverhead[playerNum].m_LookAt = dummy.transform;
@@ -321,13 +326,16 @@ public void ZoomIn()
         dummy.transform.Rotate(0.0f, 10.0f, 0.0f);
     }
 
+    //Same-Player Dummy Reset
     public void ResetDummy()
     {
         playerOverhead[playerNum].m_LookAt = dummy.transform;
         dummy.transform.position = ship[playerNum].transform.position;
         dummy.transform.rotation = ship[playerNum].transform.rotation;
+        playerOverhead[playerNum].m_Lens.FieldOfView = 60;
     }
 
+    //Reset Dummy to Next Player
     public void UpdateDummy()
     {
         playerOverhead[playerNum].m_LookAt = dummy.transform;
@@ -337,6 +345,7 @@ public void ZoomIn()
             Debug.Log("Next Player: " + (playerNum + 1));
             dummy.transform.rotation = ship[playerNum + 1].transform.rotation;
             dummy.transform.position = ship[playerNum + 1].transform.position;
+            playerOverhead[playerNum + 1].m_Lens.FieldOfView = 60;
 
         }
         else if (playerNum == maxPlayers - 1)
@@ -344,6 +353,7 @@ public void ZoomIn()
             Debug.Log("Player 1");
             dummy.transform.rotation = ship[0].transform.rotation;
             dummy.transform.position = ship[0].transform.position;
+            playerOverhead[0].m_Lens.FieldOfView = 60;
         }
 
         GUI = false;
@@ -353,6 +363,8 @@ public void ZoomIn()
     //Camera zooming function
     void Zoom(float increment)
     {
+        playerOverhead[playerNum].m_LookAt = dummy.transform;
+
         if (overhead)
         {
             playerOverhead[playerNum].m_Lens.FieldOfView = Mathf.Clamp(playerOverhead[playerNum].m_Lens.FieldOfView - (increment * 10), minZoom, maxZoom);
@@ -360,6 +372,25 @@ public void ZoomIn()
         else
         {
             playerDefault[playerNum].m_Lens.FieldOfView = Mathf.Clamp(playerDefault[playerNum].m_Lens.FieldOfView - (increment * 10), minZoom, maxZoom);
+        }
+    }
+
+    //Dice-Based Zooming
+    public void DetermineZoom()
+    {
+        float diceAmount = (float)MapLoad.diceVals[MapLoad.diceIndex];
+
+        if (MapLoad.diceVals[MapLoad.diceIndex] == -1)      //If Ghost Dice
+        {
+            Zoom(0.0f);
+        }
+        else if (MapLoad.diceIndex == 0)                    //First Dice
+        {
+            Zoom(-diceAmount * 1.5f);
+        }
+        else                                                //Other Dice
+        {
+            Zoom(-1.5f);
         }
     }
 }

@@ -68,7 +68,7 @@ public class MapLoad : MonoBehaviour
     public static int playerNum;
     public static int[] diceVals;
     public int playerIndex;
-    public int diceIndex;
+    public static int diceIndex;
     public int moveCount;
 
     static bool continueGame = false;
