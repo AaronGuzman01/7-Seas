@@ -34,6 +34,8 @@ public class Monstermovement : MonoBehaviour
     private GameObject explosion;
     private ParticleSystem explosionEffect;
     private AudioSource explosionSFX;
+    private bool died = false;
+
     //public bool istriggered;
     Collider m_Collider;
     public int cannonDmg;//amount of damage cannons do with each hit
@@ -41,8 +43,6 @@ public class Monstermovement : MonoBehaviour
     // public float shakeMagnetude = 0.05f, shakeTime = 0.5f;
     // public Camera mainCamera;
 
-    private bool hit = false;
-    private int multiplier = 1;
     private int maxAttacks = 0, attacks = 0;
     private int maxStands = 0, stands = 0;
 
@@ -50,6 +50,7 @@ public class Monstermovement : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animation>();
+        anim.Play("Disappear");
         movingForward = true;
         movingBackward = false;
         movingLeft = true;
@@ -80,14 +81,18 @@ public class Monstermovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(health<=0)
+        if(health<=0 && !died)
         {
+            Image fill = slider.transform.GetChild(1).GetChild(0).GetComponent<Image>();
+            fill.color = new Color(fill.color.r, fill.color.g, fill.color.b, 0);
+
+            died = true;
+
+            Destroy(transform.GetChild(transform.childCount - 1).gameObject);
             anim.Play("Death");
             PlayerPrefs.SetString("MonsterStatus", "Dead");
             PlayerPrefs.Save();
             StartCoroutine(Wait());
-            SceneManager.UnloadSceneAsync("Cannon");
-            SceneManager.LoadScene("CannonResults", LoadSceneMode.Additive);
         }/*
         else if (timesMoved >= 5) {
             SceneManager.UnloadSceneAsync("Cannon");
@@ -260,17 +265,16 @@ public class Monstermovement : MonoBehaviour
                 GenerateRandomMovement();
             }
 
-            FX.transform.position = new Vector3(this.transform.position.x, 1010, this.transform.position.z);
-        }
-        else
-        { anim.Play("Appear");
-            anim.Play("Stand");
+            if (FX)
+            {
+                FX.transform.position = new Vector3(this.transform.position.x, 1010, this.transform.position.z);
+            }
         }
     }
 
     void GenerateRandomMovement()
     {
-        if (!anim.isPlaying)
+        if (!anim.isPlaying && !died)
         {
             int num = Random.Range(0, 7);
 
@@ -301,6 +305,41 @@ public class Monstermovement : MonoBehaviour
         }
     }
 
+    public void MonsterHit()
+    {
+        int val = PlayerPrefs.GetInt("Hit");
+
+        if (val > 0)
+        {
+            anim.Play("Hit1");
+            health = health - (val * 5 * cannonDmg);
+            justHit = true;
+
+            explosion.transform.position = transform.position;
+            explosionEffect.startSize = 9;
+            explosionSFX.Play();
+            explosionEffect.Stop();
+            explosionEffect.Clear();
+            explosionEffect.Play();
+
+            movingForward = false;
+            movingBackward = false;
+            movingLeft = false;
+            movingRight = false;
+            hiding = false;
+            standing = false;
+        }
+    }
+
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(6);
+        SceneManager.UnloadSceneAsync("Cannon");
+        transform.position = new Vector3(0, transform.position.y, 0);
+        SceneManager.LoadScene("CannonResults", LoadSceneMode.Additive);
+    }
+
+    /*
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Cannonball") && hit)
@@ -326,18 +365,7 @@ public class Monstermovement : MonoBehaviour
             //istriggered = true;
 
     }
-
-    public void SetHit(string val)
-    {
-        multiplier = int.Parse(val);
-        hit = true;
-    }
-    
-
-    IEnumerator Wait()
-    {
-        yield return new WaitForSeconds(4f);
-    }
+    */
 
     /*public void ShakeIt()
     {

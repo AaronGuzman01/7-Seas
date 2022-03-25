@@ -50,10 +50,6 @@ public class scoreUpdate : MonoBehaviour
             
         }
         */
-        if (PlayerPrefs.GetString("Enemy").Equals("Monster"))
-        {
-            other.gameObject.GetComponentInParent<Monstermovement>().SetHit(other.tag.Substring(other.tag.Length - 1));
-        }
 
         if (other.CompareTag("+1") && (this.hit == false))
         {
@@ -67,6 +63,12 @@ public class scoreUpdate : MonoBehaviour
             score = score + 1;
             manager.AddPoints(score);
             Debug.Log(score + " hit registered");
+            PlayerPrefs.SetInt("Hit", 1);
+
+            if (PlayerPrefs.GetString("Enemy").Equals("Monster"))
+            {
+                other.gameObject.GetComponentInParent<Monstermovement>().MonsterHit();
+            }
         }
         else if (other.CompareTag("+2") && (this.hit == false))
         {
@@ -81,6 +83,11 @@ public class scoreUpdate : MonoBehaviour
             manager.AddPoints(score);
             Debug.Log(score + " hit registered");
             PlayerPrefs.SetInt("Hit", 2);
+
+            if (PlayerPrefs.GetString("Enemy").Equals("Monster"))
+            {
+                other.gameObject.GetComponentInParent<Monstermovement>().MonsterHit();
+            }
         }
         else if (other.CompareTag("+3") && (this.hit == false))
         {
@@ -95,6 +102,11 @@ public class scoreUpdate : MonoBehaviour
             manager.AddPoints(score);
             Debug.Log(score + " hit registered");
             PlayerPrefs.SetInt("Hit", 3);
+
+            if (PlayerPrefs.GetString("Enemy").Equals("Monster"))
+            {
+                other.gameObject.GetComponentInParent<Monstermovement>().MonsterHit();
+            }
         }
         else if (other.CompareTag("+4") && (this.hit == false))
         {
@@ -109,6 +121,11 @@ public class scoreUpdate : MonoBehaviour
             manager.AddPoints(score);
             Debug.Log(score + " hit registered");
             PlayerPrefs.SetInt("Hit", 4);
+
+            if (PlayerPrefs.GetString("Enemy").Equals("Monster"))
+            {
+                other.gameObject.GetComponentInParent<Monstermovement>().MonsterHit();
+            }
         }
         else { Debug.Log(" No Tag"); }
         PlayerPrefs.Save();

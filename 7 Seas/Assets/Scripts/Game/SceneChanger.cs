@@ -49,6 +49,7 @@ public class SceneChanger : MonoBehaviour
             //players = PlayersManager.GetPlayers();
             //objective.text = PlayersManager.Opponent1.Name.ToUpper() + " - SHOOT THE MONSTER TO DO DAMAGE. STRIKE FIRST TO AVOID DAMAGE!";
             objective.text = PlayerPrefs.GetString("Ship1").ToUpper() + " - SHOOT THE MONSTER TO DO DAMAGE. STRIKE FIRST TO AVOID DAMAGE!";
+            score.enabled = false;
         }
         /*
         else

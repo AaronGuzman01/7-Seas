@@ -23,6 +23,7 @@ public class CannonMinigame : MonoBehaviour
     static GameObject currTreasureShip;
     static GameObject monster;
     GameObject target;
+    int skyIndex = 0;
 
     void Start()
     {
@@ -32,6 +33,8 @@ public class CannonMinigame : MonoBehaviour
 
     void Update()
     {
+        RenderSettings.skybox = skyBox[skyIndex];
+
         if (setPlayer && currShip == 1)
         {
             PlayerPrefs.SetInt("Player1Score", 0);
@@ -109,14 +112,14 @@ public class CannonMinigame : MonoBehaviour
                 ButtonManager.GetComponent<ButtonFunctionality>().SetEnemy(monster);
 
                 RenderSettings.skybox = skyBox[1];
+
+                skyIndex = 1;
             }
         }
     }
 
     public static void SetShips(GameObject enemyShip, GameObject playerShip)
     {
-        DestroyObjects();
-
         ships[0] = Instantiate(enemyShip);
         ships[1] = Instantiate(playerShip);
 
