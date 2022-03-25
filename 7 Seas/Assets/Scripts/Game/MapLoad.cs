@@ -21,6 +21,7 @@ public class MapLoad : MonoBehaviour
     public Text treasureGoal;
     public Text treasureTotal;
     public Text treasureCurrent;
+    public Text player;
 
     public Camera main;
     public GameObject[] mainGUI;
@@ -323,6 +324,7 @@ public class MapLoad : MonoBehaviour
 
         treasureCurrent.text = "Player Treasure: " + shipInfo[playerIndex].GetCurrentTreasure().ToString();
         treasureTotal.text = "Total Treasure: " + shipInfo[playerIndex].GetTotalTreasure().ToString();
+        player.text = "Player: " + (playerIndex + 1).ToString();
 
         /*
         //Arrow Key Movement
@@ -894,6 +896,7 @@ public class MapLoad : MonoBehaviour
 
         treasureCurrent.text = "Player Treasure: " + shipInfo[playerIndex].GetCurrentTreasure().ToString();
         treasureTotal.text = "Total Treasure: " + shipInfo[playerIndex].GetTotalTreasure().ToString();
+        player.text = "Player: " + (playerIndex + 1).ToString();
 
         Debug.Log("Active Camera: " + (camNum + 1));
     }
