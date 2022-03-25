@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 
@@ -20,6 +19,7 @@ public class MapLoad : MonoBehaviour
     public Canvas buttons;
     public Text toggleText;
     public Text treasureGoal;
+    public Text treasureTotal;
     public Text treasureCurrent;
 
     public Camera main;
@@ -37,6 +37,7 @@ public class MapLoad : MonoBehaviour
     public GameObject treasureShip;
     public GameObject monster;
     public GameObject arrow;
+    public GameObject movingFX;
 
     public float time;
     public float degrees;
@@ -61,7 +62,6 @@ public class MapLoad : MonoBehaviour
 
     GameObject[] players;
     List<PlayerShip> shipInfo;
-    List<string> modifyNames;
     List<int> playerNums;
 
     public static bool diceSet = false;
@@ -98,7 +98,6 @@ public class MapLoad : MonoBehaviour
         monsterPos = new HashSet<Vector3Int>();
         tilesInMap = new int[80, 80];
         objectsInMap = new int[80, 80];
-        modifyNames = new List<string>();
         shipInfo = new List<PlayerShip>();
         playerNums = new List<int>();
         activePlayers = new bool[8];
@@ -108,13 +107,9 @@ public class MapLoad : MonoBehaviour
         diceIndex = 0;
         moveCount = 0;
 
-        treasureGoal.text = "Treasure Goal: " + PlayerPrefs.GetFloat("End").ToString();
+        ResultsManager.skyBox = skyBox[0];
 
-        //Sets ships that need position modification
-        for (int i = 4; i < 7; i++)
-        {
-            //modifyNames.Add(ships[i].name);
-        }
+        treasureGoal.text = "Treasure Goal: " + PlayerPrefs.GetFloat("End").ToString();
 
         //Gets selected players
         for (int i = 0; i < 8; i++)
@@ -323,9 +318,11 @@ public class MapLoad : MonoBehaviour
             monsterCombat = false;
             continueGame = false;
             RenderSettings.skybox = skyBox[0];
+            CannonMinigame.DestroyObjects();
         }
 
-        treasureCurrent.text = "Player Treasure: " + shipInfo[playerIndex].GetTreasure().ToString();
+        treasureCurrent.text = "Player Treasure: " + shipInfo[playerIndex].GetCurrentTreasure().ToString();
+        treasureTotal.text = "Total Treasure: " + shipInfo[playerIndex].GetTotalTreasure().ToString();
 
         /*
         //Arrow Key Movement
@@ -378,13 +375,6 @@ public class MapLoad : MonoBehaviour
                 transform.position = tilemap.GetCellCenterWorld(new Vector3Int(18, -24 + count, 0));
 
                 objectsInMap[18 + 34, (-24 + count - 32) * -1] = -1;
-
-                if (modifyNames.Contains(player.name))
-                {
-                    transform = transform.GetChild(0).transform;
-
-                    transform.position = new Vector3(transform.position.x, 4, transform.position.z);
-                }
 
                 shipInfo[count].SetCurrentPosition(tilemap.WorldToCell(transform.position));
                 shipInfo[count].SetPreviousPosition(tilemap.WorldToCell(transform.position));
@@ -491,9 +481,17 @@ public class MapLoad : MonoBehaviour
 
                 accel += 0.01f;
 
+                movingFX.transform.rotation = shipTransfom.rotation;
+
+                movingFX.transform.position = new Vector3(ship.transform.position.x, 0.55f, ship.transform.position.z);
+
+                movingFX.SetActive(true);
+
                 if (Quaternion.Angle(shipTransfom.rotation, lookRotation) < 2f)
                 {
                     rotate = false;
+
+                    movingFX.SetActive(false);
 
                     accel = 0;
                 }
@@ -503,9 +501,15 @@ public class MapLoad : MonoBehaviour
             {
                 ship.transform.position = Vector3.MoveTowards(ship.transform.position, currPos, Time.deltaTime * time);
 
+                movingFX.transform.position = new Vector3(ship.transform.position.x, 0.6f, ship.transform.position.z);
+
+                movingFX.SetActive(true);
+
                 if (Vector3.Distance(ship.transform.position, currPos) < 0.001f)
                 {
                     SetGUI(true, diceGUI);
+
+                    movingFX.SetActive(false);
 
                     posSet = false;
 
@@ -525,6 +529,8 @@ public class MapLoad : MonoBehaviour
 
                         PlayerPrefs.SetString("Enemy", "Player");
 
+                        RenderSettings.skybox = skyBox[5];
+
                         hiddenBtns[2].onClick.Invoke();
                     }
                     else if (shipCombat)
@@ -532,6 +538,8 @@ public class MapLoad : MonoBehaviour
                         CannonMinigame.setTreasure = true;
 
                         PlayerPrefs.SetString("Enemy", "Treasure");
+
+                        RenderSettings.skybox = skyBox[5];
 
                         hiddenBtns[2].onClick.Invoke();
                     }
@@ -543,6 +551,8 @@ public class MapLoad : MonoBehaviour
                             CannonMinigame.SetMonster(monster);
 
                             PlayerPrefs.SetString("Enemy", "Monster");
+
+                            RenderSettings.skybox = skyBox[2];
 
                             hiddenBtns[2].onClick.Invoke();
                         }
@@ -882,7 +892,8 @@ public class MapLoad : MonoBehaviour
             }
         }
 
-        treasureCurrent.text = "Player Treasure: " + shipInfo[playerIndex].GetTreasure().ToString();
+        treasureCurrent.text = "Player Treasure: " + shipInfo[playerIndex].GetCurrentTreasure().ToString();
+        treasureTotal.text = "Total Treasure: " + shipInfo[playerIndex].GetTotalTreasure().ToString();
 
         Debug.Log("Active Camera: " + (camNum + 1));
     }

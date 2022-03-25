@@ -14,6 +14,7 @@ public class PlayerShip : MonoBehaviour
     int crew;
     int treasure;
     int damage;
+
     public PlayerShip (int num, GameObject ship, int[] masts, int[] cannons, int crew, int treasure, int damage)
     {
         playerNum = num;
@@ -43,9 +44,14 @@ public class PlayerShip : MonoBehaviour
         currTreasure += amount;
     }
 
-    public float GetTreasure()
+    public float GetCurrentTreasure()
     {
         return currTreasure;
+    }
+
+    public float GetTotalTreasure()
+    {
+        return totalTreasure;
     }
 
     public void DepositTreasure()

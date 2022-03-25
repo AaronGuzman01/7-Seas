@@ -159,7 +159,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 10, y: -150}
+  m_AnchoredPosition: {x: 88, y: -27}
   m_SizeDelta: {x: 1521.79, y: 361.47}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &21146476
@@ -204,7 +204,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 100
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -2891,6 +2891,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HealthLostText: {fileID: 1997470190}
   MonsterStatusText: {fileID: 21146477}
+  FX: {fileID: 1495502805}
 --- !u!114 &1519016516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4090,7 +4091,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1997470188
 RectTransform:
   m_ObjectHideFlags: 0

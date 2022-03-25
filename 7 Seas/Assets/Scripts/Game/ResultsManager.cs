@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ResultsManager : MonoBehaviour
 {
+    public static Material skyBox;
     public GameObject ship;
     public GameObject[] resultsGUI;
     public static PlayerShip[] players = new PlayerShip[2];
@@ -30,12 +31,16 @@ public class ResultsManager : MonoBehaviour
             ships[1].SetActive(false);
 
             DisplayGUI(resultsGUI[0]);
+
+            RenderSettings.skybox = skyBox;
         }
         else if (PlayerPrefs.GetString("Enemy").Equals("Treasure"))
         {
             ship.SetActive(true);
 
             DisplayGUI(resultsGUI[1]);
+
+            RenderSettings.skybox = skyBox;
         }
         else
         {

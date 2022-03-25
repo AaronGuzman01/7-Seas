@@ -12,6 +12,7 @@ public class ShipCombatTarget : MonoBehaviour
     bool moving = false;
     Vector3 position;
     float time = 1;
+    float sec = 3;
 
     void Start()
     {
@@ -30,7 +31,8 @@ public class ShipCombatTarget : MonoBehaviour
 
         if (monster)
         {
-            time = 0.8f;
+            time = 0.7f;
+            sec = 5f;
 
             transform.localPosition = new Vector3(0, 1, y);
 
@@ -40,6 +42,17 @@ public class ShipCombatTarget : MonoBehaviour
             positions.Add(new Vector3(-1, 1.5f, y));
             positions.Add(new Vector3(1, 1.5f, y));
             positions.Add(new Vector3(0, 1.5f, y));
+        }
+        else if (treasure)
+        {
+            transform.localPosition = new Vector3(x, x, y);
+
+            positions.Add(new Vector3(x, x, 0));
+            positions.Add(new Vector3(x, x, x));
+            positions.Add(new Vector3(x, x, -x));
+            positions.Add(new Vector3(x, 2 * x, x));
+            positions.Add(new Vector3(x, 2 * x, -2));
+            positions.Add(new Vector3(x, 2 * x, 0));
         }
         else
         {
@@ -76,7 +89,7 @@ public class ShipCombatTarget : MonoBehaviour
         {
             count++;
 
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(sec);
 
             int index = Random.Range(0, positions.Count);
 
