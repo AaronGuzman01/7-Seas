@@ -18,11 +18,11 @@ public class CameraController : MonoBehaviour
 
     public float touchSensitivity = 10f;
     public float minZoom = 30f;
-    public float maxZoom = 80f;
+    public float maxZoom = 145f;
     public float zoomSpeed = 0.05f;
 
     //GUI
-    public bool GUI = false;
+    private bool GUI = false;
     public GameObject buttons;
     private bool left = false;
     private bool right = false;
@@ -31,6 +31,7 @@ public class CameraController : MonoBehaviour
     public GameObject dummy;
     public GameObject[] ship;
     private int maxPlayers;
+    public GameObject ghostDummy;
 
     void Start()
     {
@@ -43,18 +44,8 @@ public class CameraController : MonoBehaviour
 
         CinemachineCore.GetInputAxis = this.GetCustomAxis;
 
-        //GUI
-        if (GUI)
-        {
-            buttons.SetActive(true);
-        }
-        else
-        {
-            buttons.SetActive(false);
-        }
-
         dummy.transform.position = ship[playerNum].transform.position;
-
+        
         maxPlayers = MapLoad.maxCams;
         Debug.Log(maxPlayers);
     }
@@ -75,11 +66,22 @@ public class CameraController : MonoBehaviour
 
         currPos = main.transform.position;
 
-        if (GUI == false)
+        if (overhead == false)
         {
             Zoom(Input.GetAxis("Mouse ScrollWheel"));      //Zooming with mouse scrollwheel
         }
-        
+
+        //GUI
+        if (GUI == true && overhead == true)
+        {
+            buttons.SetActive(true);
+        }
+        else
+        {
+            buttons.SetActive(false);
+        }
+
+        ghostDummy.transform.rotation = dummy.transform.rotation;
     }
 
     public void ChangeView()
@@ -97,6 +99,8 @@ public class CameraController : MonoBehaviour
             playerOverhead[playerNum].Priority = 1;
 
             overhead = true;
+
+            DetermineZoom();
         }
     }
 
@@ -110,10 +114,14 @@ public class CameraController : MonoBehaviour
 
     public void SetOverheadView()
     {
+        ResetDummy();
+
         playerDefault[playerNum].Priority = 0;
         playerOverhead[playerNum].Priority = 1;
 
         overhead = true;
+
+        DetermineZoom();
     }
 
     public void SetDiceAndCups()
@@ -135,6 +143,10 @@ public class CameraController : MonoBehaviour
         MapLoad.diceSet = true;
 
         diceAndCups.Priority = 0;
+
+        GUI = true;
+
+        DetermineZoom();
     }
 
     //Manages Camera Movement
@@ -142,7 +154,7 @@ public class CameraController : MonoBehaviour
     {
         //Debug.Log(Input.touchCount);
 
-        if (GUI == false)   //Touch Mode
+        if (overhead == false)   //Touch Mode
         {
             if (axisName == "Custom")
             {
@@ -164,63 +176,62 @@ public class CameraController : MonoBehaviour
                 }
                 else if (Input.touchCount > 0)       //Mobile Touch
                 {
-                    if (overhead == false)
-                    {
-                        Debug.Log("One Finger Touch");
-                        return Input.touches[0].deltaPosition.x / touchSensitivity;
-                    }
+                    Debug.Log("One Finger Touch");
+                    return Input.touches[0].deltaPosition.x / touchSensitivity;
 
                 }
                 else if (Input.GetMouseButton(0))    //Mouse Click
                 {
-                    if (overhead == false)
-                    {
-                        return UnityEngine.Input.GetAxis("Mouse X");
-                    }
+                    return UnityEngine.Input.GetAxis("Mouse X");
                 }
             }
         }
-        else if (GUI == true)   //Button Mode
-        {
-            if (left == true)
-            {
-                //return UnityEngine.Input.GetAxis("Mouse X") - 1;
-            }
-            else if (right == true)
-            {
-                //return UnityEngine.Input.GetAxis("Mouse X") + 1;
-            }
-        }
-
-        
-        
+       
         return UnityEngine.Input.GetAxis(axisName);
     }
-    
+
     public void LeftButton()
     {
         if (overhead == true)
         {
+            playerOverhead[playerNum].m_LookAt = null;
+
             Debug.Log("Left Button");
 
-            if (dummy.transform.position.x - ship[playerNum].transform.position.x > -100)
+            ghostDummy.transform.Translate(-12.0f, 0.0f, 0.0f);
+
+            if (ghostDummy.transform.position.x > -403 && ghostDummy.transform.position.x < 547 && ghostDummy.transform.position.z > -559 && ghostDummy.transform.position.z < 391)
             {
-                dummy.transform.Translate(-10.0f, 0.0f, 0.0f);
+                if (dummy.transform.position.x - ship[playerNum].transform.position.x > -120)
+                {
+                    dummy.transform.Translate(-12.0f, 0.0f, 0.0f);
+                }
             }
+
+            ghostDummy.transform.position = dummy.transform.position;    
         }
     }
-        
+
 
     public void RightButton()
     {
         if (overhead == true)
         {
+            playerOverhead[playerNum].m_LookAt = null;
+
             Debug.Log("Right Button");
 
-            if (dummy.transform.position.x - ship[playerNum].transform.position.x < 100)
+            ghostDummy.transform.Translate(12.0f, 0.0f, 0.0f);
+
+            if (ghostDummy.transform.position.x > -403 && ghostDummy.transform.position.x < 547 && ghostDummy.transform.position.z > -559 && ghostDummy.transform.position.z < 391)
             {
-                dummy.transform.Translate(10.0f, 0.0f, 0.0f);
+                if (dummy.transform.position.x - ship[playerNum].transform.position.x < 120)
+                {
+                    dummy.transform.Translate(12.0f, 0.0f, 0.0f);
+                }
             }
+
+            ghostDummy.transform.position = dummy.transform.position;
         }
     }
 
@@ -228,32 +239,48 @@ public class CameraController : MonoBehaviour
     {
         if (overhead == true)
         {
+            playerOverhead[playerNum].m_LookAt = null;
+
             Debug.Log("Up Button");
 
-            if (dummy.transform.position.z - ship[playerNum].transform.position.z < 100)
+            ghostDummy.transform.Translate(0.0f, 0.0f, 12.0f);
+
+            if (ghostDummy.transform.position.x > -403 && ghostDummy.transform.position.x < 547 && ghostDummy.transform.position.z > -559 && ghostDummy.transform.position.z < 391)
             {
-                dummy.transform.Translate(0.0f, 0.0f, 10.0f);
+                if (dummy.transform.position.z - ship[playerNum].transform.position.z < 120)
+                {
+                    dummy.transform.Translate(0.0f, 0.0f, 12.0f);
+                }
             }
+
+            ghostDummy.transform.position = dummy.transform.position;
         }
-        
-        
     }
 
     public void DownButton()
     {
         if (overhead == true)
         {
-            Debug.Log("Down Button");
+            playerOverhead[playerNum].m_LookAt = null;
 
-            if (dummy.transform.position.z - ship[playerNum].transform.position.z > -100)
+            Debug.Log("Up Button");
+
+            ghostDummy.transform.Translate(0.0f, 0.0f, -12.0f);
+
+            if (ghostDummy.transform.position.x > -403 && ghostDummy.transform.position.x < 547 && ghostDummy.transform.position.z > -559 && ghostDummy.transform.position.z < 391)
             {
-                dummy.transform.Translate(0.0f, 0.0f, -10.0f);
+                if (dummy.transform.position.z - ship[playerNum].transform.position.z > -120)
+                {
+                    dummy.transform.Translate(0.0f, 0.0f, -12.0f);
+                }
             }
+
+            ghostDummy.transform.position = dummy.transform.position;
         }
-        
+
     }
 
-    public void ZoomIn()
+public void ZoomIn()
     {
         Zoom(1.0f);
     }
@@ -263,30 +290,81 @@ public class CameraController : MonoBehaviour
         Zoom(-1.0f);
     }
 
+    public void PedestalUp()
+    {
+        Debug.Log("Pedestal Up");
+
+        if (dummy.transform.position.y - ship[playerNum].transform.position.y < 60)
+        {
+            dummy.transform.Translate(0.0f, 12.0f, 0.0f);
+        }
+    }
+
+    public void PedestalDown()
+    {
+        Debug.Log("Pedestal Down");
+
+        if (dummy.transform.position.y - ship[playerNum].transform.position.y > -12)
+        {
+            dummy.transform.Translate(0.0f, -12.0f, 0.0f);
+        }
+    }
+
+    public void PanLeft()
+    {
+        playerOverhead[playerNum].m_LookAt = dummy.transform;
+        Debug.Log("Pan Left");
+
+        dummy.transform.Rotate(0.0f, -10.0f, 0.0f);
+    }
+
+    public void PanRight()
+    {
+        playerOverhead[playerNum].m_LookAt = dummy.transform;
+        Debug.Log("Pan Right");
+
+        dummy.transform.Rotate(0.0f, 10.0f, 0.0f);
+    }
+
+    //Same-Player Dummy Reset
     public void ResetDummy()
     {
+        playerOverhead[playerNum].m_LookAt = dummy.transform;
         dummy.transform.position = ship[playerNum].transform.position;
+        dummy.transform.rotation = ship[playerNum].transform.rotation;
+        playerOverhead[playerNum].m_Lens.FieldOfView = 60;
     }
-    
+
+    //Reset Dummy to Next Player
     public void UpdateDummy()
     {
+        playerOverhead[playerNum].m_LookAt = dummy.transform;
+
         if (playerNum < maxPlayers - 1)
         {
             Debug.Log("Next Player: " + (playerNum + 1));
+            dummy.transform.rotation = ship[playerNum + 1].transform.rotation;
             dummy.transform.position = ship[playerNum + 1].transform.position;
-            
+            playerOverhead[playerNum + 1].m_Lens.FieldOfView = 60;
+
         }
         else if (playerNum == maxPlayers - 1)
         {
             Debug.Log("Player 1");
+            dummy.transform.rotation = ship[0].transform.rotation;
             dummy.transform.position = ship[0].transform.position;
+            playerOverhead[0].m_Lens.FieldOfView = 60;
         }
-        
+
+        GUI = false;
+
     }
-    
+
     //Camera zooming function
     void Zoom(float increment)
     {
+        playerOverhead[playerNum].m_LookAt = dummy.transform;
+
         if (overhead)
         {
             playerOverhead[playerNum].m_Lens.FieldOfView = Mathf.Clamp(playerOverhead[playerNum].m_Lens.FieldOfView - (increment * 10), minZoom, maxZoom);
@@ -294,6 +372,25 @@ public class CameraController : MonoBehaviour
         else
         {
             playerDefault[playerNum].m_Lens.FieldOfView = Mathf.Clamp(playerDefault[playerNum].m_Lens.FieldOfView - (increment * 10), minZoom, maxZoom);
+        }
+    }
+
+    //Dice-Based Zooming
+    public void DetermineZoom()
+    {
+        float diceAmount = (float)MapLoad.diceVals[MapLoad.diceIndex];
+
+        if (MapLoad.diceVals[MapLoad.diceIndex] == -1)      //If Ghost Dice
+        {
+            Zoom(0.0f);
+        }
+        else if (MapLoad.diceIndex == 0)                    //First Dice
+        {
+            Zoom(-diceAmount * 1.5f);
+        }
+        else                                                //Other Dice
+        {
+            Zoom(-1.5f);
         }
     }
 }

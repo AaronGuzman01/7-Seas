@@ -393,160 +393,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &72024961
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 72024962}
-  - component: {fileID: 72024966}
-  - component: {fileID: 72024965}
-  - component: {fileID: 72024964}
-  - component: {fileID: 72024963}
-  m_Layer: 5
-  m_Name: LongCannon
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &72024962
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 72024961}
-  m_LocalRotation: {x: 0.00820674, y: 0.008388568, z: -0.000046793808, w: 0.99993116}
-  m_LocalPosition: {x: 0, y: 0, z: 0.3}
-  m_LocalScale: {x: 0.2443627, y: 3.0374866, z: 0.85419804}
-  m_Children:
-  - {fileID: 370079519}
-  m_Father: {fileID: 966372099}
-  m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 0.94, y: 0.961, z: 0.003}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -206.9, y: -109.1}
-  m_SizeDelta: {x: 242.7, y: 21.74}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &72024963
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 72024961}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e60df30833ab3b24cbd0397a90553934, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  emptyMastBtn: {fileID: 0}
-  mastSelected: {fileID: 0}
-  emptyCannonBtn: {fileID: 0}
-  cannonSelected: {fileID: 72024964}
-  crewBtn: {fileID: 0}
-  treasureBtn: {fileID: 0}
-  damageBtn: {fileID: 0}
-  defaultSelect: {fileID: 0}
---- !u!114 &72024964
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 72024961}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1.68
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 72024965}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 72024963}
-        m_TargetAssemblyTypeName: ShipCustomizationBtns, Assembly-CSharp
-        m_MethodName: cannonSelection
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &72024965
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 72024961}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 167c4da4b48829a46835299a788e0414, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &72024966
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 72024961}
-  m_CullTransparentMesh: 1
 --- !u!1 &134134332
 GameObject:
   m_ObjectHideFlags: 0
@@ -650,7 +496,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 134134332}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -694,13 +540,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   emptyMastBtn: {fileID: 134134334}
-  mastSelected: {fileID: 0}
+  mastImages:
+  - {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
+  - {fileID: 21300000, guid: cd2b5eb5f5fd0114b9f178317aa3f755, type: 3}
+  - {fileID: 21300000, guid: 1e4f32a9491a51b429be199357b91e2f, type: 3}
   emptyCannonBtn: {fileID: 0}
-  cannonSelected: {fileID: 0}
+  cannonImages:
+  - {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
+  - {fileID: 21300000, guid: 69c2f25e12555be4bbc325001e7dad73, type: 3}
+  - {fileID: 21300000, guid: 167c4da4b48829a46835299a788e0414, type: 3}
   crewBtn: {fileID: 0}
   treasureBtn: {fileID: 0}
   damageBtn: {fileID: 0}
-  defaultSelect: {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
 --- !u!1 &164506158
 GameObject:
   m_ObjectHideFlags: 0
@@ -754,13 +605,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   emptyMastBtn: {fileID: 0}
-  mastSelected: {fileID: 0}
+  mastImages:
+  - {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
+  - {fileID: 21300000, guid: cd2b5eb5f5fd0114b9f178317aa3f755, type: 3}
+  - {fileID: 21300000, guid: 1e4f32a9491a51b429be199357b91e2f, type: 3}
   emptyCannonBtn: {fileID: 0}
-  cannonSelected: {fileID: 0}
+  cannonImages:
+  - {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
+  - {fileID: 21300000, guid: 69c2f25e12555be4bbc325001e7dad73, type: 3}
+  - {fileID: 21300000, guid: 167c4da4b48829a46835299a788e0414, type: 3}
   crewBtn: {fileID: 164506161}
   treasureBtn: {fileID: 0}
   damageBtn: {fileID: 0}
-  defaultSelect: {fileID: 0}
 --- !u!114 &164506161
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -926,7 +782,7 @@ RectTransform:
   - {fileID: 887462191}
   - {fileID: 2030488156}
   m_Father: {fileID: 966372099}
-  m_RootOrder: 13
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1031,18 +887,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 215713875}
-        m_TargetAssemblyTypeName: ShipCustomizationBtns, Assembly-CSharp
-        m_MethodName: returnBtn
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 215713871}
         m_TargetAssemblyTypeName: LoadTargetScreenButton, Assembly-CSharp
         m_MethodName: LoadSceneNum
@@ -1051,6 +895,18 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 6
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 215713875}
+        m_TargetAssemblyTypeName: ShipCustomizationBtns, Assembly-CSharp
+        m_MethodName: exit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -1106,13 +962,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   emptyMastBtn: {fileID: 0}
-  mastSelected: {fileID: 0}
+  mastImages:
+  - {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
+  - {fileID: 21300000, guid: cd2b5eb5f5fd0114b9f178317aa3f755, type: 3}
+  - {fileID: 21300000, guid: 1e4f32a9491a51b429be199357b91e2f, type: 3}
   emptyCannonBtn: {fileID: 0}
-  cannonSelected: {fileID: 0}
+  cannonImages:
+  - {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
+  - {fileID: 21300000, guid: 69c2f25e12555be4bbc325001e7dad73, type: 3}
+  - {fileID: 21300000, guid: 167c4da4b48829a46835299a788e0414, type: 3}
   crewBtn: {fileID: 0}
   treasureBtn: {fileID: 0}
   damageBtn: {fileID: 0}
-  defaultSelect: {fileID: 0}
 --- !u!1 &229387995
 GameObject:
   m_ObjectHideFlags: 0
@@ -1142,16 +1003,16 @@ RectTransform:
   m_GameObject: {fileID: 229387995}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5125, y: 0.97499, z: 1}
+  m_LocalScale: {x: 0.49296093, y: 0.86527437, z: 1}
   m_Children:
   - {fileID: 706686122}
   m_Father: {fileID: 966372099}
-  m_RootOrder: 11
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 282, y: -111}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 281.22, y: -111.36}
+  m_SizeDelta: {x: 168.29, y: 35.31}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &229387997
 MonoBehaviour:
@@ -1166,13 +1027,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   emptyMastBtn: {fileID: 0}
-  mastSelected: {fileID: 0}
+  mastImages:
+  - {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
+  - {fileID: 21300000, guid: cd2b5eb5f5fd0114b9f178317aa3f755, type: 3}
+  - {fileID: 21300000, guid: 1e4f32a9491a51b429be199357b91e2f, type: 3}
   emptyCannonBtn: {fileID: 0}
-  cannonSelected: {fileID: 0}
+  cannonImages:
+  - {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
+  - {fileID: 21300000, guid: 69c2f25e12555be4bbc325001e7dad73, type: 3}
+  - {fileID: 21300000, guid: 167c4da4b48829a46835299a788e0414, type: 3}
   crewBtn: {fileID: 0}
   treasureBtn: {fileID: 0}
   damageBtn: {fileID: 0}
-  defaultSelect: {fileID: 0}
 --- !u!114 &229387998
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1242,7 +1108,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.19607845, g: 0.3803922, b: 0.8235295, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1504,85 +1370,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 336880033}
   m_CullTransparentMesh: 1
---- !u!1 &370079518
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 370079519}
-  - component: {fileID: 370079521}
-  - component: {fileID: 370079520}
-  m_Layer: 5
-  m_Name: Text
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &370079519
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 370079518}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 72024962}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &370079520
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 370079518}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
-    m_Alignment: 4
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: 
---- !u!222 &370079521
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 370079518}
-  m_CullTransparentMesh: 1
 --- !u!1 &395533664
 GameObject:
   m_ObjectHideFlags: 0
@@ -1686,7 +1473,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 395533664}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -1730,13 +1517,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   emptyMastBtn: {fileID: 395533666}
-  mastSelected: {fileID: 0}
+  mastImages:
+  - {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
+  - {fileID: 21300000, guid: cd2b5eb5f5fd0114b9f178317aa3f755, type: 3}
+  - {fileID: 21300000, guid: 1e4f32a9491a51b429be199357b91e2f, type: 3}
   emptyCannonBtn: {fileID: 0}
-  cannonSelected: {fileID: 0}
+  cannonImages:
+  - {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
+  - {fileID: 21300000, guid: 69c2f25e12555be4bbc325001e7dad73, type: 3}
+  - {fileID: 21300000, guid: 167c4da4b48829a46835299a788e0414, type: 3}
   crewBtn: {fileID: 0}
   treasureBtn: {fileID: 0}
   damageBtn: {fileID: 0}
-  defaultSelect: {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
 --- !u!1 &461874890
 GameObject:
   m_ObjectHideFlags: 0
@@ -1884,92 +1676,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   emptyMastBtn: {fileID: 0}
-  mastSelected: {fileID: 0}
+  mastImages:
+  - {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
+  - {fileID: 21300000, guid: cd2b5eb5f5fd0114b9f178317aa3f755, type: 3}
+  - {fileID: 21300000, guid: 1e4f32a9491a51b429be199357b91e2f, type: 3}
   emptyCannonBtn: {fileID: 0}
-  cannonSelected: {fileID: 0}
+  cannonImages:
+  - {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
+  - {fileID: 21300000, guid: 69c2f25e12555be4bbc325001e7dad73, type: 3}
+  - {fileID: 21300000, guid: 167c4da4b48829a46835299a788e0414, type: 3}
   crewBtn: {fileID: 0}
   treasureBtn: {fileID: 461874892}
   damageBtn: {fileID: 0}
-  defaultSelect: {fileID: 0}
---- !u!1 &502839165
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 502839166}
-  - component: {fileID: 502839168}
-  - component: {fileID: 502839167}
-  m_Layer: 5
-  m_Name: Text
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &502839166
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 502839165}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1245785342}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &502839167
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 502839165}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
-    m_Alignment: 4
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: 
---- !u!222 &502839168
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 502839165}
-  m_CullTransparentMesh: 1
 --- !u!1 &540134953
 GameObject:
   m_ObjectHideFlags: 0
@@ -2073,7 +1791,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 540134953}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -2117,13 +1835,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   emptyMastBtn: {fileID: 0}
-  mastSelected: {fileID: 0}
+  mastImages:
+  - {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
+  - {fileID: 21300000, guid: cd2b5eb5f5fd0114b9f178317aa3f755, type: 3}
+  - {fileID: 21300000, guid: 1e4f32a9491a51b429be199357b91e2f, type: 3}
   emptyCannonBtn: {fileID: 540134955}
-  cannonSelected: {fileID: 0}
+  cannonImages:
+  - {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
+  - {fileID: 21300000, guid: 69c2f25e12555be4bbc325001e7dad73, type: 3}
+  - {fileID: 21300000, guid: 167c4da4b48829a46835299a788e0414, type: 3}
   crewBtn: {fileID: 0}
   treasureBtn: {fileID: 0}
   damageBtn: {fileID: 0}
-  defaultSelect: {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
 --- !u!1 &609534223
 GameObject:
   m_ObjectHideFlags: 0
@@ -2271,13 +1994,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   emptyMastBtn: {fileID: 0}
-  mastSelected: {fileID: 0}
+  mastImages:
+  - {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
+  - {fileID: 21300000, guid: cd2b5eb5f5fd0114b9f178317aa3f755, type: 3}
+  - {fileID: 21300000, guid: 1e4f32a9491a51b429be199357b91e2f, type: 3}
   emptyCannonBtn: {fileID: 0}
-  cannonSelected: {fileID: 0}
+  cannonImages:
+  - {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
+  - {fileID: 21300000, guid: 69c2f25e12555be4bbc325001e7dad73, type: 3}
+  - {fileID: 21300000, guid: 167c4da4b48829a46835299a788e0414, type: 3}
   crewBtn: {fileID: 0}
   treasureBtn: {fileID: 0}
   damageBtn: {fileID: 609534225}
-  defaultSelect: {fileID: 0}
 --- !u!1 &706686121
 GameObject:
   m_ObjectHideFlags: 0
@@ -2312,8 +2040,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -0.48999786, y: 0.0000038146973}
+  m_SizeDelta: {x: -6.61, y: 0.0000038147}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &706686123
 MonoBehaviour:
@@ -2328,7 +2056,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2337,10 +2065,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
-    m_FontStyle: 0
+    m_FontSize: 12
+    m_FontStyle: 1
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 1
     m_MaxSize: 40
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -2348,7 +2076,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: \
+  m_Text: 
 --- !u!222 &706686124
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2460,7 +2188,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 798026987}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -2504,13 +2232,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   emptyMastBtn: {fileID: 0}
-  mastSelected: {fileID: 0}
+  mastImages:
+  - {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
+  - {fileID: 21300000, guid: cd2b5eb5f5fd0114b9f178317aa3f755, type: 3}
+  - {fileID: 21300000, guid: 1e4f32a9491a51b429be199357b91e2f, type: 3}
   emptyCannonBtn: {fileID: 798026989}
-  cannonSelected: {fileID: 0}
+  cannonImages:
+  - {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
+  - {fileID: 21300000, guid: 69c2f25e12555be4bbc325001e7dad73, type: 3}
+  - {fileID: 21300000, guid: 167c4da4b48829a46835299a788e0414, type: 3}
   crewBtn: {fileID: 0}
   treasureBtn: {fileID: 0}
   damageBtn: {fileID: 0}
-  defaultSelect: {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
 --- !u!1 &828315602
 GameObject:
   m_ObjectHideFlags: 0
@@ -2816,13 +2549,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   emptyMastBtn: {fileID: 0}
-  mastSelected: {fileID: 0}
+  mastImages:
+  - {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
+  - {fileID: 21300000, guid: cd2b5eb5f5fd0114b9f178317aa3f755, type: 3}
+  - {fileID: 21300000, guid: 1e4f32a9491a51b429be199357b91e2f, type: 3}
   emptyCannonBtn: {fileID: 0}
-  cannonSelected: {fileID: 0}
+  cannonImages:
+  - {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
+  - {fileID: 21300000, guid: 69c2f25e12555be4bbc325001e7dad73, type: 3}
+  - {fileID: 21300000, guid: 167c4da4b48829a46835299a788e0414, type: 3}
   crewBtn: {fileID: 0}
   treasureBtn: {fileID: 887462192}
   damageBtn: {fileID: 0}
-  defaultSelect: {fileID: 0}
 --- !u!1 &893880231
 GameObject:
   m_ObjectHideFlags: 0
@@ -2901,160 +2639,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 893880231}
-  m_CullTransparentMesh: 1
---- !u!1 &903175156
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 903175157}
-  - component: {fileID: 903175161}
-  - component: {fileID: 903175160}
-  - component: {fileID: 903175159}
-  - component: {fileID: 903175158}
-  m_Layer: 5
-  m_Name: ShortCannon
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &903175157
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 903175156}
-  m_LocalRotation: {x: 0.00820674, y: 0.008388568, z: -0.000046793808, w: 0.99993116}
-  m_LocalPosition: {x: 0, y: 0, z: -4.8}
-  m_LocalScale: {x: 0.25203288, y: 2.5313742, z: 0.88101}
-  m_Children:
-  - {fileID: 2116901799}
-  m_Father: {fileID: 966372099}
-  m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 0.94, y: 0.961, z: 0.003}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 66.9, y: -101.9}
-  m_SizeDelta: {x: 242.7, y: 21.74}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &903175158
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 903175156}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e60df30833ab3b24cbd0397a90553934, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  emptyMastBtn: {fileID: 0}
-  mastSelected: {fileID: 0}
-  emptyCannonBtn: {fileID: 0}
-  cannonSelected: {fileID: 903175159}
-  crewBtn: {fileID: 0}
-  treasureBtn: {fileID: 0}
-  damageBtn: {fileID: 0}
-  defaultSelect: {fileID: 0}
---- !u!114 &903175159
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 903175156}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1.68
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 903175160}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 903175158}
-        m_TargetAssemblyTypeName: ShipCustomizationBtns, Assembly-CSharp
-        m_MethodName: cannonSelection
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &903175160
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 903175156}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 69c2f25e12555be4bbc325001e7dad73, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &903175161
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 903175156}
   m_CullTransparentMesh: 1
 --- !u!1 &951906912
 GameObject:
@@ -3233,10 +2817,6 @@ RectTransform:
   - {fileID: 2044118773}
   - {fileID: 2140868363}
   - {fileID: 191545804}
-  - {fileID: 1245785342}
-  - {fileID: 2031176032}
-  - {fileID: 903175157}
-  - {fileID: 72024962}
   - {fileID: 229387996}
   - {fileID: 1065418884}
   - {fileID: 206363694}
@@ -3503,7 +3083,7 @@ RectTransform:
   - {fileID: 164506159}
   - {fileID: 1193043824}
   m_Father: {fileID: 966372099}
-  m_RootOrder: 12
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3563,13 +3143,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   emptyMastBtn: {fileID: 0}
-  mastSelected: {fileID: 0}
+  mastImages:
+  - {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
+  - {fileID: 21300000, guid: cd2b5eb5f5fd0114b9f178317aa3f755, type: 3}
+  - {fileID: 21300000, guid: 1e4f32a9491a51b429be199357b91e2f, type: 3}
   emptyCannonBtn: {fileID: 0}
-  cannonSelected: {fileID: 0}
+  cannonImages:
+  - {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
+  - {fileID: 21300000, guid: 69c2f25e12555be4bbc325001e7dad73, type: 3}
+  - {fileID: 21300000, guid: 167c4da4b48829a46835299a788e0414, type: 3}
   crewBtn: {fileID: 1193043826}
   treasureBtn: {fileID: 0}
   damageBtn: {fileID: 0}
-  defaultSelect: {fileID: 0}
 --- !u!114 &1193043826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3694,167 +3279,13 @@ RectTransform:
   - {fileID: 1975082767}
   - {fileID: 609534224}
   m_Father: {fileID: 966372099}
-  m_RootOrder: 14
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 60.7, y: -23.652}
   m_SizeDelta: {x: 102.21, y: 43.9}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1245785341
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1245785342}
-  - component: {fileID: 1245785346}
-  - component: {fileID: 1245785345}
-  - component: {fileID: 1245785344}
-  - component: {fileID: 1245785343}
-  m_Layer: 5
-  m_Name: LargeMast
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1245785342
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1245785341}
-  m_LocalRotation: {x: 0.00820674, y: 0.008388568, z: -0.000046793808, w: 0.99993116}
-  m_LocalPosition: {x: 0, y: 0, z: -2}
-  m_LocalScale: {x: 0.26305532, y: 2.8732638, z: 1}
-  m_Children:
-  - {fileID: 502839166}
-  m_Father: {fileID: 966372099}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0.94, y: 0.961, z: 0.003}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 84, y: 70}
-  m_SizeDelta: {x: 160, y: 30}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1245785343
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1245785341}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e60df30833ab3b24cbd0397a90553934, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  emptyMastBtn: {fileID: 0}
-  mastSelected: {fileID: 1245785344}
-  emptyCannonBtn: {fileID: 0}
-  cannonSelected: {fileID: 0}
-  crewBtn: {fileID: 0}
-  treasureBtn: {fileID: 0}
-  damageBtn: {fileID: 0}
-  defaultSelect: {fileID: 0}
---- !u!114 &1245785344
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1245785341}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 1245785345}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1245785343}
-        m_TargetAssemblyTypeName: ShipCustomizationBtns, Assembly-CSharp
-        m_MethodName: mastSelection
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &1245785345
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1245785341}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 1e4f32a9491a51b429be199357b91e2f, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1245785346
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1245785341}
-  m_CullTransparentMesh: 1
 --- !u!1 &1263735060
 GameObject:
   m_ObjectHideFlags: 0
@@ -4116,7 +3547,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1319261401}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -4160,13 +3591,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   emptyMastBtn: {fileID: 0}
-  mastSelected: {fileID: 0}
+  mastImages:
+  - {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
+  - {fileID: 21300000, guid: cd2b5eb5f5fd0114b9f178317aa3f755, type: 3}
+  - {fileID: 21300000, guid: 1e4f32a9491a51b429be199357b91e2f, type: 3}
   emptyCannonBtn: {fileID: 1319261403}
-  cannonSelected: {fileID: 0}
+  cannonImages:
+  - {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
+  - {fileID: 21300000, guid: 69c2f25e12555be4bbc325001e7dad73, type: 3}
+  - {fileID: 21300000, guid: 167c4da4b48829a46835299a788e0414, type: 3}
   crewBtn: {fileID: 0}
   treasureBtn: {fileID: 0}
   damageBtn: {fileID: 0}
-  defaultSelect: {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
 --- !u!1 &1340911147
 GameObject:
   m_ObjectHideFlags: 0
@@ -4339,13 +3775,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   emptyMastBtn: {fileID: 0}
-  mastSelected: {fileID: 0}
+  mastImages:
+  - {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
+  - {fileID: 21300000, guid: cd2b5eb5f5fd0114b9f178317aa3f755, type: 3}
+  - {fileID: 21300000, guid: 1e4f32a9491a51b429be199357b91e2f, type: 3}
   emptyCannonBtn: {fileID: 0}
-  cannonSelected: {fileID: 0}
+  cannonImages:
+  - {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
+  - {fileID: 21300000, guid: 69c2f25e12555be4bbc325001e7dad73, type: 3}
+  - {fileID: 21300000, guid: 167c4da4b48829a46835299a788e0414, type: 3}
   crewBtn: {fileID: 0}
   treasureBtn: {fileID: 0}
   damageBtn: {fileID: 0}
-  defaultSelect: {fileID: 0}
 --- !u!1 &1442173780
 GameObject:
   m_ObjectHideFlags: 0
@@ -4745,85 +4186,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1539484652}
   m_CullTransparentMesh: 1
---- !u!1 &1628765396
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1628765397}
-  - component: {fileID: 1628765399}
-  - component: {fileID: 1628765398}
-  m_Layer: 5
-  m_Name: Text
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1628765397
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1628765396}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2031176032}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1628765398
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1628765396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
-    m_Alignment: 4
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: 
---- !u!222 &1628765399
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1628765396}
-  m_CullTransparentMesh: 1
 --- !u!1 &1845798448
 GameObject:
   m_ObjectHideFlags: 0
@@ -4927,7 +4289,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1845798448}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -4971,13 +4333,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   emptyMastBtn: {fileID: 0}
-  mastSelected: {fileID: 0}
+  mastImages:
+  - {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
+  - {fileID: 21300000, guid: cd2b5eb5f5fd0114b9f178317aa3f755, type: 3}
+  - {fileID: 21300000, guid: 1e4f32a9491a51b429be199357b91e2f, type: 3}
   emptyCannonBtn: {fileID: 1845798450}
-  cannonSelected: {fileID: 0}
+  cannonImages:
+  - {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
+  - {fileID: 21300000, guid: 69c2f25e12555be4bbc325001e7dad73, type: 3}
+  - {fileID: 21300000, guid: 167c4da4b48829a46835299a788e0414, type: 3}
   crewBtn: {fileID: 0}
   treasureBtn: {fileID: 0}
   damageBtn: {fileID: 0}
-  defaultSelect: {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
 --- !u!1 &1849899750
 GameObject:
   m_ObjectHideFlags: 0
@@ -5081,7 +4448,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1849899750}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -5125,13 +4492,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   emptyMastBtn: {fileID: 0}
-  mastSelected: {fileID: 0}
+  mastImages:
+  - {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
+  - {fileID: 21300000, guid: cd2b5eb5f5fd0114b9f178317aa3f755, type: 3}
+  - {fileID: 21300000, guid: 1e4f32a9491a51b429be199357b91e2f, type: 3}
   emptyCannonBtn: {fileID: 1849899752}
-  cannonSelected: {fileID: 0}
+  cannonImages:
+  - {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
+  - {fileID: 21300000, guid: 69c2f25e12555be4bbc325001e7dad73, type: 3}
+  - {fileID: 21300000, guid: 167c4da4b48829a46835299a788e0414, type: 3}
   crewBtn: {fileID: 0}
   treasureBtn: {fileID: 0}
   damageBtn: {fileID: 0}
-  defaultSelect: {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
 --- !u!1 &1927329267
 GameObject:
   m_ObjectHideFlags: 0
@@ -5358,13 +4730,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   emptyMastBtn: {fileID: 0}
-  mastSelected: {fileID: 0}
+  mastImages:
+  - {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
+  - {fileID: 21300000, guid: cd2b5eb5f5fd0114b9f178317aa3f755, type: 3}
+  - {fileID: 21300000, guid: 1e4f32a9491a51b429be199357b91e2f, type: 3}
   emptyCannonBtn: {fileID: 0}
-  cannonSelected: {fileID: 0}
+  cannonImages:
+  - {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
+  - {fileID: 21300000, guid: 69c2f25e12555be4bbc325001e7dad73, type: 3}
+  - {fileID: 21300000, guid: 167c4da4b48829a46835299a788e0414, type: 3}
   crewBtn: {fileID: 0}
   treasureBtn: {fileID: 0}
   damageBtn: {fileID: 1975082768}
-  defaultSelect: {fileID: 0}
 --- !u!1 &1995816815
 GameObject:
   m_ObjectHideFlags: 0
@@ -5591,167 +4968,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   emptyMastBtn: {fileID: 0}
-  mastSelected: {fileID: 0}
+  mastImages:
+  - {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
+  - {fileID: 21300000, guid: cd2b5eb5f5fd0114b9f178317aa3f755, type: 3}
+  - {fileID: 21300000, guid: 1e4f32a9491a51b429be199357b91e2f, type: 3}
   emptyCannonBtn: {fileID: 0}
-  cannonSelected: {fileID: 0}
+  cannonImages:
+  - {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
+  - {fileID: 21300000, guid: 69c2f25e12555be4bbc325001e7dad73, type: 3}
+  - {fileID: 21300000, guid: 167c4da4b48829a46835299a788e0414, type: 3}
   crewBtn: {fileID: 0}
   treasureBtn: {fileID: 2030488157}
   damageBtn: {fileID: 0}
-  defaultSelect: {fileID: 0}
---- !u!1 &2031176031
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2031176032}
-  - component: {fileID: 2031176036}
-  - component: {fileID: 2031176035}
-  - component: {fileID: 2031176034}
-  - component: {fileID: 2031176033}
-  m_Layer: 5
-  m_Name: ShortMast
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &2031176032
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2031176031}
-  m_LocalRotation: {x: 0.00820674, y: 0.008388568, z: -0.000046793808, w: 0.99993116}
-  m_LocalPosition: {x: 0, y: 0, z: -1}
-  m_LocalScale: {x: 0.28607267, y: 2.8732638, z: 1}
-  m_Children:
-  - {fileID: 1628765397}
-  m_Father: {fileID: 966372099}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0.94, y: 0.961, z: 0.003}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 35, y: 56}
-  m_SizeDelta: {x: 160, y: 30}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2031176033
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2031176031}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e60df30833ab3b24cbd0397a90553934, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  emptyMastBtn: {fileID: 0}
-  mastSelected: {fileID: 2031176034}
-  emptyCannonBtn: {fileID: 0}
-  cannonSelected: {fileID: 0}
-  crewBtn: {fileID: 0}
-  treasureBtn: {fileID: 0}
-  damageBtn: {fileID: 0}
-  defaultSelect: {fileID: 0}
---- !u!114 &2031176034
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2031176031}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1.68
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 2031176035}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2031176033}
-        m_TargetAssemblyTypeName: ShipCustomizationBtns, Assembly-CSharp
-        m_MethodName: mastSelection
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &2031176035
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2031176031}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: cd2b5eb5f5fd0114b9f178317aa3f755, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &2031176036
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2031176031}
-  m_CullTransparentMesh: 1
 --- !u!1 &2044118772
 GameObject:
   m_ObjectHideFlags: 0
@@ -5924,13 +5152,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   emptyMastBtn: {fileID: 0}
-  mastSelected: {fileID: 0}
+  mastImages:
+  - {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
+  - {fileID: 21300000, guid: cd2b5eb5f5fd0114b9f178317aa3f755, type: 3}
+  - {fileID: 21300000, guid: 1e4f32a9491a51b429be199357b91e2f, type: 3}
   emptyCannonBtn: {fileID: 0}
-  cannonSelected: {fileID: 0}
+  cannonImages:
+  - {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
+  - {fileID: 21300000, guid: 69c2f25e12555be4bbc325001e7dad73, type: 3}
+  - {fileID: 21300000, guid: 167c4da4b48829a46835299a788e0414, type: 3}
   crewBtn: {fileID: 0}
   treasureBtn: {fileID: 0}
   damageBtn: {fileID: 0}
-  defaultSelect: {fileID: 0}
 --- !u!1 &2082146381
 GameObject:
   m_ObjectHideFlags: 0
@@ -6113,7 +5346,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2085907024}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -6157,92 +5390,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   emptyMastBtn: {fileID: 2085907026}
-  mastSelected: {fileID: 0}
+  mastImages:
+  - {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
+  - {fileID: 21300000, guid: cd2b5eb5f5fd0114b9f178317aa3f755, type: 3}
+  - {fileID: 21300000, guid: 1e4f32a9491a51b429be199357b91e2f, type: 3}
   emptyCannonBtn: {fileID: 0}
-  cannonSelected: {fileID: 0}
+  cannonImages:
+  - {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
+  - {fileID: 21300000, guid: 69c2f25e12555be4bbc325001e7dad73, type: 3}
+  - {fileID: 21300000, guid: 167c4da4b48829a46835299a788e0414, type: 3}
   crewBtn: {fileID: 0}
   treasureBtn: {fileID: 0}
   damageBtn: {fileID: 0}
-  defaultSelect: {fileID: 21300000, guid: da2c34786b9e93d43bf6fa1f50ac202c, type: 3}
---- !u!1 &2116901798
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2116901799}
-  - component: {fileID: 2116901801}
-  - component: {fileID: 2116901800}
-  m_Layer: 5
-  m_Name: Text
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &2116901799
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2116901798}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 903175157}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2116901800
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2116901798}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
-    m_Alignment: 4
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: 
---- !u!222 &2116901801
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2116901798}
-  m_CullTransparentMesh: 1
 --- !u!1 &2140868362
 GameObject:
   m_ObjectHideFlags: 0

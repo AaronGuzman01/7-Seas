@@ -21,10 +21,17 @@ public class CannonLoader : MonoBehaviour
         Debug.Log(SceneManager.GetActiveScene().name);
     }
 
-    public void SetGameScene()
+    public void ExitCannonScene()
     {
         MapLoad.ContinueGame();
 
         SceneManager.UnloadSceneAsync("Cannon");
+    }
+
+    public void ExitResultsScene()
+    {
+        MapLoad.ContinueGame();
+
+        SceneManager.UnloadSceneAsync("CannonResults");
     }
 }

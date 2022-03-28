@@ -7,11 +7,11 @@ public class CannonMinigame : MonoBehaviour
 {
     public static GameObject[] ships = new GameObject[2];
     public static int currShip = 1;
+    public Material[] skyBox;
     public GameObject ButtonManager;
     public GameObject SceneManager;
     public GameObject[] targets;
     public GameObject treasureShip;
-    public GameObject seaMonster;
     public Slider healthSlider;
     public Color healthColor;
 
@@ -19,21 +19,26 @@ public class CannonMinigame : MonoBehaviour
     public static bool setTreasure;
     public static bool setMonster;
 
+
+    static GameObject currTreasureShip;
+    static GameObject monster;
     GameObject target;
+    int skyIndex = 0;
 
     void Start()
     {
-        ships[0].AddComponent<ship_movement>();
-        ships[1].AddComponent<ship_movement>();
-
-        ships[0].GetComponent<ship_movement>().height = 1010;
-        ships[1].GetComponent<ship_movement>().height = 1010;
+        PlayerPrefs.SetInt("Treasure Score", 0);
+        PlayerPrefs.SetInt("score", 0);
     }
 
     void Update()
     {
+        RenderSettings.skybox = skyBox[skyIndex];
+
         if (setPlayer && currShip == 1)
         {
+            PlayerPrefs.SetInt("Player1Score", 0);
+
             setPlayer = false;
 
             currShip++;
@@ -44,65 +49,100 @@ public class CannonMinigame : MonoBehaviour
 
             ButtonManager.GetComponent<ButtonFunctionality>().SetEnemy(ships[0]);
 
+            ships[0].AddComponent<ship_movement>();
+            ships[0].GetComponent<ship_movement>().height = 1010;
+
             ships[1].SetActive(false);
 
             PlayerPrefs.SetString("Enemy", "Player");
+
+            RenderSettings.skybox = skyBox[0];
         }
         else if (setPlayer && currShip == 2)
         {
+            PlayerPrefs.SetInt("Player2Score", 0);
+
             setPlayer = false;
 
             currShip++;
 
             target = Instantiate(targets[0], ships[1].transform.GetChild(0));
 
+            ships[1].AddComponent<ship_movement>();
+            ships[1].GetComponent<ship_movement>().height = 1010;
+
             target.SetActive(true);
 
             ButtonManager.GetComponent<ButtonFunctionality>().SetEnemy(ships[1]);
 
-            ships[0].SetActive(false);
-
-            PlayerPrefs.SetString("Enemy", "Player");
+            RenderSettings.skybox = skyBox[0];
         }
         else if (setTreasure)
         {
-            treasureShip.SetActive(true);
+            setTreasure = false;
 
-            ButtonManager.GetComponent<ButtonFunctionality>().SetEnemy(treasureShip);
+            currTreasureShip = Instantiate(treasureShip);
 
-            PlayerPrefs.SetString("Enemy", "Treasure");
+            currTreasureShip.SetActive(true);
+
+            ButtonManager.GetComponent<ButtonFunctionality>().SetEnemy(currTreasureShip);
+
+            RenderSettings.skybox = skyBox[0];
         }
         else
         {
             if (setMonster)
             {
+                setMonster = false;
+
                 healthSlider.fillRect.GetComponent<Image>().color = healthColor;
                 healthSlider.gameObject.SetActive(true);
 
-                seaMonster.SetActive(true);
+                monster.SetActive(true);
 
-                ButtonManager.GetComponent<ButtonFunctionality>().SetEnemy(seaMonster);
+                target = Instantiate(targets[1], monster.transform);
 
-                PlayerPrefs.SetString("Enemy", "Monster");
+                target.SetActive(true);
+
+                target.transform.RotateAround(monster.transform.position, Vector3.up, -90f);
+                target.transform.localScale = new Vector3(1, 2, 1);
+
+                monster.GetComponent<Monstermovement>().slider = healthSlider;
+
+                ButtonManager.GetComponent<ButtonFunctionality>().SetEnemy(monster);
+
+                RenderSettings.skybox = skyBox[1];
+
+                skyIndex = 1;
             }
         }
     }
 
     public static void SetShips(GameObject enemyShip, GameObject playerShip)
     {
-        DestroyShips();
-
         ships[0] = Instantiate(enemyShip);
         ships[1] = Instantiate(playerShip);
+
+        ships[0].transform.GetChild(0).transform.rotation = Quaternion.Euler(Vector3.zero);
+        ships[1].transform.GetChild(0).transform.rotation = Quaternion.Euler(Vector3.zero);
 
         ships[0].transform.position = new Vector3(0, 1010, 0);
         ships[1].transform.position = new Vector3(0, 1010, 0);
     }
 
-    public static void DestroyShips()
+    public static void SetMonster(GameObject gameMonster)
+    {
+        monster = Instantiate(gameMonster);
+
+        monster.transform.position = new Vector3(-50, 1010, 15);
+    }
+
+    public static void DestroyObjects()
     {
         Destroy(ships[0]);
         Destroy(ships[1]);
+        Destroy(currTreasureShip);
+        Destroy(monster);
     }
 
     public static void ChangeShips()

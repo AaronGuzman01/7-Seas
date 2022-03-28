@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using UnityEditor.Events;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
@@ -153,7 +152,9 @@ public class CustomMapBuilder : MonoBehaviour
 
                     button.name = ((Tile)firstMapTiles[currTile]).name;
 
-                    UnityEventTools.AddPersistentListener(button.onClick, SetFirstMapTile);
+                    button.onClick.AddListener(SetFirstMapTile);
+
+                    //UnityEventTools.AddPersistentListener(button.onClick, SetFirstMapTile);
                 }
                 else
                 {
@@ -161,7 +162,9 @@ public class CustomMapBuilder : MonoBehaviour
 
                     button.name = ((Tile)secondMapTiles[currTile]).name;
 
-                    UnityEventTools.AddPersistentListener(button.onClick, SetSecondMapTile);
+                    button.onClick.AddListener(SetSecondMapTile);
+
+                    //UnityEventTools.AddPersistentListener(button.onClick, SetSecondMapTile);
                 }
 
                 currTile++;
