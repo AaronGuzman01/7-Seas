@@ -26024,7 +26024,8 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 435a2cef3ef99a44bb12bb45c2c9d3fe, type: 2}
   - {fileID: 2100000, guid: e4fb33349b6090249891cdd3d895dbf2, type: 2}
   - {fileID: 2100000, guid: 5beb55b4fdf24b4439fd6c3c009e3bc4, type: 2}
-  treasureShip: {fileID: 1082450794}
+  treasureShip:
+  - {fileID: 1082450794}
   monsters:
   - {fileID: 950833487}
   arrow: {fileID: 1404796761}
@@ -27280,7 +27281,7 @@ PrefabInstance:
     - target: {fileID: 2457301393646873211, guid: c3c0777786259bc49ae4e4c4b0b55542,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.9
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 2457301393646873211, guid: c3c0777786259bc49ae4e4c4b0b55542,
         type: 3}
