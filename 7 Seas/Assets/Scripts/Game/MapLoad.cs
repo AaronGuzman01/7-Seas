@@ -36,7 +36,7 @@ public class MapLoad : MonoBehaviour
     public Button[] hiddenBtns;
     public Material[] skyBox;
     public GameObject treasureShip;
-    public GameObject monster;
+    public List<GameObject> monsters;
     public GameObject arrow;
     public GameObject movingFX;
 
@@ -84,6 +84,8 @@ public class MapLoad : MonoBehaviour
 
     int[,] tilesInMap;
     int[,] objectsInMap;
+
+    RandomPosition monsterGenerator;
 
     public int[] cams;
     public static int camNum;
@@ -281,6 +283,9 @@ public class MapLoad : MonoBehaviour
         //StartCoroutine(ChangeSky());
 
         maxCams = maxPlayers;
+
+        monsterGenerator.SetTilemap(tilemap);
+        monsterGenerator.GeneratePosition(tilesInMap, objectsInMap);
     }
 
     void Update()
@@ -399,7 +404,7 @@ public class MapLoad : MonoBehaviour
     }
     void SetMonsters()
     {
-        GameObject monsterT = Instantiate(monster);
+        GameObject monsterT = Instantiate(monsters[0]);
 
         monsterT.SetActive(true);
 
@@ -550,7 +555,7 @@ public class MapLoad : MonoBehaviour
                         if (monsterCombat)
                         {
                             CannonMinigame.setMonster = true;
-                            CannonMinigame.SetMonster(monster);
+                            CannonMinigame.SetMonster(monsters[0]);
 
                             PlayerPrefs.SetString("Enemy", "Monster");
 

@@ -26025,7 +26025,8 @@ MonoBehaviour:
   - {fileID: 2100000, guid: e4fb33349b6090249891cdd3d895dbf2, type: 2}
   - {fileID: 2100000, guid: 5beb55b4fdf24b4439fd6c3c009e3bc4, type: 2}
   treasureShip: {fileID: 1082450794}
-  monster: {fileID: 950833487}
+  monsters:
+  - {fileID: 950833487}
   arrow: {fileID: 1404796761}
   movingFX: {fileID: 995687505}
   time: 2
