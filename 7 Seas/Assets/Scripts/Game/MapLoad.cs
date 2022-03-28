@@ -35,7 +35,7 @@ public class MapLoad : MonoBehaviour
     public Canvas tiles;
     public Button[] hiddenBtns;
     public Material[] skyBox;
-    public GameObject treasureShip;
+    public List<GameObject> treasureShips;
     public List<GameObject> monsters;
     public GameObject arrow;
     public GameObject movingFX;
@@ -85,7 +85,7 @@ public class MapLoad : MonoBehaviour
     int[,] tilesInMap;
     int[,] objectsInMap;
 
-    RandomPosition monsterGenerator;
+    RandomPosition objectGenerator;
 
     public int[] cams;
     public static int camNum;
@@ -284,8 +284,13 @@ public class MapLoad : MonoBehaviour
 
         maxCams = maxPlayers;
 
-        monsterGenerator.SetTilemap(tilemap);
-        monsterGenerator.GeneratePosition(tilesInMap, objectsInMap);
+        objectGenerator = new RandomPosition(monsters, 1, 10);
+        objectGenerator.SetTilemap(tilemap);
+        objectGenerator.GeneratePosition(tilesInMap, objectsInMap);
+
+        objectGenerator = new RandomPosition(treasureShips, 2, 10);
+        objectGenerator.SetTilemap(tilemap);
+        objectGenerator.GeneratePosition(tilesInMap, objectsInMap);
     }
 
     void Update()
@@ -393,7 +398,7 @@ public class MapLoad : MonoBehaviour
 
     void SetTreasureShips()
     {
-        GameObject ship = Instantiate(treasureShip);
+        GameObject ship = Instantiate(treasureShips[0]);
 
         ship.SetActive(true);
 

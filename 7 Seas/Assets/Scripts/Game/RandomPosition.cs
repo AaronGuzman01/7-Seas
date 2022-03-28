@@ -27,11 +27,6 @@ public class RandomPosition : MonoBehaviour
         else if (type == 1)
         {
             monsters = mapObects;
-
-            foreach (GameObject monster in mapObects)
-            {
-                monster.GetComponent<Monstermovement>().enabled = false;
-            }
         }
         else
         {
@@ -131,6 +126,7 @@ public class RandomPosition : MonoBehaviour
             }
             else if (type == 1)
             {
+                gameObject.GetComponent<Monstermovement>().enabled = false;
                 gameObject.transform.position = gameObject.transform.position + (Vector3.up / 2);
 
                 mapObjects[x, y] = 2;
