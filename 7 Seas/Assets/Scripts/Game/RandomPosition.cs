@@ -5,16 +5,13 @@ using UnityEngine.Tilemaps;
 
 public class RandomPosition : MonoBehaviour
 {
-    public HashSet<int> portX = new HashSet<int>();
-    public HashSet<int> shipX = new HashSet<int>();
-    public HashSet<int> monsterX = new HashSet<int>();
-    public HashSet<int> portY = new HashSet<int>();
-    public HashSet<int> shipY = new HashSet<int>();
-    public HashSet<int> monsterY = new HashSet<int>();
+    public HashSet<int> tileX = new HashSet<int>();
+    public HashSet<int> tileY = new HashSet<int>();
 
     List<GameObject> ports;
     List<GameObject> monsters;
     List<GameObject> ships;
+    GameObject[] players;
 
     Tilemap tilemap;
     int type;
@@ -43,6 +40,11 @@ public class RandomPosition : MonoBehaviour
 
         this.type = type;
         this.count = count;
+    }
+
+    public RandomPosition(GameObject[] players)
+    {
+        this.players = players;
     }
 
     public void SetTilemap(Tilemap map)
@@ -101,6 +103,11 @@ public class RandomPosition : MonoBehaviour
                 objectCount = 0;
             }
         }
+    }
+
+    public void GeneratePlayerPosition(int[,] mapTiles, int[,] mapObjects)
+    {
+
     }
 
     public void SetPosition(List<GameObject> objects, int[,] mapTiles, int[,] mapObjects, int x, int y)
