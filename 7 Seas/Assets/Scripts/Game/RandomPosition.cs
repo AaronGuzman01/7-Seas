@@ -133,7 +133,7 @@ public class RandomPosition : MonoBehaviour
             }
             else
             {
-                gameObject.transform.position = gameObject.transform.position + Vector3.up;
+                gameObject.transform.position = new Vector3(gameObject.transform.position.x, 0, gameObject.transform.position.z);
 
                 mapObjects[x, y] = 1;
             }
