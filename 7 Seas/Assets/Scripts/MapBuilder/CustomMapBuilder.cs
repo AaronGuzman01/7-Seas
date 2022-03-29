@@ -315,6 +315,9 @@ public class CustomMapBuilder : MonoBehaviour
 
         arrows[0].enabled = false;
         arrows[2].enabled = false;
+        arrows[4].enabled = false;
+        arrows[6].enabled = false;
+        arrows[7].enabled = false;
 
         for (int i = 0; i < 80; i++)
         {
@@ -576,43 +579,141 @@ public class CustomMapBuilder : MonoBehaviour
         ProcessTile();
     }
 
+    public void ShiftDownLeft()
+    {
+        ProcessTile();
+        ShiftDown();
+        ShiftLeft();
+    }
+
+    public void ShiftDownRight()
+    {
+        ShiftDown();
+        ShiftRight();
+    }
+
+    public void ShiftUpLeft()
+    {
+        ShiftUp();
+        ShiftLeft();
+    }
+
+    public void ShiftUpRight()
+    {
+        ShiftUp();
+        ShiftRight();
+    }
+
     public void ProcessTile()
     {
-        if (currentCol == 1)
+
+        if (currentCol == 1 && currentRow == 1)     //TOP LEFT CORNER
         {
             arrows[0].enabled = false;
-        }
-        else
-        {
-            arrows[0].enabled = true;
-        }
+            arrows[2].enabled = false;
+            arrows[4].enabled = false;
+            arrows[6].enabled = false;
+            arrows[7].enabled = false;
 
-        if (currentCol == maxTile)
+            arrows[1].enabled = true;
+            arrows[3].enabled = true;
+            arrows[5].enabled = true;
+        }
+        else if (currentCol == maxTile && currentRow == 1) //TOP RIGHT CORNER
         {
             arrows[1].enabled = false;
-        }
-        else
-        {
-            arrows[1].enabled = true;
-        }
+            arrows[2].enabled = false;
+            arrows[5].enabled = false;
+            arrows[6].enabled = false;
+            arrows[7].enabled = false;
 
-        if (currentRow == 1)
+            arrows[0].enabled = true;
+            arrows[3].enabled = true;
+            arrows[4].enabled = true;
+        }
+        else if (currentCol == 1 && currentRow == maxTile) //BOTTOM LEFT CORNER
+        {
+            arrows[0].enabled = false;
+            arrows[3].enabled = false;
+            arrows[4].enabled = false;
+            arrows[5].enabled = false;
+            arrows[6].enabled = false;
+
+            arrows[1].enabled = true;
+            arrows[2].enabled = true;
+            arrows[7].enabled = true;
+        }
+        else if (currentCol == maxTile && currentRow == maxTile) //BOTTOM RIGHT CORNER
+        {
+            arrows[1].enabled = false;
+            arrows[3].enabled = false;
+            arrows[4].enabled = false;
+            arrows[5].enabled = false;
+            arrows[7].enabled = false;
+
+            arrows[0].enabled = true;
+            arrows[2].enabled = true;
+            arrows[6].enabled = true;
+        }
+        else if (currentCol == 1) //LEFT EDGE
+        {
+            arrows[0].enabled = false;
+            arrows[4].enabled = false;
+            arrows[6].enabled = false;
+
+            arrows[1].enabled = true;
+            arrows[2].enabled = true;
+            arrows[3].enabled = true;
+            arrows[5].enabled = true;
+            arrows[7].enabled = true;
+        }
+        else if (currentCol == maxTile) //RIGHT EDGE
+        {
+            arrows[1].enabled = false;
+            arrows[5].enabled = false;
+            arrows[7].enabled = false;
+
+            arrows[0].enabled = true;
+            arrows[2].enabled = true;
+            arrows[3].enabled = true;
+            arrows[4].enabled = true;
+            arrows[6].enabled = true;
+        }
+        else if (currentRow == 1) //TOP EDGE
         {
             arrows[2].enabled = false;
-        }
-        else
-        {
-            arrows[2].enabled = true;
-        }
+            arrows[6].enabled = false;
+            arrows[7].enabled = false;
 
-        if (currentRow == maxTile)
+            arrows[0].enabled = true;
+            arrows[1].enabled = true;
+            arrows[3].enabled = true;
+            arrows[4].enabled = true;
+            arrows[5].enabled = true;
+        }
+        else if (currentRow == maxTile) //BOTTOM EDGE
         {
             arrows[3].enabled = false;
+            arrows[4].enabled = false;
+            arrows[5].enabled = false;
+
+            arrows[0].enabled = true;
+            arrows[1].enabled = true;
+            arrows[2].enabled = true;
+            arrows[6].enabled = true;
+            arrows[7].enabled = true;
         }
-        else
+        else    //ALL OTHER TILES
         {
+            arrows[0].enabled = true;
+            arrows[1].enabled = true;
+            arrows[2].enabled = true;
             arrows[3].enabled = true;
-        } 
+            arrows[4].enabled = true;
+            arrows[5].enabled = true;
+            arrows[6].enabled = true;
+            arrows[7].enabled = true;
+        }
 
         tileNum.text = tileNums[currentRow - 1, currentCol - 1].ToString();
     }
