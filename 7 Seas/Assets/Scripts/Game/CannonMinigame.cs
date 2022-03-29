@@ -29,6 +29,7 @@ public class CannonMinigame : MonoBehaviour
     {
         PlayerPrefs.SetInt("Treasure Score", 0);
         PlayerPrefs.SetInt("score", 0);
+        PlayerPrefs.SetInt("DamageDoneMonster", 0);
     }
 
     void Update()

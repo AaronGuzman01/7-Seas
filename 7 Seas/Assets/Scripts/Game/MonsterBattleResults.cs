@@ -19,14 +19,14 @@ public class MonsterBattleResults : MonoBehaviour
             if (PlayerPrefs.GetString("MonsterStatus") == "Dead")
             {
                 int GoldEarned = Random.Range(700, 1400);
-                MonsterStatusText.text = "THE MONSTER HAS BEEN SLAIN!  YOUR CREW REJOICES AS YOU TURN IN YOUR MONSTER PARTS FOR: \n" + GoldEarned + " GOLD!";
-
-                ResultsManager.players[0].AddTreasure(GoldEarned);
+                MonsterStatusText.text = "THE MONSTER HAS BEEN SLAIN!";
             }
             else
             {
-                MonsterStatusText.text = "THE MONSTER GOT AWAY!  YOUR CREW LOSES HOPE AFTER SUCH A DEFEAT.";
+                MonsterStatusText.text = "THE MONSTER GOT AWAY! YOUR CREW LOSES HOPE AFTER SUCH A DEFEAT.";
             }
+
+            HealthLostText.text.Replace("@", PlayerPrefs.GetInt("DamageDoneMonster").ToString());
 
             FX.SetActive(false);
         }
