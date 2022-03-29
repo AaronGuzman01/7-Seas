@@ -162,7 +162,11 @@ public class Monstermovement : MonoBehaviour
             }
             else if (attacking)
             {
-                if (maxAttacks == 0)
+                if (x < -5)
+                {
+                    movingForward = true;
+                }
+                else if (maxAttacks == 0)
                 {
                     maxAttacks = Random.Range(1, 3);
                 }
@@ -171,6 +175,8 @@ public class Monstermovement : MonoBehaviour
                     if (!anim.IsPlaying("Attack1"))
                     {
                         anim.Play("Attack1");
+
+                        PlayerPrefs.SetInt("DamageDoneMonster", PlayerPrefs.GetInt("DamageDoneMonster") + 5);
 
                         attacks++;
 
@@ -307,12 +313,12 @@ public class Monstermovement : MonoBehaviour
 
     public void MonsterHit()
     {
-        int val = PlayerPrefs.GetInt("Hit");
+        int val = PlayerPrefs.GetInt("Hit") / 2;
 
         if (val > 0)
         {
             anim.Play("Hit1");
-            health = health - (val * 5 * cannonDmg);
+            health = health - (val * cannonDmg);
             justHit = true;
 
             explosion.transform.position = transform.position;
