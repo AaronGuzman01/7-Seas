@@ -32,6 +32,8 @@ public class CameraController : MonoBehaviour
     public GameObject[] ship;
     private int maxPlayers;
     public GameObject ghostDummy;
+    private int xTilt = 0;
+    private int zTilt = 0;
 
     void Start()
     {
@@ -44,7 +46,7 @@ public class CameraController : MonoBehaviour
 
         CinemachineCore.GetInputAxis = this.GetCustomAxis;
 
-        dummy.transform.position = ship[playerNum].transform.position;
+        ResetDummy();
         
         maxPlayers = MapLoad.maxCams;
         Debug.Log(maxPlayers);
@@ -204,7 +206,7 @@ public class CameraController : MonoBehaviour
             {
                 if (dummy.transform.position.x - ship[playerNum].transform.position.x > -120)
                 {
-                    dummy.transform.Translate(-12.0f, 0.0f, 0.0f);
+                    dummy.transform.Translate(-12.0f, 0.0f, 0.0f, Space.World);
                 }
             }
 
@@ -227,7 +229,7 @@ public class CameraController : MonoBehaviour
             {
                 if (dummy.transform.position.x - ship[playerNum].transform.position.x < 120)
                 {
-                    dummy.transform.Translate(12.0f, 0.0f, 0.0f);
+                    dummy.transform.Translate(12.0f, 0.0f, 0.0f, Space.World);
                 }
             }
 
@@ -249,7 +251,7 @@ public class CameraController : MonoBehaviour
             {
                 if (dummy.transform.position.z - ship[playerNum].transform.position.z < 120)
                 {
-                    dummy.transform.Translate(0.0f, 0.0f, 12.0f);
+                    dummy.transform.Translate(0.0f, 0.0f, 12.0f, Space.World);
                 }
             }
 
@@ -271,7 +273,7 @@ public class CameraController : MonoBehaviour
             {
                 if (dummy.transform.position.z - ship[playerNum].transform.position.z > -120)
                 {
-                    dummy.transform.Translate(0.0f, 0.0f, -12.0f);
+                    dummy.transform.Translate(0.0f, 0.0f, -12.0f, Space.World);
                 }
             }
 
@@ -296,7 +298,7 @@ public void ZoomIn()
 
         if (dummy.transform.position.y - ship[playerNum].transform.position.y < 60)
         {
-            dummy.transform.Translate(0.0f, 12.0f, 0.0f);
+            dummy.transform.Translate(0.0f, 12.0f, 0.0f, Space.World);
         }
     }
 
@@ -304,9 +306,9 @@ public void ZoomIn()
     {
         Debug.Log("Pedestal Down");
 
-        if (dummy.transform.position.y - ship[playerNum].transform.position.y > -12)
+        if (dummy.transform.position.y - ship[playerNum].transform.position.y > 13)
         {
-            dummy.transform.Translate(0.0f, -12.0f, 0.0f);
+            dummy.transform.Translate(0.0f, -12.0f, 0.0f, Space.World);
         }
     }
 
@@ -315,7 +317,7 @@ public void ZoomIn()
         playerOverhead[playerNum].m_LookAt = dummy.transform;
         Debug.Log("Pan Left");
 
-        dummy.transform.Rotate(0.0f, -10.0f, 0.0f);
+        dummy.transform.Rotate(0.0f, -10.0f, 0.0f, Space.World);
     }
 
     public void PanRight()
@@ -323,7 +325,72 @@ public void ZoomIn()
         playerOverhead[playerNum].m_LookAt = dummy.transform;
         Debug.Log("Pan Right");
 
-        dummy.transform.Rotate(0.0f, 10.0f, 0.0f);
+        dummy.transform.Rotate(0.0f, 10.0f, 0.0f, Space.World);
+    }
+
+    public void TiltDown()
+    {
+        playerOverhead[playerNum].m_LookAt = dummy.transform;
+        Debug.Log("Tilt Down");
+
+        Debug.Log("Before Rotation: " + xTilt);
+
+        if (xTilt < 0)
+        {
+            dummy.transform.Rotate(10.0f, 0.0f, 0.0f, Space.Self);
+            xTilt += 10;
+        }
+
+        Debug.Log("After Rotation: " + xTilt);
+
+    }
+
+    public void TiltUp()
+    {
+        playerOverhead[playerNum].m_LookAt = dummy.transform;
+        Debug.Log("Tilt Up");
+
+        Debug.Log("Before Rotation: " + xTilt);
+
+        if (xTilt > -90)
+        {
+            dummy.transform.Rotate(-10.0f, 0.0f, 0.0f, Space.Self);
+            xTilt -= 10;
+        }
+
+        Debug.Log("After Rotation: " + xTilt);
+    }
+
+    public void TiltRight()
+    {
+        playerOverhead[playerNum].m_LookAt = dummy.transform;
+        Debug.Log("Tilt Right");
+
+        Debug.Log("Before Rotation: " + zTilt);
+
+        if (zTilt < 90)
+        {
+            dummy.transform.Rotate(0.0f, 0.0f, 10.0f, Space.Self);
+            zTilt += 10;
+        }
+
+        Debug.Log("After Rotation: " + zTilt);
+    }
+
+    public void TiltLeft()
+    {
+        playerOverhead[playerNum].m_LookAt = dummy.transform;
+        Debug.Log("Tilt Left");
+
+        Debug.Log("Before Rotation: " + zTilt);
+
+        if (zTilt > -90)
+        {
+            dummy.transform.Rotate(0.0f, 0.0f, -10.0f, Space.Self);
+            zTilt -= 10;
+        }
+
+        Debug.Log("After Rotation: " + zTilt);
     }
 
     //Same-Player Dummy Reset
@@ -331,8 +398,11 @@ public void ZoomIn()
     {
         playerOverhead[playerNum].m_LookAt = dummy.transform;
         dummy.transform.position = ship[playerNum].transform.position;
+        dummy.transform.Translate(0.0f, 12.0f, 0.0f, Space.World);
         dummy.transform.rotation = ship[playerNum].transform.rotation;
         playerOverhead[playerNum].m_Lens.FieldOfView = 60;
+        xTilt = 0;
+        zTilt = 0;
     }
 
     //Reset Dummy to Next Player
@@ -345,6 +415,7 @@ public void ZoomIn()
             Debug.Log("Next Player: " + (playerNum + 1));
             dummy.transform.rotation = ship[playerNum + 1].transform.rotation;
             dummy.transform.position = ship[playerNum + 1].transform.position;
+            dummy.transform.Translate(0.0f, 12.0f, 0.0f, Space.World);
             playerOverhead[playerNum + 1].m_Lens.FieldOfView = 60;
 
         }
@@ -353,10 +424,13 @@ public void ZoomIn()
             Debug.Log("Player 1");
             dummy.transform.rotation = ship[0].transform.rotation;
             dummy.transform.position = ship[0].transform.position;
+            dummy.transform.Translate(0.0f, 12.0f, 0.0f, Space.World);
             playerOverhead[0].m_Lens.FieldOfView = 60;
         }
 
         GUI = false;
+        xTilt = 0;
+        zTilt = 0;
 
     }
 
