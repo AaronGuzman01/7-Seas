@@ -700,11 +700,14 @@ public class MapLoad : MonoBehaviour
                 }
             }
 
-            foreach (GameObject button in cameraGUI[0].transform)
+            foreach (GameObject cameraObj in cameraGUI)
             {
-                if (EventSystem.current.currentSelectedGameObject.Equals(button))
+                for (int i = 0; i < cameraObj.transform.childCount; i++)
                 {
-                    return true;
+                    if (EventSystem.current.currentSelectedGameObject.Equals(cameraObj.transform.GetChild(i)));
+                    {
+                        return true;
+                    }
                 }
             }
         }
