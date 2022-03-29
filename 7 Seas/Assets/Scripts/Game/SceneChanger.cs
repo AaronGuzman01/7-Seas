@@ -30,7 +30,7 @@ public class SceneChanger : MonoBehaviour
         //else
         if (PlayerPrefs.GetString("Enemy").Equals("Player"))
         {
-            objective.text = PlayerPrefs.GetString("Ship1").ToUpper() + " - SHOOT THE TARGETS TO DO DAMAGE TO " + PlayerPrefs.GetString("Ship2").ToUpper() + "!";
+            objective.text = PlayerPrefs.GetString("Ship1").ToUpper() + " - SHOOT THE TARGET TO DO DAMAGE TO " + PlayerPrefs.GetString("Ship2").ToUpper() + "!";
         }
         else if (PlayerPrefs.GetString("Enemy").Equals("Treasure"))
         {
@@ -48,7 +48,7 @@ public class SceneChanger : MonoBehaviour
             // PlayersManager.SetPlayer();//comment out
             //players = PlayersManager.GetPlayers();
             //objective.text = PlayersManager.Opponent1.Name.ToUpper() + " - SHOOT THE MONSTER TO DO DAMAGE. STRIKE FIRST TO AVOID DAMAGE!";
-            objective.text = PlayerPrefs.GetString("Ship1").ToUpper() + " - SHOOT THE MONSTER TO DO DAMAGE. STRIKE FIRST TO AVOID DAMAGE!";
+            objective.text = PlayerPrefs.GetString("Ship1").ToUpper() + " - SHOOT THE TARGET TO DAMAGE THE MONSTER. KILL IT FAST TO AVOID DAMAGE!";
             score.enabled = false;
         }
         /*
