@@ -32,8 +32,11 @@ public class CameraController : MonoBehaviour
     public GameObject[] ship;
     private int maxPlayers;
     public GameObject ghostDummy;
+
+    //Camera Tilt
     private int xTilt = 0;
     private int zTilt = 0;
+    public GameObject tiltDummy;
 
     void Start()
     {
@@ -84,6 +87,7 @@ public class CameraController : MonoBehaviour
         }
 
         ghostDummy.transform.rotation = dummy.transform.rotation;
+        tiltDummy.transform.position = dummy.transform.position;
     }
 
     public void ChangeView()
@@ -206,7 +210,7 @@ public class CameraController : MonoBehaviour
             {
                 if (dummy.transform.position.x - ship[playerNum].transform.position.x > -120)
                 {
-                    dummy.transform.Translate(-12.0f, 0.0f, 0.0f, Space.World);
+                    dummy.transform.Translate(-12.0f, 0.0f, 0.0f);
                 }
             }
 
@@ -229,7 +233,7 @@ public class CameraController : MonoBehaviour
             {
                 if (dummy.transform.position.x - ship[playerNum].transform.position.x < 120)
                 {
-                    dummy.transform.Translate(12.0f, 0.0f, 0.0f, Space.World);
+                    dummy.transform.Translate(12.0f, 0.0f, 0.0f);
                 }
             }
 
@@ -240,7 +244,7 @@ public class CameraController : MonoBehaviour
     public void UpButton()
     {
         if (overhead == true)
-        {
+        { 
             playerOverhead[playerNum].m_LookAt = null;
 
             Debug.Log("Up Button");
@@ -251,7 +255,7 @@ public class CameraController : MonoBehaviour
             {
                 if (dummy.transform.position.z - ship[playerNum].transform.position.z < 120)
                 {
-                    dummy.transform.Translate(0.0f, 0.0f, 12.0f, Space.World);
+                    dummy.transform.Translate(0.0f, 0.0f, 12.0f);
                 }
             }
 
@@ -273,7 +277,7 @@ public class CameraController : MonoBehaviour
             {
                 if (dummy.transform.position.z - ship[playerNum].transform.position.z > -120)
                 {
-                    dummy.transform.Translate(0.0f, 0.0f, -12.0f, Space.World);
+                    dummy.transform.Translate(0.0f, 0.0f, -12.0f);
                 }
             }
 
@@ -282,7 +286,7 @@ public class CameraController : MonoBehaviour
 
     }
 
-public void ZoomIn()
+    public void ZoomIn()
     {
         Zoom(1.0f);
     }
@@ -294,6 +298,7 @@ public void ZoomIn()
 
     public void PedestalUp()
     {
+
         Debug.Log("Pedestal Up");
 
         if (dummy.transform.position.y - ship[playerNum].transform.position.y < 60)
@@ -304,6 +309,7 @@ public void ZoomIn()
 
     public void PedestalDown()
     {
+
         Debug.Log("Pedestal Down");
 
         if (dummy.transform.position.y - ship[playerNum].transform.position.y > 13)
@@ -314,30 +320,32 @@ public void ZoomIn()
 
     public void PanLeft()
     {
-        playerOverhead[playerNum].m_LookAt = dummy.transform;
+        playerOverhead[playerNum].m_LookAt = tiltDummy.transform;
         Debug.Log("Pan Left");
 
         dummy.transform.Rotate(0.0f, -10.0f, 0.0f, Space.World);
+        tiltDummy.transform.Rotate(0.0f, -10.0f, 0.0f, Space.World);
     }
 
     public void PanRight()
     {
-        playerOverhead[playerNum].m_LookAt = dummy.transform;
+        playerOverhead[playerNum].m_LookAt = tiltDummy.transform;
         Debug.Log("Pan Right");
 
         dummy.transform.Rotate(0.0f, 10.0f, 0.0f, Space.World);
+        tiltDummy.transform.Rotate(0.0f, 10.0f, 0.0f, Space.World);
     }
 
     public void TiltDown()
     {
-        playerOverhead[playerNum].m_LookAt = dummy.transform;
+        playerOverhead[playerNum].m_LookAt = tiltDummy.transform;
         Debug.Log("Tilt Down");
 
         Debug.Log("Before Rotation: " + xTilt);
 
         if (xTilt < 0)
         {
-            dummy.transform.Rotate(10.0f, 0.0f, 0.0f, Space.Self);
+            tiltDummy.transform.Rotate(10.0f, 0.0f, 0.0f, Space.Self);
             xTilt += 10;
         }
 
@@ -347,14 +355,14 @@ public void ZoomIn()
 
     public void TiltUp()
     {
-        playerOverhead[playerNum].m_LookAt = dummy.transform;
+        playerOverhead[playerNum].m_LookAt = tiltDummy.transform;
         Debug.Log("Tilt Up");
 
         Debug.Log("Before Rotation: " + xTilt);
 
         if (xTilt > -90)
         {
-            dummy.transform.Rotate(-10.0f, 0.0f, 0.0f, Space.Self);
+            tiltDummy.transform.Rotate(-10.0f, 0.0f, 0.0f, Space.Self);
             xTilt -= 10;
         }
 
@@ -363,14 +371,14 @@ public void ZoomIn()
 
     public void TiltRight()
     {
-        playerOverhead[playerNum].m_LookAt = dummy.transform;
+        playerOverhead[playerNum].m_LookAt = tiltDummy.transform;
         Debug.Log("Tilt Right");
 
         Debug.Log("Before Rotation: " + zTilt);
 
         if (zTilt < 90)
         {
-            dummy.transform.Rotate(0.0f, 0.0f, 10.0f, Space.Self);
+            tiltDummy.transform.Rotate(0.0f, 0.0f, 10.0f, Space.Self);
             zTilt += 10;
         }
 
@@ -379,14 +387,14 @@ public void ZoomIn()
 
     public void TiltLeft()
     {
-        playerOverhead[playerNum].m_LookAt = dummy.transform;
+        playerOverhead[playerNum].m_LookAt = tiltDummy.transform;
         Debug.Log("Tilt Left");
 
         Debug.Log("Before Rotation: " + zTilt);
 
         if (zTilt > -90)
         {
-            dummy.transform.Rotate(0.0f, 0.0f, -10.0f, Space.Self);
+            tiltDummy.transform.Rotate(0.0f, 0.0f, -10.0f, Space.Self);
             zTilt -= 10;
         }
 
@@ -403,6 +411,7 @@ public void ZoomIn()
         playerOverhead[playerNum].m_Lens.FieldOfView = 60;
         xTilt = 0;
         zTilt = 0;
+        tiltDummy.transform.rotation = Quaternion.identity;
     }
 
     //Reset Dummy to Next Player
@@ -431,6 +440,7 @@ public void ZoomIn()
         GUI = false;
         xTilt = 0;
         zTilt = 0;
+        tiltDummy.transform.rotation = Quaternion.identity;
 
     }
 
