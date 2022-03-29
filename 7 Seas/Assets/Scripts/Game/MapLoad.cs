@@ -138,10 +138,7 @@ public class MapLoad : MonoBehaviour
         {
             players[i] = ships[playerNums[i] - 1];
 
-            int count = 0;
-            int crew = 0;
-            int damage = 0;
-            int treasure = 0;
+            int mastCount = 0, cannonCount = 0, crew = 0, damage = 0, treasure = 0;
             int[] masts = new int[3];
             int[] cannons = new int[5];
             string[] lines = System.IO.File.ReadAllLines(Application.persistentDataPath + "/Player" + (i + 1).ToString() + ".txt");
@@ -152,49 +149,53 @@ public class MapLoad : MonoBehaviour
 
                 if (line.Contains("mast"))
                 {
-                    if (line.Contains((count + 1).ToString()) && count < 3)
+                    if (line.Contains((mastCount + 1).ToString()) && mastCount < 3)
                     {
                         temp = line.Trim();
 
                         if (temp.EndsWith("s"))
                         {
-                            masts[count] = 1;
+                            masts[mastCount] = 1;
                         }
                         else if (temp.EndsWith("l"))
                         {
-                            masts[count] = 2;
+                            masts[mastCount] = 2;
                         }
                         else
                         {
-                            masts[count] = 0;
+                            masts[mastCount] = 0;
                         }
+
+                        mastCount++;
                     }
                 }
 
                 if (line.Contains("cannon"))
                 {
-                    if (line.Contains((count + 1).ToString()) && count < 5)
+                    if (line.Contains((cannonCount + 1).ToString()) && cannonCount < 5)
                     {
                         temp = line.Trim();
 
                         if (temp.EndsWith("s"))
                         {
-                            cannons[count] = 1;
+                            cannons[cannonCount] = 1;
                         }
                         else if (temp.EndsWith("l"))
                         {
-                            cannons[count] = 2;
+                            cannons[cannonCount] = 2;
                         }
                         else
                         {
-                            cannons[count] = 0;
+                            cannons[cannonCount] = 0;
                         }
+
+                        cannonCount++;
                     }
                 }
 
                 if (line.Contains("crew"))
                 {
-                    if (line.Contains((count + 1).ToString()) && crew < 2)
+                    if (line.Contains((crew + 1).ToString()) && crew < 2)
                     {
                         temp = line.Trim();
 
@@ -207,7 +208,7 @@ public class MapLoad : MonoBehaviour
 
                 if (line.Contains("treasure"))
                 {
-                    if (line.Contains((count + 1).ToString()) && treasure < 3)
+                    if (line.Contains((treasure + 1).ToString()) && treasure < 3)
                     {
                         temp = line.Trim();
 
@@ -220,7 +221,7 @@ public class MapLoad : MonoBehaviour
 
                 if (line.Contains("damage"))
                 {
-                    if (line.Contains((count + 1).ToString()) && damage < 2)
+                    if (line.Contains((damage + 1).ToString()) && damage < 2)
                     {
                         temp = line.Trim();
 
