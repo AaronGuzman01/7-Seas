@@ -50,6 +50,8 @@ public class CustomMapBuilder : MonoBehaviour
     [SerializeField]
     private GameObject test;
 
+    private float moveInterval = 132.8f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -98,8 +100,8 @@ public class CustomMapBuilder : MonoBehaviour
             Vector3Int gridPos = firstMap.WorldToCell(mousePos);
 
             if (currTile != null && firstMap.HasTile(gridPos) && 
-                (gridPos.x >= currentX && gridPos.x < currentX + tileSize) &&
-                (gridPos.y <= currentY && gridPos.y > currentY - tileSize))
+                (gridPos.x >= currentX && gridPos.x < currentX + 16) &&
+                (gridPos.y <= currentY && gridPos.y > currentY - 16))
             {
                 firstMap.SetTile(gridPos, currTile);
             }
@@ -112,8 +114,8 @@ public class CustomMapBuilder : MonoBehaviour
             Vector3Int gridPos = secondMap.WorldToCell(mousePos);
 
             if (currTile != null &&
-                (gridPos.x >= currentX && gridPos.x < currentX + tileSize) &&
-                (gridPos.y <= currentY && gridPos.y > currentY - tileSize))
+                (gridPos.x >= currentX && gridPos.x < currentX + 16) &&
+                (gridPos.y <= currentY && gridPos.y > currentY - 16))
             {
                 secondMap.SetTile(gridPos, currTile);
             }
@@ -312,12 +314,6 @@ public class CustomMapBuilder : MonoBehaviour
         currentY = originY;
 
         tileNum.text = tileNums[currentRow - 1, currentCol - 1].ToString();
-
-        arrows[0].enabled = false;
-        arrows[2].enabled = false;
-        arrows[4].enabled = false;
-        arrows[6].enabled = false;
-        arrows[7].enabled = false;
 
         for (int i = 0; i < 80; i++)
         {
@@ -537,51 +533,86 @@ public class CustomMapBuilder : MonoBehaviour
 
     public void ShiftRight()
     {
-        mainCamera.transform.position = new Vector3(mainCamera.transform.position.x + 132.8f, mainCamera.transform.position.y, -100);
+        if (currentCol == maxTile)
+        {
+            mainCamera.transform.position = new Vector3(mainCamera.transform.position.x - 531.2f, mainCamera.transform.position.y, -100);
+            currentCol = 1;
+            currentX -= tileSize * 4;
+        }
+        else
+        {
+            mainCamera.transform.position = new Vector3(mainCamera.transform.position.x + moveInterval, mainCamera.transform.position.y, -100);
 
-        currentCol++;
+            currentCol++;
 
-        currentX += tileSize;
+            currentX += tileSize;
+        }
 
         ProcessTile();
     }
 
     public void ShiftLeft()
     {
-        mainCamera.transform.position = new Vector3(mainCamera.transform.position.x - 132.8f, mainCamera.transform.position.y, -100);
+        if (currentCol == 1)
+        {
+            mainCamera.transform.position = new Vector3(mainCamera.transform.position.x + 531.2f, mainCamera.transform.position.y, -100);
+            currentCol = maxTile;
+            currentX += tileSize * 4;
+        }
+        else
+        {
+            mainCamera.transform.position = new Vector3(mainCamera.transform.position.x - moveInterval, mainCamera.transform.position.y, -100);
 
-        currentCol--;
+            currentCol--;
 
-        currentX -= tileSize;
+            currentX -= tileSize;
+        }
 
         ProcessTile();
     }
 
     public void ShiftUp()
     {
-        mainCamera.transform.position = new Vector3(mainCamera.transform.position.x, mainCamera.transform.position.y + 132.8f, -100);
+        if (currentRow == 1)
+        {
+            mainCamera.transform.position = new Vector3(mainCamera.transform.position.x, mainCamera.transform.position.y - 531.2f, -100);
+            currentRow = maxTile;
+            currentY -= tileSize * 4;
+        }
+        else
+        {
+            mainCamera.transform.position = new Vector3(mainCamera.transform.position.x, mainCamera.transform.position.y + moveInterval, -100);
 
-        currentRow--;
+            currentRow--;
 
-        currentY += tileSize;
-
+            currentY += tileSize;
+        }
+        
         ProcessTile();
     }
 
     public void ShiftDown()
     {
-        mainCamera.transform.position = new Vector3(mainCamera.transform.position.x, mainCamera.transform.position.y - 132.8f, -100);
+        if (currentRow == maxTile)
+        {
+            mainCamera.transform.position = new Vector3(mainCamera.transform.position.x, mainCamera.transform.position.y + 531.2f, -100);
+            currentRow = 1;
+            currentY += tileSize * 4;
+        }
+        else
+        {
+            mainCamera.transform.position = new Vector3(mainCamera.transform.position.x, mainCamera.transform.position.y - moveInterval, -100);
 
-        currentRow++;
+            currentRow++;
 
-        currentY -= tileSize;
-
+            currentY -= tileSize;
+        }
+        
         ProcessTile();
     }
 
     public void ShiftDownLeft()
     {
-        ProcessTile();
         ShiftDown();
         ShiftLeft();
     }
@@ -606,115 +637,6 @@ public class CustomMapBuilder : MonoBehaviour
 
     public void ProcessTile()
     {
-
-        if (currentCol == 1 && currentRow == 1)     //TOP LEFT CORNER
-        {
-            arrows[0].enabled = false;
-            arrows[2].enabled = false;
-            arrows[4].enabled = false;
-            arrows[6].enabled = false;
-            arrows[7].enabled = false;
-
-            arrows[1].enabled = true;
-            arrows[3].enabled = true;
-            arrows[5].enabled = true;
-        }
-        else if (currentCol == maxTile && currentRow == 1) //TOP RIGHT CORNER
-        {
-            arrows[1].enabled = false;
-            arrows[2].enabled = false;
-            arrows[5].enabled = false;
-            arrows[6].enabled = false;
-            arrows[7].enabled = false;
-
-            arrows[0].enabled = true;
-            arrows[3].enabled = true;
-            arrows[4].enabled = true;
-        }
-        else if (currentCol == 1 && currentRow == maxTile) //BOTTOM LEFT CORNER
-        {
-            arrows[0].enabled = false;
-            arrows[3].enabled = false;
-            arrows[4].enabled = false;
-            arrows[5].enabled = false;
-            arrows[6].enabled = false;
-
-            arrows[1].enabled = true;
-            arrows[2].enabled = true;
-            arrows[7].enabled = true;
-        }
-        else if (currentCol == maxTile && currentRow == maxTile) //BOTTOM RIGHT CORNER
-        {
-            arrows[1].enabled = false;
-            arrows[3].enabled = false;
-            arrows[4].enabled = false;
-            arrows[5].enabled = false;
-            arrows[7].enabled = false;
-
-            arrows[0].enabled = true;
-            arrows[2].enabled = true;
-            arrows[6].enabled = true;
-        }
-        else if (currentCol == 1) //LEFT EDGE
-        {
-            arrows[0].enabled = false;
-            arrows[4].enabled = false;
-            arrows[6].enabled = false;
-
-            arrows[1].enabled = true;
-            arrows[2].enabled = true;
-            arrows[3].enabled = true;
-            arrows[5].enabled = true;
-            arrows[7].enabled = true;
-        }
-        else if (currentCol == maxTile) //RIGHT EDGE
-        {
-            arrows[1].enabled = false;
-            arrows[5].enabled = false;
-            arrows[7].enabled = false;
-
-            arrows[0].enabled = true;
-            arrows[2].enabled = true;
-            arrows[3].enabled = true;
-            arrows[4].enabled = true;
-            arrows[6].enabled = true;
-        }
-        else if (currentRow == 1) //TOP EDGE
-        {
-            arrows[2].enabled = false;
-            arrows[6].enabled = false;
-            arrows[7].enabled = false;
-
-            arrows[0].enabled = true;
-            arrows[1].enabled = true;
-            arrows[3].enabled = true;
-            arrows[4].enabled = true;
-            arrows[5].enabled = true;
-        }
-        else if (currentRow == maxTile) //BOTTOM EDGE
-        {
-            arrows[3].enabled = false;
-            arrows[4].enabled = false;
-            arrows[5].enabled = false;
-
-            arrows[0].enabled = true;
-            arrows[1].enabled = true;
-            arrows[2].enabled = true;
-            arrows[6].enabled = true;
-            arrows[7].enabled = true;
-        }
-        else    //ALL OTHER TILES
-        {
-            arrows[0].enabled = true;
-            arrows[1].enabled = true;
-            arrows[2].enabled = true;
-            arrows[3].enabled = true;
-            arrows[4].enabled = true;
-            arrows[5].enabled = true;
-            arrows[6].enabled = true;
-            arrows[7].enabled = true;
-        }
-
         tileNum.text = tileNums[currentRow - 1, currentCol - 1].ToString();
     }
 
@@ -726,10 +648,6 @@ public class CustomMapBuilder : MonoBehaviour
         {
             toggleBtn.image.sprite = toggleImgs[1];
 
-            mainCamera.transform.position = new Vector3(pos.x, pos.y + 8.7f, pos.z);
-
-            firstMap.transform.parent.localScale = firstMap.transform.parent.localScale * 2;
-
             maxTile = 10;
 
             tileSize = 8;
@@ -738,15 +656,13 @@ public class CustomMapBuilder : MonoBehaviour
 
             currentY = currentY + 8 * (tileNums[0, currentRow - 1] - 1);
 
+            moveInterval = 59.02f;
+
             SetTileNumbers();
         }
         else
         {
             toggleBtn.image.sprite = toggleImgs[0];
-
-            mainCamera.transform.position = new Vector3(pos.x, pos.y - 8.7f, pos.z);
-
-            firstMap.transform.parent.localScale = firstMap.transform.parent.localScale / 2;
 
             maxTile = 5;
 
@@ -784,9 +700,11 @@ public class CustomMapBuilder : MonoBehaviour
                 mainCamera.transform.position = new Vector3(pos.x, -479.2f, pos.z);
             }
 
+            moveInterval = 132.8f;
+
             SetTileNumbers();
         }
-
+        
         ProcessTile();
     }
 }
