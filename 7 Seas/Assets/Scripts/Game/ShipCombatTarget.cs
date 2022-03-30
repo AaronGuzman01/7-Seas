@@ -32,6 +32,7 @@ public class ShipCombatTarget : MonoBehaviour
         if (monster)
         {
             time = 0.7f;
+            sec = 15;
 
             transform.localPosition = new Vector3(0, 1, y);
 

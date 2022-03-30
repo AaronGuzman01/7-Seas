@@ -334,6 +334,85 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd7c7c262db8f4e42babac08c8fc7960, type: 3}
+--- !u!1 &67324224
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 67324225}
+  - component: {fileID: 67324227}
+  - component: {fileID: 67324226}
+  m_Layer: 5
+  m_Name: cannonShots
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &67324225
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 67324224}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 680014879}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 687, y: 21}
+  m_SizeDelta: {x: 500, y: 120}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &67324226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 67324224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: e9749edff50d7434ca84b5b70e04c802, type: 3}
+    m_FontSize: 75
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 7
+    m_MaxSize: 80
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 
+--- !u!222 &67324227
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 67324224}
+  m_CullTransparentMesh: 0
 --- !u!1001 &79402740
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -470,6 +549,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114662580739337770, guid: 8851ce2d97da15c4e9945230ec9cc4bf,
         type: 3}
+      propertyPath: shotsLeft
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114662580739337770, guid: 8851ce2d97da15c4e9945230ec9cc4bf,
+        type: 3}
       propertyPath: cannonBall
       value: 
       objectReference: {fileID: 2709587923553893966, guid: 5f6b4c1ca42be6b40bd56b25950dc51b,
@@ -479,6 +563,11 @@ PrefabInstance:
       propertyPath: isSelected
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114662580739337770, guid: 8851ce2d97da15c4e9945230ec9cc4bf,
+        type: 3}
+      propertyPath: cannonShots
+      value: 
+      objectReference: {fileID: 67324226}
     - target: {fileID: 114662580739337770, guid: 8851ce2d97da15c4e9945230ec9cc4bf,
         type: 3}
       propertyPath: currentCamera
@@ -2303,8 +2392,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -205, y: 205}
-  m_SizeDelta: {x: 1197.4, y: 187.7}
+  m_AnchoredPosition: {x: -200.11975, y: 262.74243}
+  m_SizeDelta: {x: 1159.7605, y: 184.2152}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &396445905
 MonoBehaviour:
@@ -2339,7 +2428,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: PLAYER 1 - SHOOT THE TARGETS TO DO DAMAGE TO PLAYER 2!
+  m_Text: PLAYER 1 - SHOOT THE TARGET TO DO DAMAGE TO PLAYER 2!
 --- !u!222 &396445906
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2919,6 +3008,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114662580739337770, guid: 8851ce2d97da15c4e9945230ec9cc4bf,
         type: 3}
+      propertyPath: shotsLeft
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114662580739337770, guid: 8851ce2d97da15c4e9945230ec9cc4bf,
+        type: 3}
       propertyPath: cannonBall
       value: 
       objectReference: {fileID: 2709587923553893966, guid: 5f6b4c1ca42be6b40bd56b25950dc51b,
@@ -2928,6 +3022,11 @@ PrefabInstance:
       propertyPath: isSelected
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114662580739337770, guid: 8851ce2d97da15c4e9945230ec9cc4bf,
+        type: 3}
+      propertyPath: cannonShots
+      value: 
+      objectReference: {fileID: 67324226}
     - target: {fileID: 114662580739337770, guid: 8851ce2d97da15c4e9945230ec9cc4bf,
         type: 3}
       propertyPath: cannonNumber
@@ -3045,6 +3144,7 @@ RectTransform:
   - {fileID: 147064582}
   - {fileID: 2101051598}
   - {fileID: 151161073}
+  - {fileID: 67324225}
   - {fileID: 2144917352}
   m_Father: {fileID: 0}
   m_RootOrder: 12
@@ -3417,6 +3517,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114662580739337770, guid: 8851ce2d97da15c4e9945230ec9cc4bf,
         type: 3}
+      propertyPath: shotsLeft
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114662580739337770, guid: 8851ce2d97da15c4e9945230ec9cc4bf,
+        type: 3}
       propertyPath: cannonBall
       value: 
       objectReference: {fileID: 2709587923553893966, guid: 5f6b4c1ca42be6b40bd56b25950dc51b,
@@ -3426,6 +3531,11 @@ PrefabInstance:
       propertyPath: isSelected
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114662580739337770, guid: 8851ce2d97da15c4e9945230ec9cc4bf,
+        type: 3}
+      propertyPath: cannonShots
+      value: 
+      objectReference: {fileID: 67324226}
     - target: {fileID: 114662580739337770, guid: 8851ce2d97da15c4e9945230ec9cc4bf,
         type: 3}
       propertyPath: cannonNumber
@@ -5323,6 +5433,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114662580739337770, guid: 8851ce2d97da15c4e9945230ec9cc4bf,
         type: 3}
+      propertyPath: shotsLeft
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114662580739337770, guid: 8851ce2d97da15c4e9945230ec9cc4bf,
+        type: 3}
       propertyPath: cannonBall
       value: 
       objectReference: {fileID: 2709587923553893966, guid: 5f6b4c1ca42be6b40bd56b25950dc51b,
@@ -5332,6 +5447,11 @@ PrefabInstance:
       propertyPath: isSelected
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114662580739337770, guid: 8851ce2d97da15c4e9945230ec9cc4bf,
+        type: 3}
+      propertyPath: cannonShots
+      value: 
+      objectReference: {fileID: 67324226}
     - target: {fileID: 114662580739337770, guid: 8851ce2d97da15c4e9945230ec9cc4bf,
         type: 3}
       propertyPath: cannonNumber
@@ -7354,6 +7474,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114662580739337770, guid: 8851ce2d97da15c4e9945230ec9cc4bf,
         type: 3}
+      propertyPath: shotsLeft
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114662580739337770, guid: 8851ce2d97da15c4e9945230ec9cc4bf,
+        type: 3}
       propertyPath: cannonBall
       value: 
       objectReference: {fileID: 2709587923553893966, guid: 5f6b4c1ca42be6b40bd56b25950dc51b,
@@ -7363,6 +7488,11 @@ PrefabInstance:
       propertyPath: isSelected
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114662580739337770, guid: 8851ce2d97da15c4e9945230ec9cc4bf,
+        type: 3}
+      propertyPath: cannonShots
+      value: 
+      objectReference: {fileID: 67324226}
     - target: {fileID: 114662580739337770, guid: 8851ce2d97da15c4e9945230ec9cc4bf,
         type: 3}
       propertyPath: cannonNumber
@@ -7449,7 +7579,7 @@ RectTransform:
   - {fileID: 1040778787}
   - {fileID: 1483615901}
   m_Father: {fileID: 680014879}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class CannonMinigame : MonoBehaviour
 {
+    public static PlayerShip[] shipsInfo = new PlayerShip[2];
     public static GameObject[] ships = new GameObject[2];
     public static int currShip = 1;
     public Material[] skyBox;
@@ -119,10 +120,10 @@ public class CannonMinigame : MonoBehaviour
         }
     }
 
-    public static void SetShips(GameObject enemyShip, GameObject playerShip)
+    public static void SetShips()
     {
-        ships[0] = Instantiate(enemyShip);
-        ships[1] = Instantiate(playerShip);
+        ships[0] = Instantiate(shipsInfo[0].GetShip());
+        ships[1] = Instantiate(shipsInfo[0].GetShip());
 
         ships[0].transform.GetChild(0).transform.rotation = Quaternion.Euler(Vector3.zero);
         ships[1].transform.GetChild(0).transform.rotation = Quaternion.Euler(Vector3.zero);
