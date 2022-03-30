@@ -68,7 +68,6 @@ public class Cannon_Firing : MonoBehaviour
     public Text cannonShots;
     private int[] cannonType =  new int[5];
 
-
     void Start()
     {
         if (CannonMinigame.currShip == 1)
@@ -110,20 +109,25 @@ public class Cannon_Firing : MonoBehaviour
             cannonArray[i, 1] = .5f;
         }
         //Debug.Log("Cannon number is " + cannonNumber);
-        if (cannonType[cannonNumber] == 1)
+
+        if (isSelected)
         {
-            rangeType.GetComponent<Text>().text = "Short range cannon";
-            cannonShots.GetComponent<Text>().text = "Cannon Shots: " + shotsLeft;
-        }
-        else if (cannonType[cannonNumber] == 2)
-        {
-            rangeType.GetComponent<Text>().text = "Long range cannon";
-            cannonShots.GetComponent<Text>().text = "Cannon Shots: " + shotsLeft;
-        }
-        else
-        {
-            rangeType.GetComponent<Text>().text = "INACTIVE";
-            cannonShots.GetComponent<Text>().text = "Cannon Shots: 0";
+            if (cannonType[cannonNumber] == 1)
+            {
+                rangeType.GetComponent<Text>().text = "Short range cannon";
+                cannonShots.GetComponent<Text>().text = "Cannon Shots: " + shotsLeft;
+            }
+            else if (cannonType[cannonNumber] == 2)
+            {
+                rangeType.GetComponent<Text>().text = "Long range cannon";
+                cannonShots.GetComponent<Text>().text = "Cannon Shots: " + shotsLeft;
+            }
+            else
+            {
+                rangeType.GetComponent<Text>().text = "INACTIVE";
+                cannonShots.GetComponent<Text>().text = "Cannon Shots: 0";
+                shotsLeft = 0;
+            }
         }
     }
 
@@ -164,8 +168,24 @@ public class Cannon_Firing : MonoBehaviour
             // saves current angle in a array
             cannonArray[cannonNumber, 0] = sliderX.value;
             cannonArray[cannonNumber, 1] = sliderY.value;
-        }
 
+            if (cannonType[cannonNumber] == 1)
+            {
+                rangeType.GetComponent<Text>().text = "Short range cannon";
+                cannonShots.GetComponent<Text>().text = "Cannon Shots: " + shotsLeft;
+            }
+            else if (cannonType[cannonNumber] == 2)
+            {
+                rangeType.GetComponent<Text>().text = "Long range cannon";
+                cannonShots.GetComponent<Text>().text = "Cannon Shots: " + shotsLeft;
+            }
+            else
+            {
+                rangeType.GetComponent<Text>().text = "INACTIVE";
+                cannonShots.GetComponent<Text>().text = "Cannon Shots: 0";
+                shotsLeft = 0;
+            }
+        }
 
         FuseSmokeParticlesNode.transform.position = new Vector3(FuseCentre.transform.position.x, FuseCentre.transform.position.y, FuseCentre.transform.position.z);
 
@@ -182,7 +202,6 @@ public class Cannon_Firing : MonoBehaviour
 
     public void CannonSelected(bool selected)
     {
-        
         // loads current val from array
         if (selected)
         {
@@ -193,21 +212,6 @@ public class Cannon_Firing : MonoBehaviour
             cannonArray[cannonNumber, 0] = sliderX.value;
             cannonArray[cannonNumber, 1] = sliderY.value;
             isSelected = true;
-            if (cannonType[cannonNumber] == 1)
-            {
-                rangeType.GetComponent<Text>().text = "Short range cannon";
-                cannonShots.GetComponent<Text>().text = "Cannon Shots: " + shotsLeft;
-            }
-            else if (cannonType[cannonNumber] == 2)
-            {
-                rangeType.GetComponent<Text>().text = "Long range cannon";
-                cannonShots.GetComponent<Text>().text = "Cannon Shots: " + shotsLeft;
-            }
-            else
-            {
-                rangeType.GetComponent<Text>().text = "INACTIVE";
-                cannonShots.GetComponent<Text>().text = "Cannon Shots: 0";
-            }
         }
         else
         {
@@ -222,7 +226,7 @@ public class Cannon_Firing : MonoBehaviour
     void FuseStart()
     {
         //if statement to activate/deactive cannon based on if the camera is active
-        if (currentCamera == Camera.main)
+        if (currentCamera == Camera.main && shotsLeft > 0)
         {
             if (cannonfired != 1)
             {
@@ -271,9 +275,6 @@ public class Cannon_Firing : MonoBehaviour
 
     IEnumerator Fuse()
     {
-
-
-
         while (offset < 0.43f)
         {
             offset += (Time.deltaTime * 0.11f);
@@ -291,8 +292,6 @@ public class Cannon_Firing : MonoBehaviour
         }
 
         offset = 0;
-
-
     }
 
     //IEnumerator LoadLevelAfterTime(float timer)
@@ -312,7 +311,6 @@ public class Cannon_Firing : MonoBehaviour
 
     void FireCannon()
     {
-
         FuseCentre.SetActive(false);
         FuseSmokeParticles.Stop();
         fuselightintensity = 0;

@@ -45,16 +45,16 @@ public class CannonMinigame : MonoBehaviour
 
             currShip++;
 
-            target = Instantiate(targets[0], ships[0].transform.GetChild(0));
+            target = Instantiate(targets[0], ships[1].transform.GetChild(0));
 
             target.SetActive(true);
 
-            ButtonManager.GetComponent<ButtonFunctionality>().SetEnemy(ships[0]);
+            ButtonManager.GetComponent<ButtonFunctionality>().SetEnemy(ships[1]);
 
-            ships[0].AddComponent<ship_movement>();
-            ships[0].GetComponent<ship_movement>().height = 1010;
+            ships[1].AddComponent<ship_movement>();
+            ships[1].GetComponent<ship_movement>().height = 1010;
 
-            ships[1].SetActive(false);
+            ships[0].SetActive(false);
 
             PlayerPrefs.SetString("Enemy", "Player");
 
@@ -68,14 +68,14 @@ public class CannonMinigame : MonoBehaviour
 
             currShip++;
 
-            target = Instantiate(targets[0], ships[1].transform.GetChild(0));
-
-            ships[1].AddComponent<ship_movement>();
-            ships[1].GetComponent<ship_movement>().height = 1010;
+            target = Instantiate(targets[0], ships[0].transform.GetChild(0));
 
             target.SetActive(true);
 
-            ButtonManager.GetComponent<ButtonFunctionality>().SetEnemy(ships[1]);
+            ships[0].AddComponent<ship_movement>();
+            ships[0].GetComponent<ship_movement>().height = 1010;
+
+            ButtonManager.GetComponent<ButtonFunctionality>().SetEnemy(ships[0]);
 
             RenderSettings.skybox = skyBox[0];
         }
@@ -123,7 +123,7 @@ public class CannonMinigame : MonoBehaviour
     public static void SetShips()
     {
         ships[0] = Instantiate(shipsInfo[0].GetShip());
-        ships[1] = Instantiate(shipsInfo[0].GetShip());
+        ships[1] = Instantiate(shipsInfo[1].GetShip());
 
         ships[0].transform.GetChild(0).transform.rotation = Quaternion.Euler(Vector3.zero);
         ships[1].transform.GetChild(0).transform.rotation = Quaternion.Euler(Vector3.zero);
@@ -149,9 +149,9 @@ public class CannonMinigame : MonoBehaviour
 
     public static void ChangeShips()
     {
-        Destroy(ships[0]);
+        Destroy(ships[1]);
 
-        ships[1].SetActive(true);
+        ships[0].SetActive(true);
     }
 
     public void CheckEmptyHealthBar()
