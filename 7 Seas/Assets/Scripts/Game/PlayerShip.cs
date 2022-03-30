@@ -85,4 +85,9 @@ public class PlayerShip : MonoBehaviour
     {
         return currPosition;
     }
+
+    public int[] GetCannons()
+    {
+        return cannons;
+    }
 }

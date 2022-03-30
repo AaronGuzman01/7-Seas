@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class Cannon_Firing : MonoBehaviour
 {
-
     public GameObject CannonObject;
     public AnimationClip CannonFireAnim;
     public ParticleSystem CannonMuzzleFlash;
@@ -59,17 +58,28 @@ public class Cannon_Firing : MonoBehaviour
     //public string NewLevel = "EndScreen";
     //public Camera cannonballFollowingCamera;
     public int cannonNumber;
+    public int shotsLeft;
     public float[,] cannonArray = new float[15, 15]; // 2d array of the cannon numbers of size 15 on both
     bool canReload;
     //ineffcient way to set up short/long range cannons - fix w/ making a public global array of all cannons
     // Replace this with a arrayprefs2 later
     private int[] shortLongRange = new int[15] { 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0 };
     public Text rangeType;
-
+    public Text cannonShots;
+    private int[] cannonType =  new int[5];
 
 
     void Start()
     {
+        if (CannonMinigame.currShip == 1)
+        {
+            cannonType = CannonMinigame.shipsInfo[0].GetCannons();
+        }
+        else
+        {
+            cannonType = CannonMinigame.shipsInfo[1].GetCannons();
+        }
+
         MuzzleFlashLight.intensity = 0;
         fuseObjectRenderer = FuseObject.GetComponent<Renderer>();
 
@@ -100,16 +110,22 @@ public class Cannon_Firing : MonoBehaviour
             cannonArray[i, 1] = .5f;
         }
         //Debug.Log("Cannon number is " + cannonNumber);
-        if (shortLongRange[cannonNumber] == 1)
+        if (cannonType[cannonNumber] == 1)
         {
-            rangeType.GetComponent<UnityEngine.UI.Text>().text = "Short range cannon";
+            rangeType.GetComponent<Text>().text = "Short range cannon";
+            cannonShots.GetComponent<Text>().text = "Cannon Shots: " + shotsLeft;
+        }
+        else if (cannonType[cannonNumber] == 2)
+        {
+            rangeType.GetComponent<Text>().text = "Long range cannon";
+            cannonShots.GetComponent<Text>().text = "Cannon Shots: " + shotsLeft;
         }
         else
         {
-            rangeType.GetComponent<UnityEngine.UI.Text>().text = "Long range cannon";
+            rangeType.GetComponent<Text>().text = "INACTIVE";
+            cannonShots.GetComponent<Text>().text = "Cannon Shots: 0";
         }
     }
-
 
 
     void Update()
@@ -151,17 +167,16 @@ public class Cannon_Firing : MonoBehaviour
         }
 
 
+        FuseSmokeParticlesNode.transform.position = new Vector3(FuseCentre.transform.position.x, FuseCentre.transform.position.y, FuseCentre.transform.position.z);
 
-            FuseSmokeParticlesNode.transform.position = new Vector3(FuseCentre.transform.position.x, FuseCentre.transform.position.y, FuseCentre.transform.position.z);
-
-            fuselightintensity = (Random.Range(0.2f, 0.4f));
-            FuseLight.intensity = fuselightintensity;
+        fuselightintensity = (Random.Range(0.2f, 0.4f));
+        FuseLight.intensity = fuselightintensity;
 
 
-            if (explodeset == 1)
-            {
-                FireCannon();
-            }
+        if (explodeset == 1)
+        {
+            FireCannon();
+        }
        // }
     }
 
@@ -178,10 +193,21 @@ public class Cannon_Firing : MonoBehaviour
             cannonArray[cannonNumber, 0] = sliderX.value;
             cannonArray[cannonNumber, 1] = sliderY.value;
             isSelected = true;
-            if (shortLongRange[cannonNumber] == 1)
-                rangeType.GetComponent<UnityEngine.UI.Text>().text = "Short range cannon";
+            if (cannonType[cannonNumber] == 1)
+            {
+                rangeType.GetComponent<Text>().text = "Short range cannon";
+                cannonShots.GetComponent<Text>().text = "Cannon Shots: " + shotsLeft;
+            }
+            else if (cannonType[cannonNumber] == 2)
+            {
+                rangeType.GetComponent<Text>().text = "Long range cannon";
+                cannonShots.GetComponent<Text>().text = "Cannon Shots: " + shotsLeft;
+            }
             else
-                rangeType.GetComponent<UnityEngine.UI.Text>().text = "Long range cannon";
+            {
+                rangeType.GetComponent<Text>().text = "INACTIVE";
+                cannonShots.GetComponent<Text>().text = "Cannon Shots: 0";
+            }
         }
         else
         {
@@ -190,11 +216,7 @@ public class Cannon_Firing : MonoBehaviour
             //saving old slider values
             //cannonArray[cannonNumber, 0] = sliderX.value;
            // cannonArray[cannonNumber, 1] = sliderY.value;
-        }
-        
-
-
-        
+        } 
     }
 
     void FuseStart()
@@ -307,7 +329,7 @@ public class Cannon_Firing : MonoBehaviour
         cannonfired = 1;
 
         //OUR CODE
-        if (shortLongRange[cannonNumber] == 1)
+        if (cannonType[cannonNumber] == 1)
         {
             //Debug.Log("1)Cannon number " + cannonNumber);
             //Debug.Log("1)Short range: true");
@@ -315,16 +337,19 @@ public class Cannon_Firing : MonoBehaviour
 
             cannonBallRB = cannonBallCopy.GetComponent<Rigidbody>();
             cannonBallRB.AddForce(shotPos.transform.forward * (firePower * .5f));
+
+            shotsLeft--;
         }
-        
-        else
+        else if (cannonType[cannonNumber] == 2)
         {
             //Debug.Log("1)Cannon number " + cannonNumber);
             //Debug.Log("1)Short range: true");
             GameObject cannonBallCopy = Instantiate(cannonBall, shotPos.position, shotPos.rotation) as GameObject;
 
-        cannonBallRB = cannonBallCopy.GetComponent<Rigidbody>();
-        cannonBallRB.AddForce(shotPos.transform.forward * firePower);
+            cannonBallRB = cannonBallCopy.GetComponent<Rigidbody>();
+            cannonBallRB.AddForce(shotPos.transform.forward * firePower);
+
+            shotsLeft--;
         }
 
         //cannonballFollowingCamera.enabled = true;
@@ -333,9 +358,11 @@ public class Cannon_Firing : MonoBehaviour
         //cannonballFollowingCamera.enabled = true;
         //cannonballFollowingCamera.transform.Translate(cannonBallCopy.transform.position);
 
-
+        if (cannonType[cannonNumber] != 0)
+        {
+            cannonShots.GetComponent<Text>().text = "Cannon Shots: " + shotsLeft;
+        }
     }
-
 
     IEnumerator FadeLight()
     {

@@ -538,7 +538,9 @@ public class MapLoad : MonoBehaviour
                     {
                         CannonMinigame.setPlayer = true;
                         CannonMinigame.currShip = 1;
-                        CannonMinigame.SetShips(GetEnemeyShip(), ship);
+                        CannonMinigame.shipsInfo[0] = shipInfo[playerIndex];
+                        CannonMinigame.shipsInfo[1] = GetEnemeyShip();
+                        CannonMinigame.SetShips();
 
                         PlayerPrefs.SetString("Enemy", "Player");
 
@@ -549,6 +551,7 @@ public class MapLoad : MonoBehaviour
                     else if (shipCombat)
                     {
                         CannonMinigame.setTreasure = true;
+                        CannonMinigame.shipsInfo[0] = shipInfo[playerIndex];
 
                         PlayerPrefs.SetString("Enemy", "Treasure");
 
@@ -562,6 +565,7 @@ public class MapLoad : MonoBehaviour
                         {
                             CannonMinigame.setMonster = true;
                             CannonMinigame.SetMonster(monsters[0]);
+                            CannonMinigame.shipsInfo[0] = shipInfo[playerIndex];
 
                             PlayerPrefs.SetString("Enemy", "Monster");
 
@@ -579,17 +583,20 @@ public class MapLoad : MonoBehaviour
         }
     }
 
-    GameObject GetEnemeyShip()
+    PlayerShip GetEnemeyShip()
     {
-        foreach (PlayerShip player in shipInfo)
+        if (playerCombat)
         {
-            if (player.GetCurrentPosition() == shipInfo[playerIndex].GetCurrentPosition() && player.GetName() != shipInfo[playerIndex].GetName())
+            foreach (PlayerShip player in shipInfo)
             {
-                PlayerPrefs.SetString("Ship2", "PLAYER " + player.GetPlayerNum().ToString());
+                if (player.GetCurrentPosition() == shipInfo[playerIndex].GetCurrentPosition() && player.GetName() != shipInfo[playerIndex].GetName())
+                {
+                    PlayerPrefs.SetString("Ship2", "PLAYER " + player.GetPlayerNum().ToString());
 
-                ResultsManager.players[1] = player;
+                    ResultsManager.players[1] = player;
 
-                return player.GetShip();
+                    return player;
+                }
             }
         }
 

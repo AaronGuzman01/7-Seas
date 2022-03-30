@@ -313,12 +313,12 @@ public class Monstermovement : MonoBehaviour
 
     public void MonsterHit()
     {
-        int val = PlayerPrefs.GetInt("Hit") / 2;
+        int val = PlayerPrefs.GetInt("Hit");
 
         if (val > 0)
         {
             anim.Play("Hit1");
-            health = health - (val * cannonDmg);
+            health = health - ((1 + ((val - 1) * 0.25f)) * cannonDmg);
             justHit = true;
 
             explosion.transform.position = transform.position;
