@@ -51,6 +51,8 @@ public class CustomMapBuilder : MonoBehaviour
     private GameObject test;
 
     private float moveInterval = 132.8f;
+    private float defaultX;
+    private float defaultY;
 
     // Start is called before the first frame update
     void Start()
@@ -88,6 +90,10 @@ public class CustomMapBuilder : MonoBehaviour
         currentPanel = panels[0];
         optionMenus[0].value = 1;
         firstMapActive = true;
+
+        Debug.Log(mainCamera.transform.position.y);
+        defaultX = mainCamera.transform.position.x;
+        defaultY = mainCamera.transform.position.y;
     }
 
     // Update is called once per frame
@@ -587,7 +593,7 @@ public class CustomMapBuilder : MonoBehaviour
 
             currentY += tileSize;
         }
-        
+
         ProcessTile();
     }
 
@@ -607,7 +613,7 @@ public class CustomMapBuilder : MonoBehaviour
 
             currentY -= tileSize;
         }
-        
+
         ProcessTile();
     }
 
@@ -652,11 +658,14 @@ public class CustomMapBuilder : MonoBehaviour
 
             tileSize = 8;
 
+            moveInterval = 59.02f;
+
+            mainCamera.transform.position = new Vector3(defaultX, defaultY, -100);
+            mainCamera.transform.position = new Vector3(mainCamera.transform.position.x + (moveInterval * (currentCol - 1)), mainCamera.transform.position.y - (moveInterval * (currentRow - 1)), -100);
+
             currentX = currentX - 8 * (tileNums[0, currentCol - 1] - 1);
 
             currentY = currentY + 8 * (tileNums[0, currentRow - 1] - 1);
-
-            moveInterval = 59.02f;
 
             SetTileNumbers();
         }
@@ -668,15 +677,13 @@ public class CustomMapBuilder : MonoBehaviour
 
             tileSize = 16;
 
-            if (currentCol % 2 == 0)
-            {
-                currentX = currentX + 8 * (tileNums[0, currentCol - 1] - 1);
-            }
+            moveInterval = 132.8f;
 
-            if (currentRow % 2 == 0)
-            {
-                currentY = currentY - 8 * (tileNums[0, currentRow - 1] - 1);
-            }
+            mainCamera.transform.position = new Vector3(defaultX, defaultY, -100);
+            mainCamera.transform.position = new Vector3(mainCamera.transform.position.x + (moveInterval * (currentCol - 1)), mainCamera.transform.position.y - (moveInterval * (currentRow - 1)), -100);
+
+            currentX = currentX + 8 * (tileNums[0, currentCol - 1] - 1);
+            currentY = currentY - 8 * (tileNums[0, currentRow - 1] - 1);
 
             if (tileNums[0, currentCol - 1] >= 5)
             {
@@ -700,7 +707,7 @@ public class CustomMapBuilder : MonoBehaviour
                 mainCamera.transform.position = new Vector3(pos.x, -479.2f, pos.z);
             }
 
-            moveInterval = 132.8f;
+            
 
             SetTileNumbers();
         }
