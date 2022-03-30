@@ -19,7 +19,7 @@ public class ResultsManager : MonoBehaviour
         if (PlayerPrefs.GetString("Enemy").Equals("Player"))
         {
             ships[0] = Instantiate(players[0].GetShip());
-            ships[1] = Instantiate(players[0].GetShip());
+            ships[1] = Instantiate(players[1].GetShip());
 
             ships[0].transform.position = new Vector3(0, 1010, 0);
             ships[1].transform.position = new Vector3(0, 1010, 0);
@@ -61,8 +61,8 @@ public class ResultsManager : MonoBehaviour
 
     public void ExitResults()
     {
-        Destroy(ships[0]);
-        Destroy(ships[1]);
+        Destroy(ships[0].gameObject);
+        Destroy(ships[1].gameObject);
 
         ship.SetActive(false);
 
