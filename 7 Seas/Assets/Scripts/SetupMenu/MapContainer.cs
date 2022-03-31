@@ -41,16 +41,12 @@ public class MapContainer : MonoBehaviour {
     void Start () {
         string[] files;
 
+        string defaultMapPath = Application.persistentDataPath + "/Maps/Default";
+        string customMapPath = Application.persistentDataPath + "/Maps/Custom";
+
         allFiles = new List<string>();
 
         tilemap.transform.parent.SetParent(mapContainer.transform);
-
-        defaultMapPath = Application.persistentDataPath + "/Maps/Default";
-        customMapPath = Application.persistentDataPath + "/Maps/Custom";
-
-        Directory.CreateDirectory(defaultMapPath);
-        Directory.CreateDirectory(customMapPath);
-        File.Create(Application.persistentDataPath + "/Load.txt");
 
         files = Directory.GetFiles(defaultMapPath);
 

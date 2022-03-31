@@ -15,6 +15,8 @@ public class DiceManager : MonoBehaviour {
     public GameObject hazardDiceSprite;
     public GameObject colorDiceSprite;
 
+    public GameObject navMenu;
+
     public InventorySystem inventorySystem;
     public GameLoop gameLoop;
 
@@ -43,6 +45,8 @@ public class DiceManager : MonoBehaviour {
     public static bool diceStart = false;
 
     bool firstRound = true;
+
+    List<int> diceVals = new List<int>();
 
 
     // Use this for initialization
@@ -102,8 +106,9 @@ public class DiceManager : MonoBehaviour {
         windDiceSprite.SetActive(false);
         rewardDiceSprite.SetActive(false);
         hazardDiceSprite.SetActive(false);
-
-
+        navMenu.SetActive(false);
+        diceVals.Clear();
+        diceVals = new List<int>();
     }
 
     //roll the dice
@@ -192,7 +197,39 @@ public class DiceManager : MonoBehaviour {
         */
     }
 
-    public 
+    public void SetNavigationMenu()
+    {
+        Text[] navTexts = navMenu.GetComponentsInChildren<Text>();
+
+        if (diceVals[0] != -1)
+        {
+            navTexts[2].text = 1.ToString();
+        }
+        else
+        {
+            navTexts[2].text = 0.ToString();
+        }
+
+        if (diceVals[1] != -1)
+        {
+            navTexts[0].text = diceVals[1].ToString();
+        }
+        else
+        {
+            navTexts[0].text = 0.ToString();
+        }
+
+        if (diceVals[2] != -1 && diceVals[2] != 1)
+        {
+            navTexts[1].text = diceVals[2].ToString();
+        }
+        else
+        {
+            navTexts[1].text = 0.ToString();
+        }
+
+        navMenu.SetActive(true);
+    }
 
     IEnumerator GetDiceValue(List<Sprite> faces, GameObject dice, int diceIndex)
     {
@@ -202,13 +239,71 @@ public class DiceManager : MonoBehaviour {
 
         num = Random.Range(0, faces.Count);
 
-        if (num.Equals(faces.Count - 1))
+        if (num.Equals(faces.Count - 1) && diceIndex != 3)
         {
             MapLoad.diceVals[diceIndex] = -1;
         }
+        else if (num.Equals(faces.Count - 2) && diceIndex == 1)
+        {
+            MapLoad.diceVals[diceIndex] = -1;
+            MapLoad.rats = true;
+        }
+        else if (num.Equals(faces.Count - 2) && diceIndex == 2)
+        {
+            MapLoad.diceVals[diceIndex] = -1;
+            MapLoad.fog = true;
+        }
+
+        else if (num.Equals(faces.Count - 2) && diceIndex == 4)
+        {
+            MapLoad.diceVals[diceIndex] = -1;
+            MapLoad.siren = true;
+        }
         else
         {
-            MapLoad.diceVals[diceIndex] = num + 1;
+
+            if (diceIndex > 1)
+            {
+                MapLoad.diceVals[diceIndex] = num + 1;
+            }
+            else
+            {
+                MapLoad.diceVals[diceIndex] = num + 2;
+            }
+        }
+
+        if (diceIndex == 0)
+        {
+            if (MapLoad.diceVals[diceIndex] == -1)
+            {
+                diceVals.Add(-1);
+            }
+            else
+            {
+                diceVals.Add(1);
+            }
+        }
+        else if (diceIndex == 1)
+        {
+            if (MapLoad.diceVals[diceIndex] == -1)
+            {
+                diceVals.Add(-1);
+            }
+            else
+            {
+                diceVals.Add(MapLoad.diceVals[diceIndex]);
+            }
+        }
+        else if (diceIndex == 2)
+        {
+            if (MapLoad.diceVals[diceIndex] == -1)
+            {
+                diceVals.Add(-1);
+            }
+            else
+            {
+                diceVals.Add(MapLoad.diceVals[diceIndex]);
+            }
         }
 
         dice.GetComponent<Image>().sprite = faces[num];
@@ -225,6 +320,11 @@ public class DiceManager : MonoBehaviour {
         explosion.gameObject.SetActive(true);
 
         explosion.Play();
+
+        if (diceIndex == 4)
+        {
+            SetNavigationMenu();
+        }
     }
 
     void AddRats()
