@@ -9,13 +9,22 @@ public class LoadFiles : MonoBehaviour
     void Start()
     {
         string[] players = { "f", "f", "f", "f", "f", "f", "f", "f" };
-
+        string[] mast = { "mast 1:", "mast 2:", "mast 3:" };
+        string[] cannon = { "cannon 1: s", "cannon 2:", "cannon 3:", "cannon 4:", "cannon 5:" };
+        string[] crew = { "crew 1:", "crew 2:" };
+        string[] treasure = { "treasure 1: t", "treasure 2:", "treasure 3:" };
+        string[] damage = { "damage 1:", "damage 2:" };
 
         System.IO.File.WriteAllText(Application.persistentDataPath + "/Players.txt", string.Join("\n", players));
         System.IO.File.WriteAllText(Application.persistentDataPath + "/Difficulty.txt", "");
         for (int i = 1; i <= 8; i++)
         {
-            System.IO.File.WriteAllText(Application.persistentDataPath + "/Player" + i + ".txt", "");
+            if(!System.IO.File.Exists(Application.persistentDataPath + "/Player" + i))
+                System.IO.File.WriteAllText(Application.persistentDataPath + "/Player" + i + ".txt", string.Join("\n", mast) + "\n" +
+                                                                                                     string.Join("\n", cannon) + "\n" +
+                                                                                                     string.Join("\n", crew) + "\n" +
+                                                                                                     string.Join("\n", treasure) + "\n" +
+                                                                                                     string.Join("\n", damage));
         }
         Debug.Log(Application.persistentDataPath);
     }

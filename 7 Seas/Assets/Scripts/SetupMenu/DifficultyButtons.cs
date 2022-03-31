@@ -19,9 +19,12 @@ public class DifficultyButtons : MonoBehaviour {
             GameObject.Find("Swabie").GetComponent<Button>().image.overrideSprite = swabieOffSprite;
             GameObject.Find("Captain").GetComponent<Button>().image.overrideSprite = captainOffSprite;
 
-            DiceCupMain.swabie = false;
-            DiceCupMain.seaman = true;
-            DiceCupMain.captain = false;
+            diceNcupController.cups[0] = false;//swabie
+            diceNcupController.cups[1] = true;//seaman
+            diceNcupController.cups[2] = false;//capitain
+            //DiceCupMain.swabie = false;
+            //DiceCupMain.seaman = true;
+            //DiceCupMain.captain = false;
         }
         else if (PlayerPrefs.GetString("Cup") == "Captain" && !SetupMenu.resetSetup)
         {
@@ -29,9 +32,12 @@ public class DifficultyButtons : MonoBehaviour {
             GameObject.Find("Swabie").GetComponent<Button>().image.overrideSprite = swabieOffSprite;
             GameObject.Find("Seaman").GetComponent<Button>().image.overrideSprite = seamanOffSprite;
 
-            DiceCupMain.swabie = false;
-            DiceCupMain.seaman = false;
-            DiceCupMain.captain = true;
+            diceNcupController.cups[0] = false;//swabie
+            diceNcupController.cups[1] = false;//seaman
+            diceNcupController.cups[2] = true;//capitain
+            //DiceCupMain.swabie = false;
+            //DiceCupMain.seaman = false;
+            //DiceCupMain.captain = true;
         }
         else
         {
@@ -40,10 +46,12 @@ public class DifficultyButtons : MonoBehaviour {
             GameObject.Find("Captain").GetComponent<Button>().image.overrideSprite = captainOffSprite;
 
             PlayerPrefs.SetString("Cup", "Swabie");
-
-            DiceCupMain.swabie = true;
-            DiceCupMain.seaman = false;
-            DiceCupMain.captain = false;
+            diceNcupController.cups[0] = true;//swabie
+            diceNcupController.cups[1] = false;//seaman
+            diceNcupController.cups[2] = false;//capitain
+            //DiceCupMain.swabie = true;
+            //DiceCupMain.seaman = false;
+            //DiceCupMain.captain = false;
         }
 
         /*
@@ -68,9 +76,9 @@ public class DifficultyButtons : MonoBehaviour {
         if (this.name == "Swabie")
         {
             PlayerPrefs.SetString("Cup", "Swabie");
-            DiceCupMain.swabie = true;
-            DiceCupMain.seaman = false;
-            DiceCupMain.captain = false;
+            diceNcupController.cups[0] = true;//swabie
+            diceNcupController.cups[1] = false;//seaman
+            diceNcupController.cups[2] = false;//capitain
             GameObject.Find("Swabie").GetComponent<Button>().image.overrideSprite = swabieOnSprite;
             GameObject.Find("Seaman").GetComponent<Button>().image.overrideSprite = seamanOffSprite;
             GameObject.Find("Captain").GetComponent<Button>().image.overrideSprite = captainOffSprite;
@@ -78,9 +86,9 @@ public class DifficultyButtons : MonoBehaviour {
         else if (this.name == "Seaman")
         {
             PlayerPrefs.SetString("Cup", "Seaman");
-            DiceCupMain.swabie = false;
-            DiceCupMain.seaman = true;
-            DiceCupMain.captain = false;
+            diceNcupController.cups[0] = false;//swabie
+            diceNcupController.cups[1] = true;//seaman
+            diceNcupController.cups[2] = false;//capitain
             GameObject.Find("Swabie").GetComponent<Button>().image.overrideSprite = swabieOffSprite;
             GameObject.Find("Seaman").GetComponent<Button>().image.overrideSprite = seamanOnSprite;
             GameObject.Find("Captain").GetComponent<Button>().image.overrideSprite = captainOffSprite;
@@ -88,9 +96,9 @@ public class DifficultyButtons : MonoBehaviour {
         else if (this.name == "Captain")
         {
             PlayerPrefs.SetString("Cup", "Captain");
-            DiceCupMain.swabie = false;
-            DiceCupMain.seaman = false;
-            DiceCupMain.captain = true;
+            diceNcupController.cups[0] = false;//swabie
+            diceNcupController.cups[1] = false;//seaman
+            diceNcupController.cups[2] = true;//capitain
             GameObject.Find("Swabie").GetComponent<Button>().image.overrideSprite = swabieOffSprite;
             GameObject.Find("Seaman").GetComponent<Button>().image.overrideSprite = seamanOffSprite;
             GameObject.Find("Captain").GetComponent<Button>().image.overrideSprite = captainOnSprite;
