@@ -14,7 +14,7 @@ public class SetupMenu : MonoBehaviour {
     public Button difficultyBtn;
     private static Button selectedDifficulty;
     private bool isPressed;
-    public static bool resetSetup = false;
+    public  static bool resetSetup = false;
     public GameLoop gameLoop;
     private static string[] players = { "f", "f", "f", "f", "f", "f", "f", "f" };
     public AudioClip audioclip;
@@ -301,10 +301,11 @@ public class SetupMenu : MonoBehaviour {
         {
             PlayerPrefs.SetFloat("End", 1000f);
         }
-    } 
+    }
 
     public static void ResetSetup()
     {
+        Debug.Log("Reset");
         resetSetup = true;
     }
 }

@@ -61,8 +61,14 @@ public class ResultsManager : MonoBehaviour
 
     public void ExitResults()
     {
-        Destroy(ships[0].gameObject);
-        Destroy(ships[1].gameObject);
+        if (ships[0])
+        {
+            Destroy(ships[0].gameObject);
+        }
+        if (ships[1])
+        {
+            Destroy(ships[1].gameObject);
+        }
 
         ship.SetActive(false);
 

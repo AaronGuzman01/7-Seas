@@ -39,6 +39,8 @@ public class MapLoad : MonoBehaviour
     public List<GameObject> monsters;
     public GameObject arrow;
     public GameObject movingFX;
+    public GameObject navMenu;
+    public Text[] navTexts;
 
     public float time;
     public float degrees;
@@ -68,6 +70,9 @@ public class MapLoad : MonoBehaviour
     public static bool diceSet = false;
     public static int playerNum;
     public static int[] diceVals;
+    public static bool rats = false;
+    public static bool fog = false;
+    public static bool siren = false;
     public int playerIndex;
     public static int diceIndex;
     public int moveCount;
@@ -285,11 +290,11 @@ public class MapLoad : MonoBehaviour
 
         maxCams = maxPlayers;
 
-        objectGenerator = new RandomPosition(monsters, 1, 10);
+        objectGenerator = new RandomPosition(monsters, 1, 5);
         objectGenerator.SetTilemap(tilemap);
         objectGenerator.GeneratePosition(tilesInMap, objectsInMap);
 
-        objectGenerator = new RandomPosition(treasureShips, 2, 10);
+        objectGenerator = new RandomPosition(treasureShips, 2, 5);
         objectGenerator.SetTilemap(tilemap);
         objectGenerator.GeneratePosition(tilesInMap, objectsInMap);
     }
@@ -336,6 +341,27 @@ public class MapLoad : MonoBehaviour
         treasureCurrent.text = "Player Treasure: " + shipInfo[playerIndex].GetCurrentTreasure().ToString();
         treasureTotal.text = "Total Treasure: " + shipInfo[playerIndex].GetTotalTreasure().ToString();
         player.text = "Player: " + (playerIndex + 1).ToString();
+
+        if (rats)
+        {
+            Debug.Log("Rats");
+
+            rats = false;
+        }
+
+        if (fog)
+        {
+            Debug.Log("fog");
+
+            fog = false;
+        }
+
+        if (siren)
+        {
+            Debug.Log("siren");
+
+            siren = false;
+        }
 
         /*
         //Arrow Key Movement
@@ -690,6 +716,8 @@ public class MapLoad : MonoBehaviour
                             monsterCombat = true;
                             clickable = false;
                         }
+
+                        UpdateNavigationMenu();
                     }
                 }
             }
@@ -758,11 +786,13 @@ public class MapLoad : MonoBehaviour
 
                         moveCount = 0;
                     }
+
+                    Debug.Log("Nav Moves: " + diceVals[diceIndex]);
                 }
 
                 if (diceIndex == 2 && positions.Count == 0 && !isMoving && !posSet)
                 {
-                    if (moveCount < diceVals[diceIndex] - 1)
+                    if (moveCount < diceVals[diceIndex] && diceVals[diceIndex] != 1)
                     {
                         moveCount++;
 
@@ -774,8 +804,36 @@ public class MapLoad : MonoBehaviour
 
                         moveCount = 0;
                     }
+
+                    Debug.Log("Wind Moves: " + diceVals[diceIndex]);
                 }
             }
+        }
+    }
+
+    void UpdateNavigationMenu()
+    {
+        if (diceIndex == 1)
+        {
+            navTexts[2].text = 0.ToString();
+
+            if (diceVals[diceIndex] - moveCount >= 0)
+            {
+                navTexts[0].text = (diceVals[diceIndex] - moveCount).ToString();
+            }
+        }
+        else if (diceIndex == 2 && diceVals[diceIndex] != 1)
+        {
+            navTexts[0].text = 0.ToString();
+
+            if (diceVals[diceIndex] - moveCount >= 0)
+            {
+                navTexts[1].text = (diceVals[diceIndex] - moveCount).ToString();
+            }
+        }
+        else
+        {
+            navTexts[1].text = 0.ToString();
         }
     }
 
@@ -919,6 +977,9 @@ public class MapLoad : MonoBehaviour
         treasureTotal.text = "Total Treasure: " + shipInfo[playerIndex].GetTotalTreasure().ToString();
         player.text = "Player: " + (playerIndex + 1).ToString();
 
+        navMenu.SetActive(false);
+        mainGUI[1].SetActive(true);
+
         Debug.Log("Active Camera: " + (camNum + 1));
     }
 
@@ -928,14 +989,20 @@ public class MapLoad : MonoBehaviour
         {
             foreach (GameObject comp in GUI)
             {
-                comp.SetActive(true);
+                if (comp.transform.name != "Roll")
+                {
+                    comp.SetActive(true);
+                }
             }
         }
         else
         {
             foreach (GameObject comp in GUI)
             {
-                comp.SetActive(false);
+                if (comp.transform.name != "Roll")
+                {
+                    comp.SetActive(false);
+                }
             }
         }
     }
@@ -1004,6 +1071,8 @@ public class MapLoad : MonoBehaviour
         diceSet = false;
 
         ClearActiveTiles();
+
+        mainGUI[1].SetActive(false);
     }
 
     public void PauseGameScene()

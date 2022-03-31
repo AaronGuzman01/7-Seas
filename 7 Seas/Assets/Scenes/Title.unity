@@ -772,7 +772,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &846212191
 RectTransform:
   m_ObjectHideFlags: 0
@@ -813,10 +813,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.13725491, g: 0.13725491, b: 0.13333334, a: 1}
+    m_NormalColor: {r: 0, g: 0.5647059, b: 1, a: 1}
     m_HighlightedColor: {r: 0.32156864, g: 0.31764707, b: 0.3019608, a: 1}
     m_PressedColor: {r: 0.21568629, g: 0.18431373, b: 0.15294118, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.37169808, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -874,6 +874,31 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 846212190}
   m_CullTransparentMesh: 0
+--- !u!1 &869482019 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6160284633333864044, guid: 1beddba08e76e9c42875b4e6ca0734d8,
+    type: 3}
+  m_PrefabInstance: {fileID: 6160284634298028222}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &869482020
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 869482019}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 67e6bf103a9c61d45be5987d77998055, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &912104718
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1426,7 +1451,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1635186323}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: OnMultiPirateClick
         m_Mode: 1
@@ -1942,10 +1967,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.13725491, g: 0.13725491, b: 0.13333334, a: 1}
-    m_HighlightedColor: {r: 0.32156864, g: 0.31764707, b: 0.3019608, a: 1}
-    m_PressedColor: {r: 0.21568629, g: 0.18431373, b: 0.15294118, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_NormalColor: {r: 0, g: 0.5632491, b: 1, a: 1}
+    m_HighlightedColor: {r: 0, g: 0.089741945, b: 1, a: 1}
+    m_PressedColor: {r: 0, g: 0, b: 0, a: 1}
+    m_SelectedColor: {r: 0, g: 0.5647059, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -1973,18 +1998,6 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 1
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SetupMenu, Assembly-CSharp
-        m_MethodName: ResetSetup
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -2301,7 +2314,6 @@ GameObject:
   - component: {fileID: 1635186319}
   - component: {fileID: 1635186318}
   - component: {fileID: 1635186322}
-  - component: {fileID: 1635186323}
   - component: {fileID: 1635186324}
   m_Layer: 5
   m_Name: Canvas
@@ -2493,27 +2505,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1635186323
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1635186317}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 169f3b185b41f644cbc9a9c97b52214c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SliderX: {fileID: 0}
-  SliderY: {fileID: 0}
-  Fire: {fileID: 0}
-  Left: {fileID: 0}
-  Right: {fileID: 0}
-  Ready: {fileID: 0}
-  FX: {fileID: 0}
-  Cannons: []
-  cameraOne: {fileID: 0}
 --- !u!114 &1635186324
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2563,7 +2554,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 50}
+  m_AnchoredPosition: {x: 250, y: 50}
   m_SizeDelta: {x: 230.8, y: 73.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1720378982
@@ -2587,10 +2578,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.13725491, g: 0.13725491, b: 0.13333334, a: 1}
-    m_HighlightedColor: {r: 0.32156864, g: 0.31764707, b: 0.3019608, a: 1}
-    m_PressedColor: {r: 0.21568629, g: 0.18431373, b: 0.15294118, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_NormalColor: {r: 0, g: 0.5632491, b: 1, a: 1}
+    m_HighlightedColor: {r: 0, g: 0.089741945, b: 1, a: 1}
+    m_PressedColor: {r: 0, g: 0, b: 0, a: 1}
+    m_SelectedColor: {r: 0, g: 0.5647059, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -2617,7 +2608,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: -1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -2909,7 +2900,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.013207495, b: 0.013207495, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2917,8 +2908,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 25
+    m_Font: {fileID: 12800000, guid: 9e715e9c00f2ee24fb01b9de4d27cd68, type: 3}
+    m_FontSize: 30
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -3021,7 +3012,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1635186323}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: OnSinglePirateClick
         m_Mode: 1
@@ -3121,7 +3112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3129,8 +3120,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 25
+    m_Font: {fileID: 12800000, guid: 9e715e9c00f2ee24fb01b9de4d27cd68, type: 3}
+    m_FontSize: 30
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -3159,6 +3150,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1635186321}
     m_Modifications:
+    - target: {fileID: 6160284633333864042, guid: 1beddba08e76e9c42875b4e6ca0734d8,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0.78431374
+      objectReference: {fileID: 0}
+    - target: {fileID: 6160284633333864042, guid: 1beddba08e76e9c42875b4e6ca0734d8,
+        type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: 862e32608b6c9e04a9fee5facf51db85, type: 3}
+    - target: {fileID: 6160284633333864042, guid: 1beddba08e76e9c42875b4e6ca0734d8,
+        type: 3}
+      propertyPath: m_RaycastTarget
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6160284633333864044, guid: 1beddba08e76e9c42875b4e6ca0734d8,
         type: 3}
       propertyPath: m_Name
@@ -3202,12 +3208,12 @@ PrefabInstance:
     - target: {fileID: 6160284633333864045, guid: 1beddba08e76e9c42875b4e6ca0734d8,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1541
+      value: 1043.168
       objectReference: {fileID: 0}
     - target: {fileID: 6160284633333864045, guid: 1beddba08e76e9c42875b4e6ca0734d8,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 230
+      value: 301.1189
       objectReference: {fileID: 0}
     - target: {fileID: 6160284633333864045, guid: 1beddba08e76e9c42875b4e6ca0734d8,
         type: 3}
@@ -3267,7 +3273,7 @@ PrefabInstance:
     - target: {fileID: 6160284633333864045, guid: 1beddba08e76e9c42875b4e6ca0734d8,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -51
+      value: -75
       objectReference: {fileID: 0}
     - target: {fileID: 6160284633333864045, guid: 1beddba08e76e9c42875b4e6ca0734d8,
         type: 3}

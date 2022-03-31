@@ -8,6 +8,14 @@ public class LoadFiles : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        string defaultMapPath = Application.persistentDataPath + "/Maps/Default";
+        string customMapPath = Application.persistentDataPath + "/Maps/Custom";
+
+        Directory.CreateDirectory(defaultMapPath);
+        Directory.CreateDirectory(customMapPath);
+
+        SetupMenu.ResetSetup();
+
         string[] players = { "f", "f", "f", "f", "f", "f", "f", "f" };
         string[] mast = { "mast 1:", "mast 2:", "mast 3:" };
         string[] cannon = { "cannon 1: s", "cannon 2:", "cannon 3:", "cannon 4:", "cannon 5:" };
@@ -26,7 +34,9 @@ public class LoadFiles : MonoBehaviour
                                                                                                      string.Join("\n", treasure) + "\n" +
                                                                                                      string.Join("\n", damage));
         }
-        Debug.Log(Application.persistentDataPath);
-    }
 
+        var textFile = Resources.Load<TextAsset>("Sea of Reward");
+
+        File.WriteAllText(defaultMapPath + "/Sea of Reward.txt", textFile.text);
+    }
 }
