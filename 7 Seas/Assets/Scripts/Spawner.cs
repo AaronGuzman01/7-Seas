@@ -10,6 +10,7 @@ public class Spawner : MonoBehaviour
     private int[] playerNums = null;
     private static int currentPlayer = 1;
     private int numPlayers = 0;
+    public static int staticNumPlayers;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +26,7 @@ public class Spawner : MonoBehaviour
             if (players[i].Equals("t"))
                 numPlayers++;
         }
+        staticNumPlayers = numPlayers;
         rdr.Close();
         F.Close();
         playerNums = new int[numPlayers];

@@ -35,7 +35,13 @@ public class ShipCustomizationBtns : MonoBehaviour
 
     private void Update()
     {
-        if (points < 0)
+        if(Spawner.staticNumPlayers == 0)
+        {
+            GameObject.Find("save").GetComponent<Button>().enabled = false;
+            GameObject.Find("save").GetComponent<Image>().enabled = true;
+            GameObject.Find("save").GetComponent<Button>().GetComponentInChildren<Text>().text = "NO PLAYER SELECTED";
+        }
+        else if (points < 0)
         {
             GameObject.Find("coins").GetComponent<Text>().color = Color.red;
             GameObject.Find("save").GetComponent<Button>().enabled = false;
@@ -762,10 +768,79 @@ public class ShipCustomizationBtns : MonoBehaviour
     
     public void save()
     {
-        System.IO.File.WriteAllText(Application.persistentDataPath + "/Player"+ GameObject.Find("shipNum").GetComponent<Text>().text+".txt", string.Join("\n", mast)+"\n"+
-                                                                                                                                             string.Join("\n", cannon)+"\n"+
-                                                                                                                                             string.Join("\n", crew)+"\n"+
-                                                                                                                                             string.Join("\n", treasure)+"\n"+
-                                                                                                                                             string.Join("\n", damage));
+        Debug.Log(Spawner.staticNumPlayers);
+        if (Spawner.staticNumPlayers > 0)
+        {
+            System.IO.File.WriteAllText(Application.persistentDataPath + "/Player" + GameObject.Find("shipNum").GetComponent<Text>().text + ".txt", string.Join("\n", mast) + "\n" +
+                                                                                                                                                 string.Join("\n", cannon) + "\n" +
+                                                                                                                                                 string.Join("\n", crew) + "\n" +
+                                                                                                                                                 string.Join("\n", treasure) + "\n" +
+                                                                                                                                                 string.Join("\n", damage));
+            int shipNum = System.Int32.Parse(GameObject.Find("shipNum").GetComponent<Text>().text);
+            if (shipNum == 1)
+            {
+                System.Array.Copy(mast, Player1.mast, mast.Length);
+                System.Array.Copy(cannon, Player1.cannon, cannon.Length);
+                System.Array.Copy(crew, Player1.crew, crew.Length);
+                System.Array.Copy(treasure, Player1.treasure, treasure.Length);
+                System.Array.Copy(damage, Player1.damage, damage.Length);
+            }
+            if(shipNum == 2)
+            {
+                System.Array.Copy(mast, Player2.mast, mast.Length);
+                System.Array.Copy(cannon, Player2.cannon, cannon.Length);
+                System.Array.Copy(crew, Player2.crew, crew.Length);
+                System.Array.Copy(treasure, Player2.treasure, treasure.Length);
+                System.Array.Copy(damage, Player2.damage, damage.Length);
+            }
+            if(shipNum == 3)
+            {
+                System.Array.Copy(mast, Player3.mast, mast.Length);
+                System.Array.Copy(cannon, Player3.cannon, cannon.Length);
+                System.Array.Copy(crew, Player3.crew, crew.Length);
+                System.Array.Copy(treasure, Player3.treasure, treasure.Length);
+                System.Array.Copy(damage, Player3.damage, damage.Length); ;
+            }
+            if(shipNum == 4)
+            {
+                System.Array.Copy(mast, Player4.mast, mast.Length);
+                System.Array.Copy(cannon, Player4.cannon, cannon.Length);
+                System.Array.Copy(crew, Player4.crew, crew.Length);
+                System.Array.Copy(treasure, Player4.treasure, treasure.Length);
+                System.Array.Copy(damage, Player4.damage, damage.Length);
+            }
+            if(shipNum == 5)
+            {
+                System.Array.Copy(mast, Player5.mast, mast.Length);
+                System.Array.Copy(cannon, Player5.cannon, cannon.Length);
+                System.Array.Copy(crew, Player5.crew, crew.Length);
+                System.Array.Copy(treasure, Player5.treasure, treasure.Length);
+                System.Array.Copy(damage, Player5.damage, damage.Length);
+            }
+            if(shipNum == 6)
+            {
+                System.Array.Copy(mast, Player6.mast, mast.Length);
+                System.Array.Copy(cannon, Player6.cannon, cannon.Length);
+                System.Array.Copy(crew, Player6.crew, crew.Length);
+                System.Array.Copy(treasure, Player6.treasure, treasure.Length);
+                System.Array.Copy(damage, Player6.damage, damage.Length);
+            }
+            if(shipNum == 7)
+            {
+                System.Array.Copy(mast, Player7.mast, mast.Length);
+                System.Array.Copy(cannon, Player7.cannon, cannon.Length);
+                System.Array.Copy(crew, Player7.crew, crew.Length);
+                System.Array.Copy(treasure, Player7.treasure, treasure.Length);
+                System.Array.Copy(damage, Player7.damage, damage.Length);
+            }
+            if(shipNum == 8)
+            {
+                System.Array.Copy(mast, Player8.mast, mast.Length);
+                System.Array.Copy(cannon, Player8.cannon, cannon.Length);
+                System.Array.Copy(crew, Player8.crew, crew.Length);
+                System.Array.Copy(treasure, Player8.treasure, treasure.Length);
+                System.Array.Copy(damage, Player8.damage, damage.Length);
+            }
+        }
     }
 }

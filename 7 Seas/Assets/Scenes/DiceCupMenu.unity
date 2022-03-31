@@ -215,6 +215,7 @@ GameObject:
   - component: {fileID: 7487339}
   - component: {fileID: 7487338}
   - component: {fileID: 7487337}
+  - component: {fileID: 7487336}
   m_Layer: 5
   m_Name: RestoreDefault
   m_TagString: Untagged
@@ -242,6 +243,18 @@ RectTransform:
   m_AnchoredPosition: {x: -138, y: 257}
   m_SizeDelta: {x: 116.89, y: 58.43}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &7487336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7487334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08ee22e3b0d148c46acaec2b17ee3b04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7487337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -285,7 +298,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7487338}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7487336}
+        m_TargetAssemblyTypeName: SaveAndReset, Assembly-CSharp
+        m_MethodName: reset
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &7487338
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2233,6 +2258,7 @@ GameObject:
   - component: {fileID: 271322874}
   - component: {fileID: 271322873}
   - component: {fileID: 271322872}
+  - component: {fileID: 271322871}
   m_Layer: 5
   m_Name: SaveButton
   m_TagString: Untagged
@@ -2260,6 +2286,18 @@ RectTransform:
   m_AnchoredPosition: {x: 437.44, y: 257}
   m_SizeDelta: {x: 117.39, y: 58.427}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &271322871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 271322869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08ee22e3b0d148c46acaec2b17ee3b04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &271322872
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2304,9 +2342,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: Save
+      - m_Target: {fileID: 271322871}
+        m_TargetAssemblyTypeName: SaveAndReset, Assembly-CSharp
+        m_MethodName: save
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3859,18 +3897,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 574740465}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3500a93be4639cf45b164dbd23273a08, type: 3}
+  m_Script: {fileID: 11500000, guid: 19ed20d76e9a9d549844c9c5ffd0d2c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swabieOnSprite: {fileID: 21300000, guid: e2bbfe6506e5e2d4c8930ec3ae9dc6b9, type: 3}
-  swabieOffSprite: {fileID: 21300000, guid: 5b6c657db71e29b47ac8262ad0cecae1, type: 3}
-  seamanOnSprite: {fileID: 21300000, guid: 9f8bc31d5349ed348b88672016362727, type: 3}
-  seamanOffSprite: {fileID: 21300000, guid: 3a61e11cce660c445a314bb4fb2500a4, type: 3}
-  captainOnSprite: {fileID: 21300000, guid: f51c657748e1ce843b5426eeaca4e81e, type: 3}
-  captainOffSprite: {fileID: 21300000, guid: f7cd29361ae48084eb81f85d90f6514d, type: 3}
-  swabieOn: 0
-  seamanOn: 0
-  captainOn: 0
+  swabieOn: {fileID: 21300000, guid: 543865eeea325db4d9524de7d108dea3, type: 3}
+  swabieOff: {fileID: 21300000, guid: 1d6decbbdabc56245aabe69a5c7ea532, type: 3}
+  seamanOn: {fileID: 21300000, guid: e7934e88c65e29642aa46591553a7de7, type: 3}
+  seamanOff: {fileID: 21300000, guid: ec51d83b6b9b3d24eb7654a401d4c9ba, type: 3}
+  captainOn: {fileID: 21300000, guid: d99cee15f2a1bd3458c7303525d6b34f, type: 3}
+  captainOff: {fileID: 21300000, guid: cd7b4e2ef0f7aca409dd54cceb1faab1, type: 3}
+  cupBtn: {fileID: 574740468}
 --- !u!114 &574740468
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3916,20 +3952,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 574740467}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: LoadDiceLevel
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: Load
+        m_TargetAssemblyTypeName: diceNcupController, Assembly-CSharp
+        m_MethodName: selctCup
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4251,18 +4275,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 642825642}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3500a93be4639cf45b164dbd23273a08, type: 3}
+  m_Script: {fileID: 11500000, guid: 19ed20d76e9a9d549844c9c5ffd0d2c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swabieOnSprite: {fileID: 21300000, guid: e2bbfe6506e5e2d4c8930ec3ae9dc6b9, type: 3}
-  swabieOffSprite: {fileID: 21300000, guid: 5b6c657db71e29b47ac8262ad0cecae1, type: 3}
-  seamanOnSprite: {fileID: 21300000, guid: 9f8bc31d5349ed348b88672016362727, type: 3}
-  seamanOffSprite: {fileID: 21300000, guid: 3a61e11cce660c445a314bb4fb2500a4, type: 3}
-  captainOnSprite: {fileID: 21300000, guid: f51c657748e1ce843b5426eeaca4e81e, type: 3}
-  captainOffSprite: {fileID: 21300000, guid: f7cd29361ae48084eb81f85d90f6514d, type: 3}
-  swabieOn: 0
-  seamanOn: 0
-  captainOn: 0
+  swabieOn: {fileID: 21300000, guid: 543865eeea325db4d9524de7d108dea3, type: 3}
+  swabieOff: {fileID: 21300000, guid: 1d6decbbdabc56245aabe69a5c7ea532, type: 3}
+  seamanOn: {fileID: 21300000, guid: e7934e88c65e29642aa46591553a7de7, type: 3}
+  seamanOff: {fileID: 21300000, guid: ec51d83b6b9b3d24eb7654a401d4c9ba, type: 3}
+  captainOn: {fileID: 21300000, guid: d99cee15f2a1bd3458c7303525d6b34f, type: 3}
+  captainOff: {fileID: 21300000, guid: cd7b4e2ef0f7aca409dd54cceb1faab1, type: 3}
+  cupBtn: {fileID: 642825645}
 --- !u!114 &642825645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4308,20 +4330,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 642825644}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: LoadDiceLevel
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: Load
+        m_TargetAssemblyTypeName: diceNcupController, Assembly-CSharp
+        m_MethodName: selctCup
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5218,7 +5228,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 785772836}
-  - component: {fileID: 785772835}
   m_Layer: 0
   m_Name: MainLoop
   m_TagString: Untagged
@@ -5226,34 +5235,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &785772835
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 785772834}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66701cbca08844b489c50b6f799c6a29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  numText: {fileID: 0}
-  buttonClick: {fileID: 0}
-  swabieTarShipDice:
-  - {fileID: 21300000, guid: 6d5e13750af20a143a7b82597eae64b2, type: 3}
-  - {fileID: 21300000, guid: 6d5e13750af20a143a7b82597eae64b2, type: 3}
-  - {fileID: 21300000, guid: 6d5e13750af20a143a7b82597eae64b2, type: 3}
-  - {fileID: 21300000, guid: 6d5e13750af20a143a7b82597eae64b2, type: 3}
-  - {fileID: 21300000, guid: 6d5e13750af20a143a7b82597eae64b2, type: 3}
-  - {fileID: 21300000, guid: a0216268b20e6de42b4fd4434598ab03, type: 3}
-  tarShipGold: 
-  franceText: {fileID: 0}
-  englandText: {fileID: 0}
-  hollandText: {fileID: 0}
-  spainText: {fileID: 0}
-  italyText: {fileID: 0}
-  portugalText: {fileID: 0}
 --- !u!4 &785772836
 Transform:
   m_ObjectHideFlags: 0
@@ -5938,18 +5919,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 900061696}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3500a93be4639cf45b164dbd23273a08, type: 3}
+  m_Script: {fileID: 11500000, guid: 19ed20d76e9a9d549844c9c5ffd0d2c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swabieOnSprite: {fileID: 21300000, guid: e2bbfe6506e5e2d4c8930ec3ae9dc6b9, type: 3}
-  swabieOffSprite: {fileID: 21300000, guid: 5b6c657db71e29b47ac8262ad0cecae1, type: 3}
-  seamanOnSprite: {fileID: 21300000, guid: 9f8bc31d5349ed348b88672016362727, type: 3}
-  seamanOffSprite: {fileID: 21300000, guid: 3a61e11cce660c445a314bb4fb2500a4, type: 3}
-  captainOnSprite: {fileID: 21300000, guid: f51c657748e1ce843b5426eeaca4e81e, type: 3}
-  captainOffSprite: {fileID: 21300000, guid: f7cd29361ae48084eb81f85d90f6514d, type: 3}
-  swabieOn: 0
-  seamanOn: 0
-  captainOn: 0
+  swabieOn: {fileID: 21300000, guid: 543865eeea325db4d9524de7d108dea3, type: 3}
+  swabieOff: {fileID: 21300000, guid: 1d6decbbdabc56245aabe69a5c7ea532, type: 3}
+  seamanOn: {fileID: 21300000, guid: e7934e88c65e29642aa46591553a7de7, type: 3}
+  seamanOff: {fileID: 21300000, guid: ec51d83b6b9b3d24eb7654a401d4c9ba, type: 3}
+  captainOn: {fileID: 21300000, guid: d99cee15f2a1bd3458c7303525d6b34f, type: 3}
+  captainOff: {fileID: 21300000, guid: cd7b4e2ef0f7aca409dd54cceb1faab1, type: 3}
+  cupBtn: {fileID: 900061699}
 --- !u!114 &900061699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5995,20 +5974,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 900061698}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: LoadDiceLevel
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: Load
+        m_TargetAssemblyTypeName: diceNcupController, Assembly-CSharp
+        m_MethodName: selctCup
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6617,7 +6584,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 941877430}
-  - component: {fileID: 941877429}
   m_Layer: 0
   m_Name: RestoreDefault
   m_TagString: Untagged
@@ -6625,62 +6591,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &941877429
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 941877428}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12be562750d7be7479497c78b1529475, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tarShipFrance: {fileID: 0}
-  tarShipEngland: {fileID: 0}
-  tarShipHolland: {fileID: 0}
-  tarShipSpain: {fileID: 0}
-  tarShipItaly: {fileID: 0}
-  tarShipPortugal: {fileID: 0}
-  tarShipGhost: {fileID: 0}
-  moveNum1: {fileID: 0}
-  moveNum2: {fileID: 142789565}
-  moveNum3: {fileID: 0}
-  moveNum4: {fileID: 0}
-  moveNum5: {fileID: 0}
-  moveNum6: {fileID: 0}
-  moveNumGhost: {fileID: 0}
-  windNum0: {fileID: 0}
-  windNum1: {fileID: 0}
-  windNum2: {fileID: 0}
-  windNum3: {fileID: 0}
-  windNum4: {fileID: 0}
-  windNumFog: {fileID: 0}
-  windNumGhost: {fileID: 619119346}
-  resK1CB0: {fileID: 0}
-  resK1CB2: {fileID: 0}
-  resK2CB0: {fileID: 0}
-  resK2CB1: {fileID: 0}
-  resK4CB3: {fileID: 0}
-  resGhost: {fileID: 0}
-  resK0CB1: {fileID: 0}
-  resK2CB2: {fileID: 0}
-  resK0CB3: {fileID: 0}
-  resK3CB0: {fileID: 0}
-  resK3CB2: {fileID: 0}
-  resRats: {fileID: 0}
-  parrotAmber: {fileID: 0}
-  parrotBlue: {fileID: 0}
-  parrotBrown: {fileID: 0}
-  parrotGreen: {fileID: 0}
-  parrotOrange: {fileID: 0}
-  parrotPurple: {fileID: 0}
-  parrotRed: {fileID: 0}
-  parrotWhite: {fileID: 0}
-  parrotGhost: {fileID: 0}
-  difficulty: 
-  saveAndLoadDice: {fileID: 0}
 --- !u!4 &941877430
 Transform:
   m_ObjectHideFlags: 0
