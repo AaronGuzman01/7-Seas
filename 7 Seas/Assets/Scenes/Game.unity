@@ -8440,7 +8440,7 @@ MonoBehaviour:
   - m_Script
   m_LockStageInInspector: 
   m_StreamingVersion: 20170927
-  m_Priority: 0
+  m_Priority: 10
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 139491532}
@@ -11792,7 +11792,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 807810624}
-  m_LocalRotation: {x: 0.087225035, y: 0.0013367626, z: -0.00011704538, w: 0.99618775}
+  m_LocalRotation: {x: 0.08722504, y: 0.00133677, z: -0.00011704603, w: 0.99618775}
   m_LocalPosition: {x: 0.43626404, y: 3.9999998, z: 39.700035}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -27043,6 +27043,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d8fb7cb4c4fe6d4f903f8234d0b4557, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activePlayers: 
   buttons: {fileID: 2104613192}
   toggleText: {fileID: 729395067}
   treasureGoal: {fileID: 2093221945}
@@ -27808,7 +27809,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1699303250}
-  m_LocalRotation: {x: 0.10356203, y: 0.00073885027, z: -0.000076930504, w: 0.99462277}
+  m_LocalRotation: {x: 0.10356203, y: 0.0007388856, z: -0.000076934186, w: 0.99462277}
   m_LocalPosition: {x: 0.44496155, y: 3.9999998, z: 67.200005}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -27932,8 +27933,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1727065413}
-  m_LocalRotation: {x: 0.115285255, y: -0.0073308605, z: 0.0008508365, w: 0.993305}
-  m_LocalPosition: {x: -150.01454, y: 5.5653486, z: 33.393917}
+  m_LocalRotation: {x: 0.63448745, y: -0.000000018808162, z: 0.000000015439293, w: 0.7729332}
+  m_LocalPosition: {x: 0.0000000036581773, y: 44.18, z: -8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 712651906}

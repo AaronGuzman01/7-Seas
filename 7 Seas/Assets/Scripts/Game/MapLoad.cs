@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class MapLoad : MonoBehaviour
 {
-    public static bool[] activePlayers;
+    public bool[] activePlayers;
 
     public static bool isMoving;
     public static bool isRolling;
@@ -84,7 +84,7 @@ public class MapLoad : MonoBehaviour
     public int moveCount;
 
     static bool continueGame = false;
-    public static int maxPlayers;
+    int maxPlayers;
     float arrowRot;
     bool posSet = false;
     bool rotate = false;

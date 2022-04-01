@@ -16,11 +16,6 @@ public class CameraController : MonoBehaviour
     static int playerNum;
     Vector3 currPos;
 
-    static bool[] activePlayers;
-    int[] players = new int[8];
-    int playerIndex = 0;
-    private int maxPlayers;
-
     public float touchSensitivity = 10f;
     public float minZoom = 30f;
     public float maxZoom = 145f;
@@ -35,6 +30,7 @@ public class CameraController : MonoBehaviour
     //CAMERA DUMMY
     public GameObject dummy;
     public GameObject[] ship;
+    private int maxPlayers;
     public GameObject ghostDummy;
 
     //Camera Tilt
@@ -43,23 +39,8 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
-        int count = 0;
 
-        activePlayers = MapLoad.activePlayers;
-        
-        
-        for (int i = 0; i < 8; i++)
-        {
-            if (activePlayers[i] == true)
-            {
-                players[count] = i;
-                count++;
-            }
-        }
-        
-        playerNum = players[playerIndex];
-
-        Debug.Log("playerNum: " + playerNum);
+        playerNum = MapLoad.camNum;
 
         playerOverhead[playerNum].Priority = 1;
 
@@ -69,13 +50,8 @@ public class CameraController : MonoBehaviour
 
         ResetDummy();
         
-        maxPlayers = MapLoad.maxPlayers;
+        maxPlayers = MapLoad.maxCams;
         Debug.Log(maxPlayers);
-
-        for (int i = 0; i < maxPlayers; i++)
-        {
-            Debug.Log(players[i]);
-        }
     }
 
     //Mostly Switching between cameras
@@ -134,7 +110,6 @@ public class CameraController : MonoBehaviour
 
     public void SetDefaultView()
     {
-        Debug.Log("Set Default: " + playerNum);
         playerDefault[playerNum].Priority = 1;
         playerOverhead[playerNum].Priority = 0;
 
@@ -439,26 +414,22 @@ public class CameraController : MonoBehaviour
     {
         playerOverhead[playerNum].m_LookAt = dummy.transform;
 
-        if (playerIndex < maxPlayers - 1)
+        if (playerNum < maxPlayers - 1)
         {
-            playerIndex++;
-            playerNum = players[playerIndex];
-            Debug.Log("Next Player: " + playerNum);
-            dummy.transform.rotation = ship[playerNum].transform.rotation;
-            dummy.transform.position = ship[playerNum].transform.position;
+            Debug.Log("Next Player: " + (playerNum + 1));
+            dummy.transform.rotation = ship[playerNum + 1].transform.rotation;
+            dummy.transform.position = ship[playerNum + 1].transform.position;
             dummy.transform.Translate(0.0f, 12.0f, 0.0f, Space.World);
-            playerOverhead[playerNum].m_Lens.FieldOfView = 60;
+            playerOverhead[playerNum + 1].m_Lens.FieldOfView = 60;
 
         }
-        else if (playerIndex == maxPlayers - 1)
+        else if (playerNum == maxPlayers - 1)
         {
-            playerIndex = 0;
-            playerNum = players[0];
             Debug.Log("Player 1");
-            dummy.transform.rotation = ship[playerNum].transform.rotation;
-            dummy.transform.position = ship[playerNum].transform.position;
+            dummy.transform.rotation = ship[0].transform.rotation;
+            dummy.transform.position = ship[0].transform.position;
             dummy.transform.Translate(0.0f, 12.0f, 0.0f, Space.World);
-            playerOverhead[playerNum].m_Lens.FieldOfView = 60;
+            playerOverhead[0].m_Lens.FieldOfView = 60;
         }
 
         GUI = false;
