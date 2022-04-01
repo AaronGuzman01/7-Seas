@@ -54,6 +54,19 @@ public class CustomMapBuilder : MonoBehaviour
     private float defaultX;
     private float defaultY;
 
+    private bool[] homeports = new bool[8];
+    private Vector3Int[] homePos = new Vector3Int[8];
+    private int[] homeRow = new int[8];
+    private int[] homeCol = new int[8];
+    private bool[,] port = new bool[5, 5];
+
+    private int[,] treasureShipCount = new int[5, 5];
+    private int[,] monsterCount = new int[5, 5];
+
+    private int adjustedRow;
+    private int adjustedCol;
+    bool isToggled = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -79,7 +92,7 @@ public class CustomMapBuilder : MonoBehaviour
 
         CreatePanels(optionMenus[0], true);
         CreatePanels(optionMenus[1], false);
-        SetTileNumbers();  
+        SetTileNumbers();
         HideSaveMenu();
         HideClearMenu();
         HideLoadMenu();
@@ -94,18 +107,23 @@ public class CustomMapBuilder : MonoBehaviour
         Debug.Log(mainCamera.transform.position.y);
         defaultX = mainCamera.transform.position.x;
         defaultY = mainCamera.transform.position.y;
+
+        for (int i = 0; i < 8; i++)
+        {
+            homeports[i] = false;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButton(0) && firstMapActive)
+        if (Input.GetMouseButtonDown(0) && firstMapActive)
         {
             Vector2 mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
 
             Vector3Int gridPos = firstMap.WorldToCell(mousePos);
 
-            if (currTile != null && firstMap.HasTile(gridPos) && 
+            if (currTile != null && firstMap.HasTile(gridPos) &&
                 (gridPos.x >= currentX && gridPos.x < currentX + 16) &&
                 (gridPos.y <= currentY && gridPos.y > currentY - 16))
             {
@@ -113,7 +131,7 @@ public class CustomMapBuilder : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButton(0) && !firstMapActive)
+        if (Input.GetMouseButtonDown(0) && !firstMapActive)
         {
             Vector2 mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
 
@@ -123,9 +141,181 @@ public class CustomMapBuilder : MonoBehaviour
                 (gridPos.x >= currentX && gridPos.x < currentX + 16) &&
                 (gridPos.y <= currentY && gridPos.y > currentY - 16))
             {
-                secondMap.SetTile(gridPos, currTile);
+                adjustedRow = GetAdjustedRow();
+                adjustedCol = GetAdjustedColumn();
+
+                if (isToggled == false)
+                {
+                    adjustedRow = currentRow;
+                    adjustedCol = currentCol;
+                    
+                }
+                //Determine which type of tile is being placed
+
+                //Ports
+                for (int i = 0; i < 9; i++)
+                {
+                    if (currTile == secondMapTiles[i])
+                    {
+                        PlacePort(gridPos);
+                    }
+                }
+
+                //Treasure Ships
+                if (currTile == secondMapTiles[9])
+                {
+                    PlaceTreasureShip(gridPos);
+                }
+
+                //Monsters
+                for (int i = 11; i < 16; i++)
+                {
+                    if (currTile == secondMapTiles[i])
+                    {
+                        PlaceMonster(gridPos);
+                    }
+                }
             }
         }
+
+    }
+
+    private int GetAdjustedRow()
+    {
+        if (isToggled == true)
+        {
+            if (currentRow % 2 == 0)
+            {
+                return currentRow / 2;
+            }
+            else if (currentRow % 2 == 1)
+            {
+                return (currentRow + 1) / 2;
+            }
+        }
+
+        return currentRow;
+    }
+
+    private int GetAdjustedColumn()
+    {
+        if (isToggled == true)
+        {
+            if (currentCol % 2 == 0)
+            {
+                return currentCol / 2;
+            }
+            else if (currentCol % 2 == 1)
+            {
+                return (currentCol + 1) / 2;
+            }
+        }
+
+        return currentCol;
+    }
+
+    private void PlacePort(Vector3Int gridPos)
+    {
+        if (port[adjustedRow, adjustedCol] == false)
+        {
+            ReplaceTile(gridPos);
+            secondMap.SetTile(gridPos, currTile);
+            port[adjustedRow, adjustedCol] = true;
+            Debug.Log("Port Placed.");
+            HomePortConfig(gridPos);     //Ensures only one home port of each color can exist on the map
+        }
+        else
+        {
+            Debug.Log("Port Exists in this tile.");
+        }
+    }
+
+    private void HomePortConfig(Vector3Int gridPos)
+    {
+        for (int i = 0; i < 8; i++)
+        {
+            if (currTile == secondMapTiles[i])
+            {
+                if (homeports[i] == true && secondMap.GetTile(homePos[i]) == secondMapTiles[i])
+                {
+                    secondMap.SetTile(homePos[i], null);
+                    port[homeRow[i], homeCol[i]] = false;
+                    Debug.Log("Homeport Cleared");
+                }
+
+                homeports[i] = true;
+                homeRow[i] = adjustedRow;
+                homeCol[i] = adjustedCol;
+                homePos[i] = gridPos;
+                Debug.Log("Home Port Placed");
+            }
+        }
+    }
+
+    private void PlaceTreasureShip(Vector3Int gridPos)
+    {
+        if (treasureShipCount[adjustedRow, adjustedCol] < 5)
+        {
+            ReplaceTile(gridPos);
+            secondMap.SetTile(gridPos, currTile);
+            treasureShipCount[adjustedRow, adjustedCol]++;
+            Debug.Log("Treasure Ship Placed.");
+        }
+        else
+        {
+            Debug.Log("Too many treasure ships exist in this tile.");
+        }
+    }
+
+    private void PlaceMonster(Vector3Int gridPos)
+    {
+        if (monsterCount[adjustedRow, adjustedCol] < 5)
+        {
+            ReplaceTile(gridPos);
+            secondMap.SetTile(gridPos, currTile);
+            monsterCount[adjustedRow, adjustedCol]++;
+            Debug.Log("Monster Placed.");
+        }
+        else
+        {
+            Debug.Log("Too many monsters exist in this tile.");
+        }
+    }
+
+    private void ReplaceTile(Vector3Int gridPos)
+    {
+        if (secondMap.GetTile(gridPos) == null)
+        {
+            return;
+        }
+
+        //replace a port
+        for (int i = 0; i < 9; i++)
+        {
+            if (secondMap.GetTile(gridPos) ==  secondMapTiles[i])
+            {
+                port[adjustedRow, adjustedCol] = false;
+                Debug.Log("Port Replaced.");
+            }
+        }
+
+        //replace a monster
+        for (int i = 11; i < 16; i++)
+        {
+            if (secondMap.GetTile(gridPos) == secondMapTiles[i])
+            {
+                monsterCount[adjustedRow, adjustedCol]--;
+                Debug.Log("Monster Replaced.");
+            }
+        }
+
+        //replace a treasure ship
+        if (secondMap.GetTile(gridPos) == secondMapTiles[9])
+        {
+            treasureShipCount[adjustedRow, adjustedCol]--;
+            Debug.Log("Treasure Ship Replaced.");
+        }
+
     }
 
     public void CreatePanels(Dropdown menu, bool tiles)
@@ -668,6 +858,8 @@ public class CustomMapBuilder : MonoBehaviour
             currentY = currentY + 8 * (tileNums[0, currentRow - 1] - 1);
 
             SetTileNumbers();
+
+            isToggled = true;
         }
         else
         {
@@ -707,9 +899,9 @@ public class CustomMapBuilder : MonoBehaviour
                 mainCamera.transform.position = new Vector3(pos.x, -479.2f, pos.z);
             }
 
-            
-
             SetTileNumbers();
+
+            isToggled = false;
         }
         
         ProcessTile();
