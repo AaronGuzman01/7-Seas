@@ -1,24 +1,22 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class RandomPosition : MonoBehaviour
 {
-    public HashSet<int> tileX = new HashSet<int>();
-    public HashSet<int> tileY = new HashSet<int>();
-
+    HashSet<string> tilesUsed = new HashSet<string>();
+    Canvas container;
     List<GameObject> ports;
     List<GameObject> monsters;
     List<GameObject> ships;
-    GameObject[] players;
+    List<PlayerShip> players;
 
     Tilemap tilemap;
     int type;
     int count;
     bool found = false;
 
-    public RandomPosition(List<GameObject> mapObects, int type, int count)
+    public RandomPosition(List<GameObject> mapObects, Canvas container, int type, int count)
     {
         if (type == 0)
         {
@@ -35,11 +33,17 @@ public class RandomPosition : MonoBehaviour
 
         this.type = type;
         this.count = count;
+        this.container = container;
     }
 
-    public RandomPosition(GameObject[] players)
+    public RandomPosition(List<PlayerShip> players, List<GameObject> mapObects, Canvas container, int type, int count)
     {
+        ports = mapObects;
+
+        this.type = type;
+        this.count = count;
         this.players = players;
+        this.container = container;
     }
 
     public void SetTilemap(Tilemap map)
@@ -78,19 +82,20 @@ public class RandomPosition : MonoBehaviour
                     positionY = Random.Range(tilePositionY - 16, tilePositionY);
 
                     tryCount++;
-                    objectCount++;
-
-                    if (type == 0)
-                    {
-                        SetPosition(ports, mapTiles, mapObjects, positionX, positionY);
-                    }
-                    else if (type == 1)
+                    
+                    if (type == 1)
                     {
                         SetPosition(monsters, mapTiles, mapObjects, positionX, positionY);
                     }
                     else
                     {
                         SetPosition(ships, mapTiles, mapObjects, positionX, positionY);
+                    }
+
+                    if (found)
+                    {
+                        found = false;
+                        objectCount++;
                     }
                 }
 
@@ -100,14 +105,86 @@ public class RandomPosition : MonoBehaviour
         }
     }
 
+    public void GeneratePortPosition(int[,] mapTiles, int[,] mapObjects) 
+    {
+        int objectCount = 0, tryCount = 0;
+        int tileX, tileY, tilePositionX, tilePositionY;
+        int positionX, positionY;
+
+        foreach (GameObject port in ports)
+        {
+            objectCount++;
+
+            if (!found && objectCount < ports.Count)
+            {
+                while (!found && tryCount < 25)
+                {
+                    tileX = Random.Range(1, 6);
+                    tileY = Random.Range(1, 6);
+
+                    if (!tilesUsed.Contains(tileX.ToString() + ' ' + tileY.ToString()))
+                    {
+                        tilesUsed.Add(tileX.ToString() + ' ' + tileY.ToString());
+
+                        tilePositionX = 16 * tileX;
+                        tilePositionY = 16 * tileY;
+
+                        while (tryCount < 25 && !found)
+                        {
+                            positionX = Random.Range(tilePositionX - 16, tilePositionX);
+                            positionY = Random.Range(tilePositionY - 16, tilePositionY);
+
+                            SetPositionWithObject(port, mapTiles, mapObjects, positionX, positionY);
+
+                            tryCount++;
+                        }
+
+                        tryCount = 0;
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 1; i <= 5; i++)
+                {
+                    for (int j = 1; j <= 5; j++)
+                    {
+                        if (!tilesUsed.Contains(i.ToString() + ' ' + j.ToString()))
+                        {
+                            tilesUsed.Add(i.ToString() + ' ' + j.ToString());
+
+                            tilePositionX = 16 * i;
+                            tilePositionY = 16 * j;
+
+                            while (tryCount < 25 && !found)
+                            {
+                                positionX = Random.Range(tilePositionX - 16, tilePositionX);
+                                positionY = Random.Range(tilePositionY - 16, tilePositionY);
+
+                                SetPositionWithObject(port, mapTiles, mapObjects, positionX, positionY);
+
+                                tryCount++;
+                            }
+
+                            tryCount = 0;
+                        }
+
+                        found = false;
+                    }
+                }
+            }
+
+            found = false;
+        }
+    }
+
     public void GeneratePlayerPosition(int[,] mapTiles, int[,] mapObjects)
     {
 
     }
 
-    public void SetPosition(List<GameObject> objects, int[,] mapTiles, int[,] mapObjects, int x, int y)
+    void SetPosition(List<GameObject> objects, int[,] mapTiles, int[,] mapObjects, int x, int y)
     {
-
         int objectIndex;
 
         objectIndex = Random.Range(0, objects.Count);
@@ -116,15 +193,13 @@ public class RandomPosition : MonoBehaviour
         {
             GameObject gameObject = Instantiate(objects[objectIndex]);
 
+            gameObject.transform.parent = container.transform;
+
             gameObject.SetActive(true);
 
             gameObject.transform.position = tilemap.GetCellCenterWorld(new Vector3Int(-34 + x, (y - 32) * -1, 0));
 
-            if (type == 0)
-            {
-                mapObjects[x, y] = 3;
-            }
-            else if (type == 1)
+            if (type == 1)
             {
                 gameObject.GetComponent<Monstermovement>().enabled = false;
                 gameObject.transform.position = gameObject.transform.position + (Vector3.up / 2);
@@ -137,11 +212,28 @@ public class RandomPosition : MonoBehaviour
 
                 mapObjects[x, y] = 1;
             }
+
+            found = true;
         }
     }
 
-    public void ResetPositions()
+    void SetPositionWithObject(GameObject gameObject, int[,] mapTiles, int[,] mapObjects, int x, int y)
     {
+        if (type == 0 && mapTiles[x, y] < 2 && mapObjects[x, y] == 0)
+        {
+            mapObjects[x, y] = 3; 
+                
+            GameObject newObject = Instantiate(gameObject);
 
+            newObject.transform.parent = container.transform;
+
+            newObject.SetActive(true);
+
+            newObject.transform.position = tilemap.CellToWorld(new Vector3Int(-34 + x, (y - 32) * -1, 0));
+
+            newObject.transform.position = new Vector3(newObject.transform.position.x + 2, 0.97f, newObject.transform.position.z + 2);
+
+            found = true;
+        }
     }
 }

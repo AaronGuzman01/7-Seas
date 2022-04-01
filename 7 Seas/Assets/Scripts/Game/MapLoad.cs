@@ -31,16 +31,22 @@ public class MapLoad : MonoBehaviour
     public GameObject[] ships;
     public Sprite[] mapObjects;
     public Canvas objectContainer;
+    public Canvas portContainer;
+    public Canvas monsterContainer;
+    public Canvas shipContainer;
     public GameObject[] positionTiles;
     public Canvas tiles;
     public Button[] hiddenBtns;
     public Material[] skyBox;
+    public List<Sprite> portImages;
+    public List<GameObject> ports;
     public List<GameObject> treasureShips;
     public List<GameObject> monsters;
     public GameObject arrow;
     public GameObject movingFX;
     public GameObject navMenu;
     public Text[] navTexts;
+    public Image playerImg;
 
     public float time;
     public float degrees;
@@ -91,6 +97,8 @@ public class MapLoad : MonoBehaviour
     int[,] objectsInMap;
 
     RandomPosition objectGenerator;
+    GameObject portModel;
+    List<GameObject> portObjects;
 
     public int[] cams;
     public static int camNum;
@@ -108,6 +116,7 @@ public class MapLoad : MonoBehaviour
         objectsInMap = new int[80, 80];
         shipInfo = new List<PlayerShip>();
         playerNums = new List<int>();
+        portObjects = new List<GameObject>();
         activePlayers = new bool[8];
         diceVals = new int[5];
         cams = new int[8];
@@ -250,6 +259,15 @@ public class MapLoad : MonoBehaviour
             }
         }
 
+        for (int i = 7; i >= 0; i--)
+        {
+            if (activePlayers[i] == false)
+            {
+                portImages.RemoveAt(i);
+                ports.RemoveAt(i);
+            }
+        }
+
         /*
         //Assign active ships and cameras to player numbers
         int j = 0;
@@ -290,11 +308,15 @@ public class MapLoad : MonoBehaviour
 
         maxCams = maxPlayers;
 
-        objectGenerator = new RandomPosition(monsters, 1, 5);
+        objectGenerator = new RandomPosition(shipInfo, ports, portContainer, 0, 1);
+        objectGenerator.SetTilemap(tilemap);
+        objectGenerator.GeneratePortPosition(tilesInMap, objectsInMap);
+
+        objectGenerator = new RandomPosition(monsters, monsterContainer, 1, 5);
         objectGenerator.SetTilemap(tilemap);
         objectGenerator.GeneratePosition(tilesInMap, objectsInMap);
 
-        objectGenerator = new RandomPosition(treasureShips, 2, 5);
+        objectGenerator = new RandomPosition(treasureShips, shipContainer, 2, 5);
         objectGenerator.SetTilemap(tilemap);
         objectGenerator.GeneratePosition(tilesInMap, objectsInMap);
     }
@@ -341,6 +363,7 @@ public class MapLoad : MonoBehaviour
         treasureCurrent.text = "Player Treasure: " + shipInfo[playerIndex].GetCurrentTreasure().ToString();
         treasureTotal.text = "Total Treasure: " + shipInfo[playerIndex].GetTotalTreasure().ToString();
         player.text = "Player: " + (playerIndex + 1).ToString();
+        playerImg.sprite = portImages[playerIndex];
 
         if (rats)
         {
