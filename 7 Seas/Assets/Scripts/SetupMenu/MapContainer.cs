@@ -111,15 +111,17 @@ public class MapContainer : MonoBehaviour {
 
         PlayerPrefs.SetString("Map", map);
 
-        int tile;
+        int tile, space;
 
         for (int i = 0; i < 80; i++)
         {
             for (int j = 0; j < 80; j++)
             {
-                tile = int.Parse(map.Substring(0, 1));
+                space = map.IndexOf(' ');
 
-                map = map.Remove(0, 2);
+                tile = int.Parse(map.Substring(0, space));
+
+                map = map.Remove(0, (map.Substring(0, space).Length) + 1);
 
                 tilemap.SetTile(new Vector3Int(x + i, y + j, 0), tiles[tile]);
             }

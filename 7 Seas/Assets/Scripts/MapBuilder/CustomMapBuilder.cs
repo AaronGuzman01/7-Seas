@@ -681,9 +681,11 @@ public class CustomMapBuilder : MonoBehaviour
         {
             for (int j = 0; j < 80; j++)
             {
-                tile = int.Parse(map.Substring(0, 1));
+                space = map.IndexOf(' ');
 
-                map = map.Remove(0, 2);
+                tile = int.Parse(map.Substring(0, space));
+
+                map = map.Remove(0, (map.Substring(0, space).Length) + 1);
 
                 firstMap.SetTile(new Vector3Int(originX + i, originY - j, 0), firstMapTiles[tile]);
             }
