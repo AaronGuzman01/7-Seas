@@ -15,6 +15,7 @@ public class RandomPosition : MonoBehaviour
     Tilemap tilemap;
     int type;
     int count;
+    int playerIndex = 0;
     bool found = false;
 
     public RandomPosition(List<GameObject> mapObects, Canvas container, int type, int count)
@@ -181,6 +182,7 @@ public class RandomPosition : MonoBehaviour
             }
 
             found = false;
+            playerIndex++;
         }
     }
     public void GeneratePlayerPosition(int[,] mapTiles, int[,] mapObjects)
@@ -190,8 +192,8 @@ public class RandomPosition : MonoBehaviour
 
     public void GenerateSirenPosition(int[,] mapTiles, int[,] mapObjects)
     {
-        int objectCount = 0, tryCount = 0;
-        int tileX, tileY, tilePositionX, tilePositionY;
+        int tryCount = 0;
+        int tilePositionX, tilePositionY;
         int positionX, positionY;
 
         for (int i = 1; i <= 5; i++)
@@ -229,7 +231,7 @@ public class RandomPosition : MonoBehaviour
 
         objectIndex = Random.Range(0, objects.Count);
 
-        if (mapTiles[x, y] < 2 && mapObjects[x, y] == 0)
+        if (mapTiles[x, y] < 2 && mapTiles[x, y] > -1 && mapObjects[x, y] == 0)
         {
             GameObject gameObject = Instantiate(objects[objectIndex]);
 
@@ -261,7 +263,7 @@ public class RandomPosition : MonoBehaviour
     {
         if (type == 0 && mapTiles[x, y] < 2 && mapObjects[x, y] == 0)
         {
-            mapObjects[x, y] = 3; 
+            mapTiles[x, y] = -1; 
                 
             GameObject newObject = Instantiate(gameObject);
 
@@ -270,6 +272,11 @@ public class RandomPosition : MonoBehaviour
             newObject.SetActive(true);
 
             newObject.transform.position = tilemap.CellToWorld(new Vector3Int(-34 + x, (y - 32) * -1, 0));
+
+            if (playerIndex < players.Count)
+            {
+                players[playerIndex].SetPortPosition(tilemap.WorldToCell(newObject.transform.position));
+            }
 
             newObject.transform.position = new Vector3(newObject.transform.position.x + 2, 0.97f, newObject.transform.position.z + 2);
 

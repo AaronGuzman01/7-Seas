@@ -27,6 +27,7 @@ public class MapLoad : MonoBehaviour
     public GameObject[] mainGUI;
     public GameObject[] diceGUI;
     public GameObject[] cameraGUI;
+    public GameObject[] portGUI;
 
     public GameObject[] ships;
     public Sprite[] mapObjects;
@@ -60,6 +61,7 @@ public class MapLoad : MonoBehaviour
 
     HashSet<Vector3Int> positions;
     HashSet<Vector3Int> validPos;
+    HashSet<Vector3Int> portPos;
     HashSet<Vector3Int> playerPos;
     HashSet<Vector3Int> shipPos;
     HashSet<Vector3Int> monsterPos;
@@ -86,6 +88,7 @@ public class MapLoad : MonoBehaviour
     float arrowRot;
     bool posSet = false;
     bool rotate = false;
+    bool port = false;
     bool playerCombat = false;
     bool shipCombat = false;
     bool monsterCombat = false;
@@ -95,8 +98,6 @@ public class MapLoad : MonoBehaviour
     int[,] objectsInMap;
 
     RandomPosition objectGenerator;
-    GameObject portModel;
-    List<GameObject> portObjects;
 
     public int[] cams;
     public static int camNum;
@@ -107,6 +108,7 @@ public class MapLoad : MonoBehaviour
     {
         positions = new HashSet<Vector3Int>();
         validPos = new HashSet<Vector3Int>();
+        portPos = new HashSet<Vector3Int>();
         playerPos = new HashSet<Vector3Int>();
         shipPos = new HashSet<Vector3Int>();
         monsterPos = new HashSet<Vector3Int>();
@@ -114,7 +116,6 @@ public class MapLoad : MonoBehaviour
         objectsInMap = new int[80, 80];
         shipInfo = new List<PlayerShip>();
         playerNums = new List<int>();
-        portObjects = new List<GameObject>();
         activePlayers = new bool[8];
         diceVals = new int[5];
         cams = new int[8];
@@ -327,7 +328,7 @@ public class MapLoad : MonoBehaviour
     {
         MoveShip(players[playerIndex]);
 
-        if (!isMoving && !isRolling && !playerCombat && !shipCombat && !monsterCombat)
+        if (!isMoving && !isRolling && !playerCombat && !shipCombat && !monsterCombat && !port)
         {
             SetGUI(true, mainGUI);
             SetGUI(true, cameraGUI);
@@ -338,28 +339,34 @@ public class MapLoad : MonoBehaviour
             SetGUI(false, cameraGUI);
         }
 
-        if (diceIndex >= 3)
-        {
-            ClearActiveTiles();
-
-            diceSet = false;
-            diceIndex = 0;
-        }
-
         if (continueGame)
         {
             SetGUI(true, diceGUI);
+            SetGUI(false, portGUI);
 
             main.enabled = true;
             tiles.gameObject.SetActive(true);
-            diceSet = true;
             clickable = true;
+            diceSet = true;
+            port = false;
             playerCombat = false;
             shipCombat = false;
             monsterCombat = false;
             continueGame = false;
             RenderSettings.skybox = skyBox[0];
             CannonMinigame.DestroyObjects();
+
+            if (currArrow)
+            {
+                currArrow.SetActive(true);
+            }
+        }
+
+        if (diceIndex >= 3)
+        {
+            ClearActiveTiles();
+
+            diceSet = false;
         }
 
         treasureCurrent.text = "Player Treasure: " + shipInfo[playerIndex].GetCurrentTreasure().ToString();
@@ -585,7 +592,27 @@ public class MapLoad : MonoBehaviour
 
                     ResultsManager.players[0] = shipInfo[playerIndex];
 
-                    if (playerCombat)
+                    if (port)
+                    {
+                        SetGUI(false, diceGUI);
+
+                        tiles.gameObject.SetActive(false);
+
+                        if (currArrow)
+                        {
+                            currArrow.SetActive(false);
+                        }
+
+                        if (tilemap.WorldToCell(currPos).Equals(shipInfo[playerIndex].GetPortPosition()))
+                        {
+                            portGUI[0].SetActive(true);
+                        }
+                        else
+                        {
+                            portGUI[1].SetActive(true);
+                        }
+                    }
+                    else if (playerCombat)
                     {
                         CannonMinigame.setPlayer = true;
                         CannonMinigame.currShip = 1;
@@ -665,6 +692,7 @@ public class MapLoad : MonoBehaviour
 
         positions.Clear();
         playerPos.Clear();
+        portPos.Clear();
         shipPos.Clear();
         monsterPos.Clear();
         validPos.Clear();
@@ -724,6 +752,12 @@ public class MapLoad : MonoBehaviour
                         {
                             objectsInMap[prevGridPos.x + 34, (prevGridPos.y - 32) * -1] += 1;
                             objectsInMap[gridPos.x + 34, (gridPos.y - 32) * -1] -= 1;
+                        }
+
+                        if (portPos.Contains(gridPos))
+                        {
+                            port = true;
+                            clickable = false;
                         }
 
                         if (shipPos.Contains(gridPos))
@@ -811,8 +845,6 @@ public class MapLoad : MonoBehaviour
 
                         moveCount = 0;
                     }
-
-                    Debug.Log("Nav Moves: " + diceVals[diceIndex]);
                 }
 
                 if (diceIndex == 2 && positions.Count == 0 && !isMoving && !posSet)
@@ -856,7 +888,7 @@ public class MapLoad : MonoBehaviour
                 navTexts[1].text = (diceVals[diceIndex] - moveCount).ToString();
             }
         }
-        else
+        else if (diceIndex == 0 && diceVals[diceIndex] != 1)
         {
             navTexts[1].text = 0.ToString();
         }
@@ -902,7 +934,11 @@ public class MapLoad : MonoBehaviour
         GameObject temp;
         Transform transform;
 
-        if (objectPlaced < 0 || objectPlaced > 0)
+        if (tilePlaced < 0)
+        {
+            temp = Instantiate(positionTiles[2], tiles.transform);
+        }
+        else if (objectPlaced < 0 || objectPlaced > 0)
         {
             temp = Instantiate(positionTiles[1], tiles.transform);
         }
@@ -911,11 +947,15 @@ public class MapLoad : MonoBehaviour
             temp = Instantiate(positionTiles[0], tiles.transform);
         }
 
-        if (tilePlaced <= 1 || objectPlaced < 0)
+        if ((tilePlaced <= 1 && tilePlaced > -1) || (objectPlaced < 0 && objectPlaced > -2 && tilePlaced > -1) || (objectPlaced == 0 && tilePlaced == -1))
         {
             validPos.Add(pos);
 
-            if (objectPlaced == -1)
+            if (tilePlaced == -1)
+            {
+                portPos.Add(pos);
+            }
+            else if (objectPlaced == -1)
             {
                 playerPos.Add(pos);
             }

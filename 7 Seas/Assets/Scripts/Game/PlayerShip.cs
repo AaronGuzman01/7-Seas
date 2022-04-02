@@ -9,6 +9,7 @@ public class PlayerShip : MonoBehaviour
     string shipName;
     Vector3Int currPosition;
     Vector3Int prevPosition;
+    Vector3Int portPosition;
     int[] masts;
     int[] cannons;
     int crew;
@@ -71,6 +72,11 @@ public class PlayerShip : MonoBehaviour
         prevPosition = pos;
     }
 
+    public void SetPortPosition(Vector3Int pos)
+    {
+        portPosition = pos;
+    }
+
     public GameObject GetShip()
     {
         return ship;
@@ -84,6 +90,11 @@ public class PlayerShip : MonoBehaviour
     public Vector3Int GetCurrentPosition()
     {
         return currPosition;
+    }
+
+    public Vector3Int GetPortPosition()
+    {
+        return portPosition;
     }
 
     public int[] GetCannons()
