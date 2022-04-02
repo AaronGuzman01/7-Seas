@@ -789,7 +789,7 @@ public class GameLoop : MonoBehaviour
 
             //gui background
             GUI.backgroundColor = new Color(0, 0, 0, 1);
-            GUI.Button(new Rect(0, 0, offset * diceManager.resourceDiceArray.Count + 10, Screen.height), "");
+            //GUI.Button(new Rect(0, 0, offset * diceManager.resourceDiceArray.Count + 10, Screen.height), "");
 
             //debug labels
             GUILayout.Label("FPS: " + (int)(1.0f / Time.smoothDeltaTime), style);
@@ -825,6 +825,7 @@ public class GameLoop : MonoBehaviour
                 GUILayout.Label(str, style);
             }
 
+            /*
             //show our entire dice cup dice
             foreach (var item in diceManager.shipDiceArray)
             {
@@ -876,7 +877,7 @@ public class GameLoop : MonoBehaviour
                 m += offset;
             }
 
-
+            */
 
 
         }

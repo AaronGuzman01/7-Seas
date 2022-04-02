@@ -20,6 +20,7 @@ public class CannonMinigame : MonoBehaviour
     public static bool setTreasure;
     public static bool setMonster;
 
+    public Text damage;
 
     static GameObject currTreasureShip;
     static GameObject monster;
@@ -49,14 +50,15 @@ public class CannonMinigame : MonoBehaviour
 
             target.SetActive(true);
 
-            ButtonManager.GetComponent<ButtonFunctionality>().SetEnemy(ships[1]);
-
             ships[1].AddComponent<ship_movement>();
             ships[1].GetComponent<ship_movement>().height = 1010;
 
             ships[0].SetActive(false);
 
+            scoreUpdate.absorb = shipsInfo[1].GetDamage();
             PlayerPrefs.SetString("Enemy", "Player");
+
+            ButtonManager.GetComponent<ButtonFunctionality>().SetEnemy(ships[1]);
 
             RenderSettings.skybox = skyBox[0];
         }
@@ -74,6 +76,8 @@ public class CannonMinigame : MonoBehaviour
 
             ships[0].AddComponent<ship_movement>();
             ships[0].GetComponent<ship_movement>().height = 1010;
+
+            scoreUpdate.absorb = shipsInfo[0].GetDamage();
 
             ButtonManager.GetComponent<ButtonFunctionality>().SetEnemy(ships[0]);
 

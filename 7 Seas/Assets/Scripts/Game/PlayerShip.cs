@@ -90,4 +90,9 @@ public class PlayerShip : MonoBehaviour
     {
         return cannons;
     }
+
+    public int GetDamage()
+    {
+        return damage;
+    }
 }

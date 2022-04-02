@@ -137,7 +137,7 @@ public class RoundEvents : MonoBehaviour
             {
                 player.ghostDice = 1;
             }
-            diceManager.PunishPlayer();
+            //diceManager.PunishPlayer();
         }
         else
         {

@@ -28,7 +28,7 @@ public class EndTurnEvents : MonoBehaviour {
         eventWheel.ResetEventWheel();
 
         gameLoop.UpdateUI();
-        dicemanager.AddFog();
+        //dicemanager.AddFog();
         gameLoop.roundEvents.CheckFog();
         playerMove.windTotal = playerMove.GetWindCount();
         //playerMove.DisplayWindUI();
