@@ -199,11 +199,11 @@ public class PlayerMove : MonoBehaviour
     public bool CheckIsParrot(Vector2 playerV, Vector2 clickV)
     {
         
-        var parrotDiceName = diceManager.GetComponent<DiceManager>().colorDiceSprite.GetComponent<Image>().sprite.name;
+        //var parrotDiceName = diceManager.GetComponent<DiceManager>().colorDiceSprite.GetComponent<Image>().sprite.name;
         foreach (var item in gameLoop.DiceList.GetComponent<MasterDiceList>().diceClassList)
         {
             //find parrot sprite needed to show from dice
-            if (parrotDiceName == item.DiceImage.name)
+            //if (parrotDiceName == item.DiceImage.name)
             {
                 
 

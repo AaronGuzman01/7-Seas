@@ -6,7 +6,9 @@ using UnityEngine.UI;
 
 public class scoreUpdate : MonoBehaviour
 {
+    public static int absorb = 0;
     public Text MyText;
+    public Text absorbText;
     public int score;
     int highestScore;
     public PointsManager manager;
@@ -15,12 +17,9 @@ public class scoreUpdate : MonoBehaviour
     private ParticleSystem explosionEffect;
     private AudioSource explosionSFX;
     
-
-
     // Start is called before the first frame update
     void Start()
     {
-        
         score = 0;
 
         manager = GetComponent<PointsManager>();
@@ -50,8 +49,14 @@ public class scoreUpdate : MonoBehaviour
             
         }
         */
-
-        if (other.CompareTag("+1") && (this.hit == false))
+        if (PlayerPrefs.GetString("Enemy").Equals("Player") && absorb > 0 && 
+            (other.CompareTag("+1") || other.CompareTag("+2") || other.CompareTag("+3") || other.CompareTag("+4")))
+        {
+            absorb--;
+            absorbText.text = "Damage Absorbed: " + other.tag.Substring(1);
+            absorbText.gameObject.SetActive(true);
+        }
+        else if (other.CompareTag("+1") && (this.hit == false))
         {
             explosion.transform.position = transform.position;
             explosionEffect.startSize = 1;

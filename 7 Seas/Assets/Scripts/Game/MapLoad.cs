@@ -30,10 +30,7 @@ public class MapLoad : MonoBehaviour
 
     public GameObject[] ships;
     public Sprite[] mapObjects;
-    public Canvas objectContainer;
-    public Canvas portContainer;
-    public Canvas monsterContainer;
-    public Canvas shipContainer;
+    public Canvas[] objectContainers;
     public GameObject[] positionTiles;
     public Canvas tiles;
     public Button[] hiddenBtns;
@@ -42,6 +39,7 @@ public class MapLoad : MonoBehaviour
     public List<GameObject> ports;
     public List<GameObject> treasureShips;
     public List<GameObject> monsters;
+    public GameObject sirenObj;
     public GameObject arrow;
     public GameObject movingFX;
     public GameObject navMenu;
@@ -301,24 +299,28 @@ public class MapLoad : MonoBehaviour
         SetTreasureShips();
         SetMonsters(); 
 
-        DisplayMoves(1);
-
         //Testing for switching sky
         //StartCoroutine(ChangeSky());
 
         maxCams = maxPlayers;
 
-        objectGenerator = new RandomPosition(shipInfo, ports, portContainer, 0, 1);
+        objectGenerator = new RandomPosition(shipInfo, ports, objectContainers[1], 0, 1);
         objectGenerator.SetTilemap(tilemap);
         objectGenerator.GeneratePortPosition(tilesInMap, objectsInMap);
 
-        objectGenerator = new RandomPosition(monsters, monsterContainer, 1, 5);
+        objectGenerator = new RandomPosition(treasureShips, objectContainers[2], 2, 5);
         objectGenerator.SetTilemap(tilemap);
         objectGenerator.GeneratePosition(tilesInMap, objectsInMap);
 
-        objectGenerator = new RandomPosition(treasureShips, shipContainer, 2, 5);
+        objectGenerator = new RandomPosition(monsters, objectContainers[3], 1, 5);
         objectGenerator.SetTilemap(tilemap);
         objectGenerator.GeneratePosition(tilesInMap, objectsInMap);
+
+        objectGenerator = new RandomPosition(sirenObj, objectContainers[4], 3, 1);
+        objectGenerator.SetTilemap(tilemap);
+        objectGenerator.GenerateSirenPosition(tilesInMap, objectsInMap);
+
+        DisplayMoves(1);
     }
 
     void Update()
@@ -504,7 +506,7 @@ public class MapLoad : MonoBehaviour
         GameObject newObject = new GameObject();
         SpriteRenderer sr = newObject.AddComponent(typeof(SpriteRenderer)) as SpriteRenderer;
 
-        newObject.transform.parent = objectContainer.transform;
+        newObject.transform.parent = objectContainers[0].transform;
 
         sr.sprite = mapObjects[index];
 

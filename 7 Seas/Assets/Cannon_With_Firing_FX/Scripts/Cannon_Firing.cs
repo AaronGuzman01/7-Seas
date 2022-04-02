@@ -66,6 +66,7 @@ public class Cannon_Firing : MonoBehaviour
     private int[] shortLongRange = new int[15] { 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0 };
     public Text rangeType;
     public Text cannonShots;
+    public Text absorb;
     private int[] cannonType =  new int[5];
 
     void Start()
@@ -230,6 +231,7 @@ public class Cannon_Firing : MonoBehaviour
         {
             if (cannonfired != 1)
             {
+                absorb.gameObject.SetActive(false);
 
                 if (fuseLit != 1)
                 {
@@ -333,6 +335,8 @@ public class Cannon_Firing : MonoBehaviour
             //Debug.Log("1)Short range: true");
             GameObject cannonBallCopy = Instantiate(cannonBall, shotPos.position, shotPos.rotation) as GameObject;
 
+            cannonBallCopy.GetComponent<scoreUpdate>().absorbText = absorb;
+
             cannonBallRB = cannonBallCopy.GetComponent<Rigidbody>();
             cannonBallRB.AddForce(shotPos.transform.forward * (firePower * .5f));
 
@@ -343,6 +347,8 @@ public class Cannon_Firing : MonoBehaviour
             //Debug.Log("1)Cannon number " + cannonNumber);
             //Debug.Log("1)Short range: true");
             GameObject cannonBallCopy = Instantiate(cannonBall, shotPos.position, shotPos.rotation) as GameObject;
+
+            cannonBallCopy.GetComponent<scoreUpdate>().absorbText = absorb;
 
             cannonBallRB = cannonBallCopy.GetComponent<Rigidbody>();
             cannonBallRB.AddForce(shotPos.transform.forward * firePower);

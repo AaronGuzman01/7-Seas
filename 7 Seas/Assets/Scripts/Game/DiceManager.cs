@@ -6,29 +6,23 @@ using UnityEngine;
 public class DiceManager : MonoBehaviour {
     public int num = 0;
     public int ghostDiceTotal = 0;
-    public GameObject shipDiceSprite;
-    public GameObject resourceDiceSprite;
+
     public GameObject basicDiceSprite;
     public GameObject movementDiceSprite;
     public GameObject windDiceSprite;
     public GameObject rewardDiceSprite;
     public GameObject hazardDiceSprite;
-    public GameObject colorDiceSprite;
 
     public GameObject navMenu;
 
     public InventorySystem inventorySystem;
     public GameLoop gameLoop;
 
-    public List<Sprite> shipDiceArray;
-    public List<Sprite> resourceDiceArray;
     public List<Sprite> basicDiceArray;
     public List<Sprite> movementDiceArray;
     public List<Sprite> windDiceArray;
     public List<Sprite> rewardDiceArray;
     public List<Sprite> hazardDiceArray;
-    public List<Sprite> colorDiceArray;
-    public List<Sprite> parrotTileArray;
 
     public GameObject diceImage;
     public Texture diceDefaultTexture;
@@ -48,6 +42,15 @@ public class DiceManager : MonoBehaviour {
 
     List<int> diceVals = new List<int>();
 
+    int[] navDist;
+    int[] moveDist;
+    int[] windDist;
+    int[] creatureDist;
+
+    List<int> nav = new List<int>();
+    List<int> move = new List<int>();
+    List<int> wind = new List<int>();
+    List<int> creature = new List<int>();
 
     // Use this for initialization
     void Awake()
@@ -57,6 +60,33 @@ public class DiceManager : MonoBehaviour {
         diceDefaultTexture = diceImage.transform.GetChild(2).GetComponent<MeshRenderer>().material.mainTexture;
 
         ResetDice();
+
+        if (PlayerPrefs.GetString("Cup") == "Seaman")
+        {
+            navDist = Seaman.nav;
+            moveDist = Seaman.nav;
+            windDist = Seaman.nav;
+            creatureDist = Seaman.nav;
+        }
+        else if (PlayerPrefs.GetString("Cup") == "Captain")
+        {
+            navDist = Captain.nav;
+            moveDist = Captain.move;
+            windDist = Captain.wind;
+            creatureDist = Captain.creature;
+        }
+        else
+        {
+            navDist = Swabie.nav;
+            moveDist = Swabie.move;
+            windDist = Swabie.wind;
+            creatureDist = Swabie.creature;
+        }
+
+        SetDistribution(navDist, nav);
+        SetDistribution(moveDist, move);
+        SetDistribution(windDist, wind);
+        SetDistribution(creatureDist, creature);
 
         /*
         //if the dice cup menu setting files exist, then load them into the gameboard arrays
@@ -98,6 +128,21 @@ public class DiceManager : MonoBehaviour {
         }
         */
     }
+    
+    void SetDistribution(int[] distribution, List<int> dice)
+    {
+        int count = 0;
+
+        foreach (int amount in distribution)
+        {
+            for (int i = 0; i < amount; i++)
+            {
+                dice.Add(count);
+            }
+
+            count++;
+        }
+    }
 
     void ResetDice()
     {
@@ -117,8 +162,6 @@ public class DiceManager : MonoBehaviour {
         ResetDice();
 
         ghostDiceTotal = 0;
-
-        diceImage.SetActive(true);
 
         diceImage.transform.GetChild(2).GetComponent<MeshRenderer>().material.mainTexture = diceDefaultTexture;
 
@@ -237,7 +280,26 @@ public class DiceManager : MonoBehaviour {
 
         diceStart = false;
 
-        num = Random.Range(0, faces.Count);
+        if (diceIndex == 0)
+        {
+            num = GetRandomFace(move);
+        }
+        else if (diceIndex == 1)
+        {
+            num = GetRandomFace(nav);
+        }
+        else if (diceIndex == 2)
+        {
+            num = GetRandomFace(wind);
+        }
+        else if (diceIndex == 4)
+        {
+            num = GetRandomFace(creature);
+        }
+        else
+        {
+            num = Random.Range(0, faces.Count);
+        }
 
         if (num.Equals(faces.Count - 1) && diceIndex != 3)
         {
@@ -327,6 +389,14 @@ public class DiceManager : MonoBehaviour {
         }
     }
 
+    int GetRandomFace(List<int> distribution)
+    {
+        int index = Random.Range(0, distribution.Count);
+
+        return distribution[index];
+    }
+
+    /*
     void AddRats()
     {
         foreach (var item in inventorySystem.GetComponent<InventorySystem>().ResourceDice)
@@ -455,4 +525,5 @@ public class DiceManager : MonoBehaviour {
             Debug.Log("You Lose Your Turn!");
         }     
     }
-}
+    */
+    }
