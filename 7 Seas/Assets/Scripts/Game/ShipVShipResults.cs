@@ -27,7 +27,7 @@ public class ShipVShipResults : MonoBehaviour
                 WinnerText.text = "Player " + ResultsManager.players[0].GetPlayerNum().ToString() + " Wins!".ToUpper();
                 WinnerResults.text = "Player " + ResultsManager.players[0].GetPlayerNum().ToString() + " gets: ".ToUpper() + results + " gold!".ToUpper();
 
-                ResultsManager.players[0].AddTreasure(results);
+                ResultsManager.players[0].AddToTreasure(results);
                 ResultsManager.ships[0].SetActive(true);
             }
             else if (P1Score < P2Score)
@@ -35,7 +35,7 @@ public class ShipVShipResults : MonoBehaviour
                 WinnerText.text = "Player " + ResultsManager.players[1].GetPlayerNum().ToString() + " Wins!".ToUpper();
                 WinnerResults.text = "Player " + ResultsManager.players[1].GetPlayerNum().ToString() + " gets: ".ToUpper() + results + " gold!".ToUpper();
 
-                ResultsManager.players[1].AddTreasure(results);
+                ResultsManager.players[1].AddToTreasure(results);
                 ResultsManager.ships[1].SetActive(true);
             }
             else

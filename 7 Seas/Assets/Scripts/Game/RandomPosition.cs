@@ -44,12 +44,13 @@ public class RandomPosition : MonoBehaviour
         this.container = container;
     }
 
-    public RandomPosition(GameObject siren, Canvas container, int type, int count)
+    public RandomPosition(List<PlayerShip> players, GameObject siren, Canvas container, int type, int count)
     {
         this.siren = siren;
 
         this.type = type;
         this.count = count;
+        this.players = players;
         this.container = container;
     }
 
@@ -295,6 +296,10 @@ public class RandomPosition : MonoBehaviour
             newObject.transform.position = tilemap.GetCellCenterWorld(new Vector3Int(-34 + x, (y - 32) * -1, 0));
 
             newObject.transform.position = newObject.transform.position + new Vector3(0, 1.2f, 0);
+
+            newObject.GetComponent<Siren>().SetPlayers(players);
+            newObject.GetComponent<Siren>().SetBounds((-34 + x) - 3, ((y - 32) * -1) + 3, (-34 + x) + 3, ((y - 32) * -1) - 3);
+            newObject.GetComponent<Siren>().SetPosition(tilemap.WorldToCell(newObject.transform.position));
 
             found = true;
         }

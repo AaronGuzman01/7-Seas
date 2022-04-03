@@ -14,7 +14,7 @@ public class ShipvTreasureResults : MonoBehaviour
 
             GoldEarned.text = "GOLD EARNED: " + PlayerPrefs.GetInt("Treasure Score");
 
-            ResultsManager.players[0].AddTreasure(PlayerPrefs.GetInt("Treasure Score"));
+            ResultsManager.players[0].AddToTreasure(PlayerPrefs.GetInt("Treasure Score"));
         }
     }
 
