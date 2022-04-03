@@ -15,11 +15,11 @@ C:/Users/aaron/OneDrive/Documents/Git Hub/7-Seas-Game/7-Seas/7 Seas
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-60355
+52876
 Successfully changed project path to: C:/Users/aaron/OneDrive/Documents/Git Hub/7-Seas-Game/7-Seas/7 Seas
 C:/Users/aaron/OneDrive/Documents/Git Hub/7-Seas-Game/7-Seas/7 Seas
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 222.53 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 299.95 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2021.1.23f1 (b50729e604a9)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2021.1.23f1/Editor/Data/Resources/UnitySubsystems
@@ -36,92 +36,92 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2021.1.23f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2021.1.23f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2021.1.23f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56624
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56748
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2021.1.23f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.002731 seconds.
+Registered in 0.003774 seconds.
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 216.43 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 202.66 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  3.622 seconds
+- Completed reload, in  4.722 seconds
 Domain Reload Profiling:
-	ReloadAssembly (3623ms)
-		BeginReloadAssembly (102ms)
+	ReloadAssembly (4723ms)
+		BeginReloadAssembly (159ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (0ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
 			CreateAndSetChildDomain (1ms)
-		EndReloadAssembly (900ms)
-			LoadAssemblies (99ms)
+		EndReloadAssembly (1204ms)
+			LoadAssemblies (155ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (328ms)
+			SetupTypeCache (618ms)
 			ReleaseScriptCaches (0ms)
-			RebuildScriptCaches (56ms)
-			SetupLoadedEditorAssemblies (439ms)
+			RebuildScriptCaches (45ms)
+			SetupLoadedEditorAssemblies (438ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (11ms)
+				InitializePlatformSupportModulesInManaged (8ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (217ms)
+				RefreshPlugins (203ms)
 				BeforeProcessingInitializeOnLoad (2ms)
-				ProcessInitializeOnLoadAttributes (159ms)
-				ProcessInitializeOnLoadMethodAttributes (50ms)
+				ProcessInitializeOnLoadAttributes (166ms)
+				ProcessInitializeOnLoadMethodAttributes (59ms)
 				AfterProcessingInitializeOnLoad (0ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
 			AwakeInstancesAfterBackupRestoration (0ms)
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.009852 seconds.
+Registered in 0.016407 seconds.
 Begin MonoManager ReloadAssembly
 Symbol file LoadedFromMemory doesn't match image C:\Users\aaron\OneDrive\Documents\Git Hub\7-Seas-Game\7-Seas\7 Seas\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
 Symbol file LoadedFromMemory doesn't match image C:\Users\aaron\OneDrive\Documents\Git Hub\7-Seas-Game\7-Seas\7 Seas\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 5.28 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 1.47 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  2.087 seconds
+- Completed reload, in  1.652 seconds
 Domain Reload Profiling:
-	ReloadAssembly (2088ms)
-		BeginReloadAssembly (218ms)
+	ReloadAssembly (1653ms)
+		BeginReloadAssembly (215ms)
 			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (8ms)
+			DisableScriptedObjects (7ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
 			CreateAndSetChildDomain (28ms)
-		EndReloadAssembly (1719ms)
-			LoadAssemblies (160ms)
+		EndReloadAssembly (1364ms)
+			LoadAssemblies (122ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (599ms)
+			SetupTypeCache (515ms)
 			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (107ms)
-			SetupLoadedEditorAssemblies (668ms)
+			RebuildScriptCaches (82ms)
+			SetupLoadedEditorAssemblies (520ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (7ms)
+				InitializePlatformSupportModulesInManaged (6ms)
 				SetLoadedEditorAssemblies (1ms)
-				RefreshPlugins (6ms)
-				BeforeProcessingInitializeOnLoad (151ms)
-				ProcessInitializeOnLoadAttributes (482ms)
-				ProcessInitializeOnLoadMethodAttributes (17ms)
+				RefreshPlugins (2ms)
+				BeforeProcessingInitializeOnLoad (106ms)
+				ProcessInitializeOnLoadAttributes (381ms)
+				ProcessInitializeOnLoadMethodAttributes (18ms)
 				AfterProcessingInitializeOnLoad (6ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (8ms)
+			AwakeInstancesAfterBackupRestoration (9ms)
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
 Shader 'Outlined/Silhouetted Bumped Mobile': fallback shader 'Outlined/Silhouetted Diffuse' not found
 Launched and connected shader compiler UnityShaderCompiler.exe after 0.07 seconds
-Refreshing native plugins compatible for Editor in 1.47 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 2.64 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 3994 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 151.4 MB.
-System memory in use after: 151.5 MB.
+System memory in use before: 151.5 MB.
+System memory in use after: 151.7 MB.
 
 Unloading 56 unused Assets to reduce memory usage. Loaded Objects now: 4457.
-Total: 5.761900 ms (FindLiveObjects: 0.541300 ms CreateObjectMapping: 0.264600 ms MarkObjects: 4.808400 ms  DeleteObjects: 0.145600 ms)
+Total: 6.378300 ms (FindLiveObjects: 0.529100 ms CreateObjectMapping: 0.260800 ms MarkObjects: 5.335800 ms  DeleteObjects: 0.250700 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
@@ -138,62 +138,56 @@ AssetImportParameters requested are different than current active one (requested
 Received Import Request.
   path: Assets/Scripts/Game/MapLoad.cs
   artifactKey: Guid(6d8fb7cb4c4fe6d4f903f8234d0b4557) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scripts/Game/MapLoad.cs using Guid(6d8fb7cb4c4fe6d4f903f8234d0b4557) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6f8aa98c3890e98f4a23ba571e7ca958') in 0.046109 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 45.638102 seconds.
-  path: Assets/Scripts/Game/MapLoad.cs
-  artifactKey: Guid(6d8fb7cb4c4fe6d4f903f8234d0b4557) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scripts/Game/MapLoad.cs using Guid(6d8fb7cb4c4fe6d4f903f8234d0b4557) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '959767ae1a6c7239aa94bf90938452a8') in 0.006112 seconds 
+Start importing Assets/Scripts/Game/MapLoad.cs using Guid(6d8fb7cb4c4fe6d4f903f8234d0b4557) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8b9c82fe128e428ac1aeeacb8a8f9f46') in 0.042373 seconds 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.007720 seconds.
+Registered in 0.007532 seconds.
 Begin MonoManager ReloadAssembly
 Symbol file LoadedFromMemory doesn't match image C:\Users\aaron\OneDrive\Documents\Git Hub\7-Seas-Game\7-Seas\7 Seas\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
 Symbol file LoadedFromMemory doesn't match image C:\Users\aaron\OneDrive\Documents\Git Hub\7-Seas-Game\7-Seas\7 Seas\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 1.41 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 1.38 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.383 seconds
+- Completed reload, in  1.355 seconds
 Domain Reload Profiling:
-	ReloadAssembly (1383ms)
-		BeginReloadAssembly (153ms)
+	ReloadAssembly (1355ms)
+		BeginReloadAssembly (151ms)
 			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (8ms)
+			DisableScriptedObjects (7ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (50ms)
-		EndReloadAssembly (1156ms)
-			LoadAssemblies (119ms)
+			CreateAndSetChildDomain (48ms)
+		EndReloadAssembly (1133ms)
+			LoadAssemblies (109ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (418ms)
+			SetupTypeCache (451ms)
 			ReleaseScriptCaches (2ms)
-			RebuildScriptCaches (55ms)
-			SetupLoadedEditorAssemblies (426ms)
+			RebuildScriptCaches (59ms)
+			SetupLoadedEditorAssemblies (385ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (6ms)
-				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (2ms)
-				BeforeProcessingInitializeOnLoad (70ms)
-				ProcessInitializeOnLoadAttributes (327ms)
-				ProcessInitializeOnLoadMethodAttributes (14ms)
-				AfterProcessingInitializeOnLoad (7ms)
+				InitializePlatformSupportModulesInManaged (5ms)
+				SetLoadedEditorAssemblies (1ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (72ms)
+				ProcessInitializeOnLoadAttributes (287ms)
+				ProcessInitializeOnLoadMethodAttributes (13ms)
+				AfterProcessingInitializeOnLoad (5ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (11ms)
+			AwakeInstancesAfterBackupRestoration (8ms)
 Platform modules already initialized, skipping
 Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(589824) extendedPlatform(0)
 Shader 'Outlined/Silhouetted Bumped Mobile': fallback shader 'Outlined/Silhouetted Diffuse' not found
-Refreshing native plugins compatible for Editor in 2.12 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 1.42 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 3958 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 147.4 MB.
-System memory in use after: 147.6 MB.
+System memory in use before: 147.5 MB.
+System memory in use after: 147.7 MB.
 
 Unloading 47 unused Assets to reduce memory usage. Loaded Objects now: 4461.
-Total: 7.176400 ms (FindLiveObjects: 0.554900 ms CreateObjectMapping: 0.625800 ms MarkObjects: 5.885100 ms  DeleteObjects: 0.108700 ms)
+Total: 4.555600 ms (FindLiveObjects: 0.433200 ms CreateObjectMapping: 0.168100 ms MarkObjects: 3.852900 ms  DeleteObjects: 0.099100 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
