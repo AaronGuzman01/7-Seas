@@ -992,7 +992,7 @@ public class MapLoad : MonoBehaviour
     void SetSelected(Vector3Int pos)
     {
         if ((pos.x + 34 < 80) && ((pos.y - 32) * -1) < 80 &&
-            (pos.x + 34 > 0) && ((pos.y - 32) * -1) > 80) {
+            (pos.x + 34 > 0) && ((pos.y - 32) * -1) > 0) {
             int tilePlaced = tilesInMap[pos.x + 34, (pos.y - 32) * -1];
             int objectPlaced = objectsInMap[pos.x + 34, (pos.y - 32) * -1];
 
