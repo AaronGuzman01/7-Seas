@@ -12,9 +12,9 @@ public class PlayerShip : MonoBehaviour
     Vector3Int portPosition;
     int[] masts;
     int[] cannons;
-    int crew;
-    int treasure;
-    int damage;
+    int crew = 0;
+    int treasure = 1;
+    int damage = 0;
 
     public PlayerShip (int num, GameObject ship, int[] masts, int[] cannons, int crew, int treasure, int damage)
     {
@@ -40,9 +40,16 @@ public class PlayerShip : MonoBehaviour
         currTreasure = amount;
     }
 
-    public void AddTreasure(float amount)
+    public void AddToTreasure(float amount)
     {
-        currTreasure += amount;
+        if (currTreasure + amount > treasure)
+        {
+            currTreasure = treasure;
+        }
+        else
+        {
+            currTreasure += amount;
+        }
     }
 
     public float GetCurrentTreasure()
@@ -53,6 +60,11 @@ public class PlayerShip : MonoBehaviour
     public float GetTotalTreasure()
     {
         return totalTreasure;
+    }
+
+    public float GetTreasureLimit()
+    {
+        return treasure;
     }
 
     public void DepositTreasure()

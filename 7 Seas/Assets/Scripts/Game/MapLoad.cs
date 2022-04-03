@@ -9,6 +9,7 @@ public class MapLoad : MonoBehaviour
 {
     public static bool[] activePlayers;
 
+    public static List<int> playersHit = new List<int>();
     public static bool isMoving;
     public static bool isRolling;
     private Vector3 original;
@@ -20,6 +21,7 @@ public class MapLoad : MonoBehaviour
     public Text toggleText;
     public Text treasureGoal;
     public Text treasureTotal;
+    public Text treasureLimit;
     public Text treasureCurrent;
     public Text player;
 
@@ -28,11 +30,13 @@ public class MapLoad : MonoBehaviour
     public GameObject[] diceGUI;
     public GameObject[] cameraGUI;
     public GameObject[] portGUI;
+    public Button[] skipButtons;
 
     public GameObject[] ships;
     public Sprite[] mapObjects;
     public Canvas[] objectContainers;
     public GameObject[] positionTiles;
+    public GameObject[] gameTiles;
     public Canvas tiles;
     public Button[] hiddenBtns;
     public Material[] skyBox;
@@ -45,6 +49,7 @@ public class MapLoad : MonoBehaviour
     public GameObject movingFX;
     public GameObject navMenu;
     public Text[] navTexts;
+    public Text[] sextantTexts;
     public Image playerImg;
 
     public float time;
@@ -92,6 +97,7 @@ public class MapLoad : MonoBehaviour
     bool playerCombat = false;
     bool shipCombat = false;
     bool monsterCombat = false;
+    bool movingSkip = false;
     Vector3 currPos;
 
     int[,] tilesInMap;
@@ -298,7 +304,7 @@ public class MapLoad : MonoBehaviour
 
         SetPlayerShips();
         SetTreasureShips();
-        SetMonsters(); 
+        SetMonsters();
 
         //Testing for switching sky
         //StartCoroutine(ChangeSky());
@@ -317,15 +323,23 @@ public class MapLoad : MonoBehaviour
         objectGenerator.SetTilemap(tilemap);
         objectGenerator.GeneratePosition(tilesInMap, objectsInMap);
 
-        objectGenerator = new RandomPosition(sirenObj, objectContainers[4], 3, 1);
+        objectGenerator = new RandomPosition(shipInfo, sirenObj, objectContainers[4], 3, 1);
         objectGenerator.SetTilemap(tilemap);
         objectGenerator.GenerateSirenPosition(tilesInMap, objectsInMap);
-
-        DisplayMoves(1);
     }
 
     void Update()
     {
+        if (playersHit.Count > 0)
+        {
+            foreach (int index in playersHit)
+            {
+                Debug.Log("Player " + shipInfo[index].GetPlayerNum().ToString() + " has been hit by Siren.");
+            }
+
+            playersHit.Clear();
+        }
+
         MoveShip(players[playerIndex]);
 
         if (!isMoving && !isRolling && !playerCombat && !shipCombat && !monsterCombat && !port)
@@ -371,8 +385,10 @@ public class MapLoad : MonoBehaviour
 
         treasureCurrent.text = "Player Treasure: " + shipInfo[playerIndex].GetCurrentTreasure().ToString();
         treasureTotal.text = "Total Treasure: " + shipInfo[playerIndex].GetTotalTreasure().ToString();
+        treasureLimit.text = "Carry Limit: " + shipInfo[playerIndex].GetTreasureLimit().ToString();
         player.text = "Player: " + (playerIndex + 1).ToString();
         playerImg.sprite = portImages[playerIndex];
+        UpdateSextant();
 
         if (rats)
         {
@@ -391,6 +407,11 @@ public class MapLoad : MonoBehaviour
         if (siren)
         {
             Debug.Log("siren");
+
+            for (int i = 0; i < objectContainers[4].transform.childCount; i++)
+            {
+                objectContainers[4].transform.GetChild(i).GetComponent<Siren>().CheckPlayersHit();
+            }
 
             siren = false;
         }
@@ -497,9 +518,13 @@ public class MapLoad : MonoBehaviour
 
                 tilesInMap[i, j] = tile;
 
-                if (tile != 0)
+                if (tile == 1)
                 {
-                    SetObject(tile, i, j);
+                    SetObjectTile(0, i, j);
+                }
+                else if (tile != 0)
+                {
+                    SetTile(tile, i, j);
                 }
             }
 
@@ -508,7 +533,7 @@ public class MapLoad : MonoBehaviour
 
     }
 
-    public void SetObject(int index, int row, int column)
+    public void SetTile(int index, int row, int column)
     {
         GameObject newObject = new GameObject();
         SpriteRenderer sr = newObject.AddComponent(typeof(SpriteRenderer)) as SpriteRenderer;
@@ -526,6 +551,17 @@ public class MapLoad : MonoBehaviour
         newObject.transform.position = pos;
     }
 
+    public void SetObjectTile(int index, int row, int column)
+    {
+        GameObject newObject = Instantiate(gameTiles[index]);
+
+        newObject.transform.parent = objectContainers[0].transform;
+
+        newObject.transform.position = tilemap.GetCellCenterWorld(new Vector3Int(-34 + row, 32 - column, 0));
+
+        newObject.transform.position = newObject.transform.position + new Vector3(0, 0.2f, 0);
+    }
+
     public void MoveShip(GameObject ship)
     {
         if (posSet)
@@ -536,29 +572,19 @@ public class MapLoad : MonoBehaviour
 
             ClearActiveTiles();
 
-            if (rotate)
+            if (rotate && !movingSkip)
             {
                 isMoving = true;
 
                 float currDeg = degrees + accel;
 
-                Transform shipTransfom = ship.transform.Find("ship");
+                Transform shipTransform = ship.transform.Find("ship");
 
-                Vector3 direction = (currPos - new Vector3(shipTransfom.position.x, 0, shipTransfom.position.z)).normalized;
+                Vector3 direction = (currPos - new Vector3(shipTransform.position.x, 0, shipTransform.position.z)).normalized;
 
                 Quaternion lookRotation = Quaternion.LookRotation(direction);
 
-                shipTransfom.rotation = Quaternion.Slerp(shipTransfom.rotation, lookRotation, Time.deltaTime * currDeg);
-
-                accel += 0.01f;
-
-                movingFX.transform.rotation = shipTransfom.rotation;
-
-                movingFX.transform.position = new Vector3(ship.transform.position.x, 0.55f, ship.transform.position.z);
-
-                movingFX.SetActive(true);
-
-                if (Quaternion.Angle(shipTransfom.rotation, lookRotation) < 2f)
+                if (Quaternion.Angle(shipTransform.rotation, lookRotation) < 2f)
                 {
                     rotate = false;
 
@@ -566,25 +592,41 @@ public class MapLoad : MonoBehaviour
 
                     accel = 0;
                 }
+                else
+                {
+                    shipTransform.rotation = Quaternion.Slerp(shipTransform.rotation, lookRotation, Time.deltaTime * currDeg);
 
+                    accel += 0.01f;
+
+                    movingFX.transform.rotation = shipTransform.rotation;
+
+                    movingFX.transform.position = new Vector3(ship.transform.position.x, 0.55f, ship.transform.position.z);
+
+                    movingFX.SetActive(true);
+                }
             }
             else
             {
-                ship.transform.position = Vector3.MoveTowards(ship.transform.position, currPos, Time.deltaTime * time);
-
-                movingFX.transform.position = new Vector3(ship.transform.position.x, 0.6f, ship.transform.position.z);
-
-                movingFX.SetActive(true);
-
-                if (Vector3.Distance(ship.transform.position, currPos) < 0.001f)
+                if (Vector3.Distance(ship.transform.position, currPos) < 0.01f || movingSkip)
                 {
+                    if (rotate)
+                    {
+                        rotate = false;
+
+                        movingFX.SetActive(false);
+
+                        accel = 0;
+                    }
+
                     SetGUI(true, diceGUI);
 
                     movingFX.SetActive(false);
+                    skipButtons[0].gameObject.SetActive(false);
 
                     posSet = false;
 
                     isMoving = false;
+                    movingSkip = false;
 
                     hiddenBtns[1].onClick.Invoke();
 
@@ -652,6 +694,14 @@ public class MapLoad : MonoBehaviour
                             hiddenBtns[2].onClick.Invoke();
                         }
                     }
+                }
+                else
+                {
+                    ship.transform.position = Vector3.MoveTowards(ship.transform.position, currPos, Time.deltaTime * time);
+
+                    movingFX.transform.position = new Vector3(ship.transform.position.x, 0.6f, ship.transform.position.z);
+
+                    movingFX.SetActive(true);
                 }
             }
         }
@@ -739,6 +789,8 @@ public class MapLoad : MonoBehaviour
                         posSet = true;
                         rotate = true;
                         diceSet = true;
+
+                        skipButtons[0].gameObject.SetActive(true);
 
                         if (playerPos.Contains(gridPos))
                         {
@@ -894,6 +946,17 @@ public class MapLoad : MonoBehaviour
         }
     }
 
+    void UpdateSextant()
+    {
+        Vector3Int ship = shipInfo[playerIndex].GetCurrentPosition();
+        Vector3Int port = shipInfo[playerIndex].GetPortPosition();
+
+        sextantTexts[0].text = (ship.x + 34).ToString();
+        sextantTexts[1].text = ((ship.y - 32) * -1).ToString();
+        sextantTexts[2].text = (port.x + 34).ToString();
+        sextantTexts[3].text = ((port.y - 32) * -1).ToString();
+    }
+
     void DisplayMoves(int count)
     {
         Vector3Int playerPos = tilemap.WorldToCell(players[playerIndex].transform.position);
@@ -928,57 +991,60 @@ public class MapLoad : MonoBehaviour
 
     void SetSelected(Vector3Int pos)
     {
-        int tilePlaced = tilesInMap[pos.x + 34, (pos.y - 32) * -1];
-        int objectPlaced = objectsInMap[pos.x + 34, (pos.y - 32) * -1];
+        if ((pos.x + 34 < 80) && ((pos.y - 32) * -1) < 80 &&
+            (pos.x + 34 > 0) && ((pos.y - 32) * -1) > 80) {
+            int tilePlaced = tilesInMap[pos.x + 34, (pos.y - 32) * -1];
+            int objectPlaced = objectsInMap[pos.x + 34, (pos.y - 32) * -1];
 
-        GameObject temp;
-        Transform transform;
+            GameObject temp;
+            Transform transform;
 
-        if (tilePlaced < 0)
-        {
-            temp = Instantiate(positionTiles[2], tiles.transform);
-        }
-        else if (objectPlaced < 0 || objectPlaced > 0)
-        {
-            temp = Instantiate(positionTiles[1], tiles.transform);
-        }
-        else
-        {
-            temp = Instantiate(positionTiles[0], tiles.transform);
-        }
-
-        if ((tilePlaced <= 1 && tilePlaced > -1) || (objectPlaced < 0 && objectPlaced > -2 && tilePlaced > -1) || (objectPlaced == 0 && tilePlaced == -1))
-        {
-            validPos.Add(pos);
-
-            if (tilePlaced == -1)
+            if (tilePlaced < 0)
             {
-                portPos.Add(pos);
+                temp = Instantiate(positionTiles[2], tiles.transform);
             }
-            else if (objectPlaced == -1)
+            else if (objectPlaced < 0 || objectPlaced > 0)
             {
-                playerPos.Add(pos);
-            }
-            else if (objectPlaced == 1)
-            {
-                shipPos.Add(pos);
+                temp = Instantiate(positionTiles[1], tiles.transform);
             }
             else
             {
-                if (objectPlaced == 2)
+                temp = Instantiate(positionTiles[0], tiles.transform);
+            }
+
+            if ((tilePlaced <= 1 && tilePlaced > -1) || (objectPlaced < 0 && objectPlaced > -2 && tilePlaced > -1) || (objectPlaced == 0 && tilePlaced == -1))
+            {
+                validPos.Add(pos);
+
+                if (tilePlaced == -1)
                 {
-                    monsterPos.Add(pos);
+                    portPos.Add(pos);
+                }
+                else if (objectPlaced == -1)
+                {
+                    playerPos.Add(pos);
+                }
+                else if (objectPlaced == 1)
+                {
+                    shipPos.Add(pos);
+                }
+                else
+                {
+                    if (objectPlaced == 2)
+                    {
+                        monsterPos.Add(pos);
+                    }
                 }
             }
+
+            transform = temp.transform;
+
+            transform.position = tilemap.GetCellCenterWorld(pos);
+
+            transform.position = new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z);
+
+            positions.Add(pos);
         }
-
-        transform = temp.transform;
-
-        transform.position = tilemap.GetCellCenterWorld(pos);
-
-        transform.position = new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z);
-
-        positions.Add(pos);
     }
 
     void SetArrow(Vector3Int pos)
@@ -1040,7 +1106,9 @@ public class MapLoad : MonoBehaviour
 
         treasureCurrent.text = "Player Treasure: " + shipInfo[playerIndex].GetCurrentTreasure().ToString();
         treasureTotal.text = "Total Treasure: " + shipInfo[playerIndex].GetTotalTreasure().ToString();
+        treasureLimit.text = "Carry Limit: " + shipInfo[playerIndex].GetTreasureLimit().ToString();
         player.text = "Player: " + (playerIndex + 1).ToString();
+        UpdateSextant();
 
         navMenu.SetActive(false);
         mainGUI[1].SetActive(true);
@@ -1133,11 +1201,32 @@ public class MapLoad : MonoBehaviour
     public void ResetRoll()
     {
         diceIndex = 0;
+        moveCount = 0;
         diceSet = false;
 
         ClearActiveTiles();
 
         mainGUI[1].SetActive(false);
+    }
+
+    public void AddPlayerTreasure()
+    {
+        shipInfo[playerIndex].DepositTreasure();
+    }
+
+    public void SkipShipMovement()
+    {
+        movingSkip = true;
+        skipButtons[0].gameObject.SetActive(false);
+
+        Transform ship = players[playerIndex].transform.GetChild(0);
+        
+        Vector3 direction = (currPos - new Vector3(ship.position.x, 0, ship.position.z)).normalized;
+
+        Quaternion lookRotation = Quaternion.LookRotation(direction);
+
+        ship.rotation = lookRotation;
+        players[playerIndex].transform.position = currPos;
     }
 
     public void PauseGameScene()
@@ -1150,5 +1239,13 @@ public class MapLoad : MonoBehaviour
     public static void ContinueGame()
     {
         continueGame = true;
+    }
+
+    //TEST FUNCTION
+    public void DISPLAY()
+    {
+        ClearActiveTiles();
+
+        DisplayMoves(20);
     }
 }
