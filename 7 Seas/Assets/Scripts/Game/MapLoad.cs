@@ -9,6 +9,7 @@ public class MapLoad : MonoBehaviour
 {
     public static bool[] activePlayers;
 
+    public static HashSet<int> portIndices = new HashSet<int>();
     public static List<int> playersHit = new List<int>();
     public static bool isMoving;
     public static bool isRolling;
@@ -262,6 +263,10 @@ public class MapLoad : MonoBehaviour
             {
                 Destroy(ships[i]);
             }
+            else
+            {
+                portIndices.Add(i);
+            }
         }
 
         for (int i = 7; i >= 0; i--)
@@ -311,20 +316,11 @@ public class MapLoad : MonoBehaviour
 
         maxCams = maxPlayers;
 
-        objectGenerator = new RandomPosition(shipInfo, ports, objectContainers[1], 0, 1);
+        objectGenerator = new RandomPosition(shipInfo, ports, treasureShips, monsters, sirenObj, objectContainers);
         objectGenerator.SetTilemap(tilemap);
-        objectGenerator.GeneratePortPosition(tilesInMap, objectsInMap);
-
-        objectGenerator = new RandomPosition(treasureShips, objectContainers[2], 2, 5);
-        objectGenerator.SetTilemap(tilemap);
-        objectGenerator.GeneratePosition(tilesInMap, objectsInMap);
-
-        objectGenerator = new RandomPosition(monsters, objectContainers[3], 1, 5);
-        objectGenerator.SetTilemap(tilemap);
-        objectGenerator.GeneratePosition(tilesInMap, objectsInMap);
-
-        objectGenerator = new RandomPosition(shipInfo, sirenObj, objectContainers[4], 3, 1);
-        objectGenerator.SetTilemap(tilemap);
+        objectGenerator.SetMapObjects(tilesInMap, objectsInMap);
+        objectGenerator.GenerateHomePortPositions(tilesInMap, objectsInMap);
+        objectGenerator.GeneratePortPositions(tilesInMap, objectsInMap);
         objectGenerator.GenerateSirenPosition(tilesInMap, objectsInMap);
     }
 
@@ -415,33 +411,6 @@ public class MapLoad : MonoBehaviour
 
             siren = false;
         }
-
-        /*
-        //Arrow Key Movement
-        if (Input.GetKey(KeyCode.UpArrow) && !isMoving && player1.transform.position.z < upperBound - 10)
-        {
-            Debug.Log("Up");
-            StartCoroutine(MovePlayer(player1, Vector3.forward));
-        }
-
-        if (Input.GetKey(KeyCode.DownArrow) && !isMoving && player1.transform.position.z > lowerBound + 1)
-        {
-            Debug.Log("Down");
-            StartCoroutine(MovePlayer(player1, Vector3.back));
-        }
-
-        if (Input.GetKey(KeyCode.LeftArrow) && !isMoving && player1.transform.position.x > leftBound + 1)
-        {
-            Debug.Log("Left");
-            StartCoroutine(MovePlayer(player1, Vector3.left));
-        }
-
-        if (Input.GetKey(KeyCode.RightArrow) && !isMoving && player1.transform.position.x < rightBound)
-        {
-            Debug.Log("Right");
-            StartCoroutine(MovePlayer(player1, Vector3.right));
-        }
-        */
     }
 
     private IEnumerator ChangeSky()
@@ -531,6 +500,7 @@ public class MapLoad : MonoBehaviour
             map = map.Remove(0, 1);
         }
 
+        PlayerPrefs.SetString("Map2", map);
     }
 
     public void SetTile(int index, int row, int column)
@@ -791,6 +761,7 @@ public class MapLoad : MonoBehaviour
                         diceSet = true;
 
                         skipButtons[0].gameObject.SetActive(true);
+                        main.GetComponent<CameraController>().ResetDummy();
 
                         if (playerPos.Contains(gridPos))
                         {

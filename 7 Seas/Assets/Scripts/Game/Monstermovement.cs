@@ -318,7 +318,7 @@ public class Monstermovement : MonoBehaviour
         if (val > 0)
         {
             anim.Play("Hit1");
-            health = health - ((1 + ((val - 1) * 0.25f)) * cannonDmg);
+            health = health - cannonDmg;
             justHit = true;
 
             explosion.transform.position = transform.position;

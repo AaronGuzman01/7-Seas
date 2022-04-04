@@ -33,8 +33,6 @@ public class scoreUpdate : MonoBehaviour
 
     // Update is called once per frame
   
-
-
     void OnTriggerEnter(Collider other)
     {
         /*
