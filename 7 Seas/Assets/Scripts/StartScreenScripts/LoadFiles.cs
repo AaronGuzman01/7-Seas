@@ -23,12 +23,16 @@ public class LoadFiles : MonoBehaviour
         string[] treasure = { "treasure 1: t", "treasure 2:", "treasure 3:" };
         string[] damage = { "damage 1:", "damage 2:" };
 
-        System.IO.File.WriteAllText(Application.persistentDataPath + "/Players.txt", string.Join("\n", players));
+
+        if (!File.Exists(Application.persistentDataPath + "/Players.txt"))
+        {
+            System.IO.File.WriteAllText(Application.persistentDataPath + "/Players.txt", string.Join("\n", players));
+        }
         System.IO.File.WriteAllText(Application.persistentDataPath + "/Difficulty.txt", "");
         for (int i = 1; i <= 8; i++)
         {
-            if(!System.IO.File.Exists(Application.persistentDataPath + "/Player" + i))
-                System.IO.File.WriteAllText(Application.persistentDataPath + "/Player" + i + ".txt", string.Join("\n", mast) + "\n" +
+            if(!File.Exists(Application.persistentDataPath + "/Player" + i.ToString() + ".txt"))
+                File.WriteAllText(Application.persistentDataPath + "/Player" + i.ToString() + ".txt", string.Join("\n", mast) + "\n" +
                                                                                                      string.Join("\n", cannon) + "\n" +
                                                                                                      string.Join("\n", crew) + "\n" +
                                                                                                      string.Join("\n", treasure) + "\n" +
