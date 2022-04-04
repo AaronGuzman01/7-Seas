@@ -610,7 +610,7 @@ public class CustomMapBuilder : MonoBehaviour
                     {
                         name = secondMap.GetTile(new Vector3Int(originX + i, originY - j, 0)).name;
 
-                        for (int k = 0; k < firstMapTiles.Length; k++)
+                        for (int k = 0; k < secondMapTiles.Length; k++)
                         {
                             if (secondMapTiles[k].name == name)
                             {
