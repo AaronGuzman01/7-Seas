@@ -724,6 +724,10 @@ public class MapLoad : MonoBehaviour
         ChangePlayer();
 
         UpdateTurn();
+
+        ShipMovement();
+
+        MonsterMovement();
     }
 
     public void UpdateTurn()
@@ -1198,6 +1202,26 @@ public class MapLoad : MonoBehaviour
 
         ship.rotation = lookRotation;
         players[playerIndex].transform.position = currPos;
+    }
+
+    void ShipMovement()
+    {
+        for (int i = 0; i < objectContainers[2].transform.childCount; i++)
+        {
+            GameObject ship = objectContainers[2].transform.GetChild(i).gameObject;
+
+            ship.GetComponent<ShipAI>().StartMoving();
+        }
+    }
+
+    void MonsterMovement()
+    {
+        for (int i = 0; i < objectContainers[3].transform.childCount; i++)
+        {
+            GameObject monster = objectContainers[3].transform.GetChild(i).gameObject;
+
+            monster.GetComponent<MonsterAI>().StartMoving();
+        }
     }
 
     public void PauseGameScene()

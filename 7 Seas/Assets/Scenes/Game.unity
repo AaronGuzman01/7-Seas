@@ -8520,6 +8520,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.66, y: 2.85, z: 1.66}
   m_Center: {x: 0, y: 1.05, z: -0.3}
+--- !u!114 &306151794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 306151790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acd935052ab3934468e1a2d360c31996, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &315452920
 GameObject:
   m_ObjectHideFlags: 0
@@ -10582,6 +10594,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.66, y: 2.85, z: 1.66}
   m_Center: {x: 0, y: 1.05, z: -0.3}
+--- !u!114 &483146505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 483146501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acd935052ab3934468e1a2d360c31996, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &510446366
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10702,6 +10726,10 @@ PrefabInstance:
     - target: {fileID: 105104, guid: b5926f3d12c1d224d9622a00adb6ba65, type: 3}
       propertyPath: m_Name
       value: Spain Ship
+      objectReference: {fileID: 0}
+    - target: {fileID: 105104, guid: b5926f3d12c1d224d9622a00adb6ba65, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2732194030918096129, guid: b5926f3d12c1d224d9622a00adb6ba65,
         type: 3}
@@ -12510,6 +12538,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1262042911}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &713276618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 713276617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8643163d27630ff4894adc95182c324d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &715244895
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13374,6 +13414,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.66, y: 2.85, z: 1.66}
   m_Center: {x: 0, y: 1.05, z: -0.3}
+--- !u!114 &775086662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 775086658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acd935052ab3934468e1a2d360c31996, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &795917216
 GameObject:
   m_ObjectHideFlags: 0
@@ -14327,6 +14379,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1661612073}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &876876623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 876876622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8643163d27630ff4894adc95182c324d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &881908723
 GameObject:
   m_ObjectHideFlags: 3
@@ -15217,6 +15281,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.66, y: 2.85, z: 1.66}
   m_Center: {x: 0, y: 1.05, z: -0.3}
+--- !u!114 &950833491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 950833487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acd935052ab3934468e1a2d360c31996, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &950833492 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: de3f7f2c4e7929640a52bc3c02f36c47,
@@ -16861,6 +16937,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1816348265}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1118708293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1118708292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8643163d27630ff4894adc95182c324d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1129074249
 GameObject:
   m_ObjectHideFlags: 0
@@ -17297,6 +17385,10 @@ PrefabInstance:
     - target: {fileID: 105104, guid: 57d851ab655c8c449b2ec7bfedd84239, type: 3}
       propertyPath: m_Name
       value: France Ship
+      objectReference: {fileID: 0}
+    - target: {fileID: 105104, guid: 57d851ab655c8c449b2ec7bfedd84239, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2732194030918096129, guid: 57d851ab655c8c449b2ec7bfedd84239,
         type: 3}
@@ -18228,6 +18320,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1636103584}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1403156546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1403156545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8643163d27630ff4894adc95182c324d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1404796761
 GameObject:
   m_ObjectHideFlags: 0
@@ -29888,8 +29992,8 @@ MonoBehaviour:
   monsters:
   - {fileID: 950833487}
   - {fileID: 306151790}
-  - {fileID: 775086658}
   - {fileID: 483146501}
+  - {fileID: 775086658}
   sirenObj: {fileID: 2007690425655028532, guid: 8ecfa3c044d404b41bcbecc2e2f652be,
     type: 3}
   arrow: {fileID: 1404796761}
@@ -29920,6 +30024,10 @@ PrefabInstance:
     - target: {fileID: 105104, guid: ea7fdfe76e4db1342bc2332176e23d07, type: 3}
       propertyPath: m_Name
       value: Holland Ship
+      objectReference: {fileID: 0}
+    - target: {fileID: 105104, guid: ea7fdfe76e4db1342bc2332176e23d07, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2732194030918096129, guid: ea7fdfe76e4db1342bc2332176e23d07,
         type: 3}
@@ -30250,6 +30358,10 @@ PrefabInstance:
     - target: {fileID: 105104, guid: 8071b6f3fe965684aad451a1855304b3, type: 3}
       propertyPath: m_Name
       value: Italy Ship
+      objectReference: {fileID: 0}
+    - target: {fileID: 105104, guid: 8071b6f3fe965684aad451a1855304b3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2732194030918096129, guid: 8071b6f3fe965684aad451a1855304b3,
         type: 3}
@@ -30825,7 +30937,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1699303250}
-  m_LocalRotation: {x: 0.10356203, y: 0.00073885027, z: -0.000076930504, w: 0.99462277}
+  m_LocalRotation: {x: 0.10356203, y: 0.0007388856, z: -0.000076934186, w: 0.99462277}
   m_LocalPosition: {x: 0.44496155, y: 3.9999998, z: 67.200005}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -31028,8 +31140,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1727065413}
-  m_LocalRotation: {x: 0.115285255, y: -0.0073308605, z: 0.0008508365, w: 0.993305}
-  m_LocalPosition: {x: -150.01454, y: 5.5653486, z: 33.393917}
+  m_LocalRotation: {x: 0.115288086, y: 0.0022156085, z: -0.00025714852, w: 0.99332964}
+  m_LocalPosition: {x: -150.17792, y: 5.5653486, z: 56.313072}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 712651906}
@@ -31926,6 +32038,10 @@ PrefabInstance:
     - target: {fileID: 105104, guid: 88009821b3265d2438cb6e12d6cd33b4, type: 3}
       propertyPath: m_Name
       value: England Ship
+      objectReference: {fileID: 0}
+    - target: {fileID: 105104, guid: 88009821b3265d2438cb6e12d6cd33b4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2732194030918096129, guid: 88009821b3265d2438cb6e12d6cd33b4,
         type: 3}
@@ -33037,6 +33153,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Portugal Ship
       objectReference: {fileID: 0}
+    - target: {fileID: 105104, guid: d32a2aee4ca611e4fb1415a4e415a58f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2732194030918096129, guid: d32a2aee4ca611e4fb1415a4e415a58f,
         type: 3}
       propertyPath: m_Pivot.x
@@ -34029,12 +34149,36 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1992614270}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2094544013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2094544012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8643163d27630ff4894adc95182c324d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2100544142 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 105104, guid: b5926f3d12c1d224d9622a00adb6ba65,
     type: 3}
   m_PrefabInstance: {fileID: 511102931}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2100544143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2100544142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8643163d27630ff4894adc95182c324d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2104613188
 GameObject:
   m_ObjectHideFlags: 0
