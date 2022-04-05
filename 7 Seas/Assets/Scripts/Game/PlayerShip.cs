@@ -67,6 +67,11 @@ public class PlayerShip : MonoBehaviour
         return treasure;
     }
 
+    public void ClearTreasure()
+    {
+        currTreasure = 0;
+    }
+
     public void DepositTreasure()
     {
         totalTreasure += currTreasure;

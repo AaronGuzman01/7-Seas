@@ -449,6 +449,8 @@ public class MapLoad : MonoBehaviour
     {
         GameObject ship = Instantiate(treasureShips[0]);
 
+        ship.transform.parent = objectContainers[2].transform;
+
         ship.SetActive(true);
 
         ship.transform.position = tilemap.GetCellCenterWorld(new Vector3Int(17, -24, 0));
@@ -458,7 +460,9 @@ public class MapLoad : MonoBehaviour
     }
     void SetMonsters()
     {
-        GameObject monsterT = Instantiate(monsters[0]);
+        GameObject monsterT = Instantiate(monsters[1]);
+
+        monsterT.transform.parent = objectContainers[3].transform;
 
         monsterT.SetActive(true);
 
@@ -642,6 +646,7 @@ public class MapLoad : MonoBehaviour
                     {
                         CannonMinigame.setTreasure = true;
                         CannonMinigame.shipsInfo[0] = shipInfo[playerIndex];
+                        CannonMinigame.SetTreasureShip(GetTreasureShip());
 
                         PlayerPrefs.SetString("Enemy", "Treasure");
 
@@ -656,6 +661,7 @@ public class MapLoad : MonoBehaviour
                             CannonMinigame.setMonster = true;
                             CannonMinigame.SetMonster(monsters[0]);
                             CannonMinigame.shipsInfo[0] = shipInfo[playerIndex];
+                            CannonMinigame.SetMonster(GetMonster());
 
                             PlayerPrefs.SetString("Enemy", "Monster");
 
@@ -700,6 +706,33 @@ public class MapLoad : MonoBehaviour
 
         return null;
     }
+
+    GameObject GetTreasureShip()
+    {
+        for (int i = 0; i < objectContainers[2].transform.childCount; i++)
+        {
+            if (tilemap.WorldToCell(objectContainers[2].transform.GetChild(i).position) == tilemap.WorldToCell(currPos))
+            {
+                return objectContainers[2].transform.GetChild(i).gameObject;
+            }
+        }
+
+        return null;
+    }
+
+    GameObject GetMonster()
+    {
+        for (int i = 0; i < objectContainers[3].transform.childCount; i++)
+        {
+            if (tilemap.WorldToCell(objectContainers[3].transform.GetChild(i).position) == tilemap.WorldToCell(currPos))
+            {
+                return objectContainers[3].transform.GetChild(i).gameObject;
+            }
+        }
+
+        return null;
+    }
+
 
     public void ClearActiveTiles()
     {

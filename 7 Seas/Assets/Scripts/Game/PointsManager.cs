@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class PointsManager : MonoBehaviour
 {
     public Text scoreText;
+    public Text goldText;
     int highestScore;
     private static int Points;
 
@@ -26,7 +27,10 @@ public class PointsManager : MonoBehaviour
         }
         else if(PlayerPrefs.GetString("Enemy").Equals("Treasure"))
         {
-            scoreText.text = "GOLD EARNED: " + Points;
+            scoreText.text = "Hits Required: " + PlayerPrefs.GetInt("ShipHits").ToString();
+
+            goldText.gameObject.SetActive(true);
+            goldText.text = "Gold: " + PlayerPrefs.GetInt("Gold").ToString();
         }
         else
         {
