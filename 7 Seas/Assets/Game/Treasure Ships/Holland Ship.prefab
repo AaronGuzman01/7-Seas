@@ -99,6 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nation: Holland
   gold: 500
+  hits: 5
 --- !u!1 &106104
 GameObject:
   m_ObjectHideFlags: 0

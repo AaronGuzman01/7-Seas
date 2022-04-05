@@ -40,7 +40,7 @@ public class SceneChanger : MonoBehaviour
             // PlayersManager.SetPlayer();//comment out
             //players = PlayersManager.GetPlayers();
             //objective.text = PlayersManager.Opponent1.Name.ToUpper() + "  - AIM FOR THE COIN TO GET SOME SWEET, SWEET BOOTY!";
-            objective.text = PlayerPrefs.GetString("Ship1").ToUpper() + "  - AIM FOR THE COIN TO GET SOME SWEET, SWEET BOOTY!";
+            objective.text = PlayerPrefs.GetString("Ship1").ToUpper() + "  - AIM FOR THE COIN TO DESTROY THE SHIP AND GET SOME SWEET, SWEET BOOTY!";
         }
         else
         {
@@ -48,7 +48,7 @@ public class SceneChanger : MonoBehaviour
             // PlayersManager.SetPlayer();//comment out
             //players = PlayersManager.GetPlayers();
             //objective.text = PlayersManager.Opponent1.Name.ToUpper() + " - SHOOT THE MONSTER TO DO DAMAGE. STRIKE FIRST TO AVOID DAMAGE!";
-            objective.text = PlayerPrefs.GetString("Ship1").ToUpper() + " - SHOOT THE TARGET TO DAMAGE THE MONSTER. KILL IT FAST TO AVOID DAMAGE!";
+            objective.text = PlayerPrefs.GetString("Ship1").ToUpper() + " - SHOOT THE TARGET TO DAMAGE THE MONSTER. KILL IT FAST TO KEEP YOUR TREASURE!";
             score.enabled = false;
         }
         /*

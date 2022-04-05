@@ -205,6 +205,8 @@ public class RandomPosition : MonoBehaviour
                 found = false;
             }
         }
+
+        tilesUsed.Clear();
     }
 
     public void GeneratePlayerPosition(int[,] mapTiles, int[,] mapObjects)
@@ -263,6 +265,8 @@ public class RandomPosition : MonoBehaviour
             {
                 gameObject.transform.parent = containers[3].transform;
                 gameObject.GetComponent<Monstermovement>().enabled = false;
+                gameObject.GetComponent<MonsterAI>().SetMaps(mapTiles, mapObjects, tilemap);
+                gameObject.GetComponent<MonsterAI>().SetCoordinate(x, y);
                 gameObject.transform.position = gameObject.transform.position + (Vector3.up / 2);
 
                 mapObjects[x, y] = 2;
@@ -270,6 +274,8 @@ public class RandomPosition : MonoBehaviour
             else
             {
                 gameObject.transform.parent = containers[2].transform;
+                gameObject.GetComponent<ShipAI>().SetMaps(mapTiles, mapObjects, tilemap);
+                gameObject.GetComponent<ShipAI>().SetCoordinate(x, y);
                 gameObject.transform.position = new Vector3(gameObject.transform.position.x, 0, gameObject.transform.position.z);
 
                 mapObjects[x, y] = 1;

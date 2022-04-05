@@ -60,9 +60,6 @@ public class CustomMapBuilder : MonoBehaviour
     private int[] homeCol = new int[8];
     private bool[,] port = new bool[5, 5];
 
-    private int[,] treasureShipCount = new int[5, 5];
-    private int[,] monsterCount = new int[5, 5];
-
     private int adjustedRow;
     private int adjustedCol;
     bool isToggled = false;
@@ -117,7 +114,10 @@ public class CustomMapBuilder : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && firstMapActive)
+        bool isPort = false;
+
+        //First Map Tile Placement
+        if (Input.GetMouseButton(0) && firstMapActive)
         {
             Vector2 mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
 
@@ -131,7 +131,8 @@ public class CustomMapBuilder : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonDown(0) && !firstMapActive)
+        //Second Map Object Placement (No Restrictions)
+        if (Input.GetMouseButton(0) && !firstMapActive)
         {
             Vector2 mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
 
@@ -141,38 +142,81 @@ public class CustomMapBuilder : MonoBehaviour
                 (gridPos.x >= currentX && gridPos.x < currentX + 16) &&
                 (gridPos.y <= currentY && gridPos.y > currentY - 16))
             {
-                adjustedRow = GetAdjustedRow();
-                adjustedCol = GetAdjustedColumn();
+
+                //Determine if object that is being placed is a port
+                for (int i = 0; i < 9; i++)
+                {
+                    if (currTile == secondMapTiles[i])
+                    {
+                        isPort = true;
+                    }
+                }
+
+                //Place the object if it is not a port
+                if (isPort == false)
+                {
+                    if (currTile == secondMapTiles[11])  //Siren
+                    {
+                        //Sirens can only be placed on Shoal Tiles
+                        if (firstMap.GetTile(gridPos) == firstMapTiles[2])
+                        {
+                            Debug.Log("Siren Placed");
+                            ReplaceTile(gridPos);
+                            secondMap.SetTile(gridPos, currTile);
+                        }
+                        else
+                        {
+                            Debug.Log("Siren can't be placed here.");
+                        }
+                    }
+                    else    //Monsters and Treasure Ships
+                    {
+                        //Monsters and Treasure Ships can only be placed on Ocean, Deep Ocean, or Shoal Tiles
+                        if (firstMap.GetTile(gridPos) == firstMapTiles[0] || firstMap.GetTile(gridPos) == firstMapTiles[1] || firstMap.GetTile(gridPos) == firstMapTiles[2])
+                        {
+                            Debug.Log("Object Placed");
+                            ReplaceTile(gridPos);
+                            secondMap.SetTile(gridPos, currTile);
+                        }
+                        else
+                        {
+                            Debug.Log("Object can't be placed here.");
+                        }
+                    }
+                    
+                    
+                }
+
+            }
+        }
+
+        //Port Placement (Has Restrictions)
+        if (Input.GetMouseButtonDown(0) && !firstMapActive && isPort == true)
+        {
+            Vector2 mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+
+            Vector3Int gridPos = secondMap.WorldToCell(mousePos);
+
+            if (currTile != null &&
+                (gridPos.x >= currentX && gridPos.x < currentX + 16) &&
+                (gridPos.y <= currentY && gridPos.y > currentY - 16))
+            {
+                adjustedRow = GetAdjustedRow() - 1;
+                adjustedCol = GetAdjustedColumn() - 1;
 
                 if (isToggled == false)
                 {
-                    adjustedRow = currentRow;
-                    adjustedCol = currentCol;
-                    
-                }
-                //Determine which type of tile is being placed
+                    adjustedRow = currentRow - 1;
+                    adjustedCol = currentCol - 1;
 
-                //Ports
+                }
+                
+                //Place Port
                 for (int i = 0; i < 9; i++)
                 {
                     if (currTile == secondMapTiles[i])
                     {
                         PlacePort(gridPos);
-                    }
-                }
-
-                //Treasure Ships
-                if (currTile == secondMapTiles[9])
-                {
-                    PlaceTreasureShip(gridPos);
-                }
-
-                //Monsters
-                for (int i = 11; i < 16; i++)
-                {
-                    if (currTile == secondMapTiles[i])
-                    {
-                        PlaceMonster(gridPos);
                     }
                 }
             }
@@ -216,17 +260,23 @@ public class CustomMapBuilder : MonoBehaviour
 
     private void PlacePort(Vector3Int gridPos)
     {
+        //Check if a port exists in the current tile
         if (port[adjustedRow, adjustedCol] == false)
         {
-            ReplaceTile(gridPos);
-            secondMap.SetTile(gridPos, currTile);
-            port[adjustedRow, adjustedCol] = true;
-            Debug.Log("Port Placed.");
-            HomePortConfig(gridPos);     //Ensures only one home port of each color can exist on the map
-        }
-        else
-        {
-            Debug.Log("Port Exists in this tile.");
+            //Ports can only be placed in ocean or deep ocean tiles
+            if (firstMap.GetTile(gridPos) == firstMapTiles[0] || firstMap.GetTile(gridPos) == firstMapTiles[1])
+            {
+                Debug.Log("Port Placed.");
+                ReplaceTile(gridPos);
+                secondMap.SetTile(gridPos, currTile);
+                port[adjustedRow, adjustedCol] = true;
+                HomePortConfig(gridPos);     //Ensures only one home port of each color can exist on the map
+            }
+            else
+            {
+                Debug.Log("Port can't be placed here.");
+            }
+            
         }
     }
 
@@ -240,45 +290,13 @@ public class CustomMapBuilder : MonoBehaviour
                 {
                     secondMap.SetTile(homePos[i], null);
                     port[homeRow[i], homeCol[i]] = false;
-                    Debug.Log("Homeport Cleared");
                 }
 
                 homeports[i] = true;
                 homeRow[i] = adjustedRow;
                 homeCol[i] = adjustedCol;
                 homePos[i] = gridPos;
-                Debug.Log("Home Port Placed");
             }
-        }
-    }
-
-    private void PlaceTreasureShip(Vector3Int gridPos)
-    {
-        if (treasureShipCount[adjustedRow, adjustedCol] < 5)
-        {
-            ReplaceTile(gridPos);
-            secondMap.SetTile(gridPos, currTile);
-            treasureShipCount[adjustedRow, adjustedCol]++;
-            Debug.Log("Treasure Ship Placed.");
-        }
-        else
-        {
-            Debug.Log("Too many treasure ships exist in this tile.");
-        }
-    }
-
-    private void PlaceMonster(Vector3Int gridPos)
-    {
-        if (monsterCount[adjustedRow, adjustedCol] < 5)
-        {
-            ReplaceTile(gridPos);
-            secondMap.SetTile(gridPos, currTile);
-            monsterCount[adjustedRow, adjustedCol]++;
-            Debug.Log("Monster Placed.");
-        }
-        else
-        {
-            Debug.Log("Too many monsters exist in this tile.");
         }
     }
 
@@ -289,31 +307,12 @@ public class CustomMapBuilder : MonoBehaviour
             return;
         }
 
-        //replace a port
         for (int i = 0; i < 9; i++)
-        {
-            if (secondMap.GetTile(gridPos) ==  secondMapTiles[i])
-            {
-                port[adjustedRow, adjustedCol] = false;
-                Debug.Log("Port Replaced.");
-            }
-        }
-
-        //replace a monster
-        for (int i = 11; i < 16; i++)
         {
             if (secondMap.GetTile(gridPos) == secondMapTiles[i])
             {
-                monsterCount[adjustedRow, adjustedCol]--;
-                Debug.Log("Monster Replaced.");
+                port[adjustedRow, adjustedCol] = false;
             }
-        }
-
-        //replace a treasure ship
-        if (secondMap.GetTile(gridPos) == secondMapTiles[9])
-        {
-            treasureShipCount[adjustedRow, adjustedCol]--;
-            Debug.Log("Treasure Ship Replaced.");
         }
 
     }

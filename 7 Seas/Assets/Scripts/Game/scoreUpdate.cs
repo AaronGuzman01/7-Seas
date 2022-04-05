@@ -54,6 +54,20 @@ public class scoreUpdate : MonoBehaviour
             absorbText.text = "Damage Absorbed: " + other.tag.Substring(1);
             absorbText.gameObject.SetActive(true);
         }
+        else if (PlayerPrefs.GetString("Enemy").Equals("Treasure") && 
+            (other.CompareTag("+1") || other.CompareTag("+2") || other.CompareTag("+3") || other.CompareTag("+4")))
+        {
+            if (PlayerPrefs.GetInt("TimesHit") >= 0)
+            {
+                PlayerPrefs.SetInt("TimesHit", PlayerPrefs.GetInt("TimesHit") + PlayerPrefs.GetInt("PlayerHits"));
+                PlayerPrefs.SetInt("ShipHits", PlayerPrefs.GetInt("ShipHits") - PlayerPrefs.GetInt("TimesHit"));
+
+                if (PlayerPrefs.GetInt("ShipHits") < 0)
+                {
+                    PlayerPrefs.SetInt("ShipHits", 0);
+                }
+            }
+        }
         else if (other.CompareTag("+1") && (this.hit == false))
         {
             explosion.transform.position = transform.position;

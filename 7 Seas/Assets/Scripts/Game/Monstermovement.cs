@@ -176,7 +176,7 @@ public class Monstermovement : MonoBehaviour
                     {
                         anim.Play("Attack1");
 
-                        PlayerPrefs.SetInt("DamageDoneMonster", PlayerPrefs.GetInt("DamageDoneMonster") + 5);
+                        //PlayerPrefs.SetInt("DamageDoneMonster", PlayerPrefs.GetInt("DamageDoneMonster") + 5);
 
                         attacks++;
 

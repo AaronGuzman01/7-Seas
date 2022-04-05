@@ -15,6 +15,7 @@ public class PlayerShip : MonoBehaviour
     int crew = 0;
     int treasure = 1;
     int damage = 0;
+    int hits = 1;
 
     public PlayerShip (int num, GameObject ship, int[] masts, int[] cannons, int crew, int treasure, int damage)
     {
@@ -67,6 +68,11 @@ public class PlayerShip : MonoBehaviour
         return treasure;
     }
 
+    public void ClearTreasure()
+    {
+        currTreasure = 0;
+    }
+
     public void DepositTreasure()
     {
         totalTreasure += currTreasure;
@@ -117,5 +123,15 @@ public class PlayerShip : MonoBehaviour
     public int GetDamage()
     {
         return damage;
+    }
+
+    public int GetHits()
+    {
+        return hits;
+    }
+
+    public void AddHits(int hits)
+    {
+        this.hits += hits;
     }
 }

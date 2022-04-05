@@ -79,6 +79,9 @@ public class MapLoad : MonoBehaviour
     List<PlayerShip> shipInfo;
     List<int> playerNums;
 
+    public static int reward = -1;
+    public static int hazard = -1;
+    public static int ghostCount = 0;
     public static bool diceSet = false;
     public static int playerNum;
     public static int[] diceVals;
@@ -161,7 +164,7 @@ public class MapLoad : MonoBehaviour
             int mastCount = 0, cannonCount = 0, crew = 0, damage = 0, treasure = 0;
             int[] masts = new int[3];
             int[] cannons = new int[5];
-            string[] lines = System.IO.File.ReadAllLines(Application.persistentDataPath + "/Player" + (i + 1).ToString() + ".txt");
+            string[] lines = System.IO.File.ReadAllLines(Application.persistentDataPath + "/Player" + playerNums[i].ToString() + ".txt");
 
             foreach (string line in lines)
             {
@@ -278,20 +281,6 @@ public class MapLoad : MonoBehaviour
             }
         }
 
-        /*
-        //Assign active ships and cameras to player numbers
-        int j = 0;
-        for (int i = 0; i < 8; i++)
-        {
-            if (activePlayers[i] == true)
-            {
-                players[j] = ships[i];
-                cams[j] = i;
-                j++;
-            }
-        }
-        */
-
         camNum = cams[0];
         playerNum = playerNums[0] - 1;
         playerIndex = 0;
@@ -310,9 +299,6 @@ public class MapLoad : MonoBehaviour
         SetPlayerShips();
         SetTreasureShips();
         SetMonsters();
-
-        //Testing for switching sky
-        //StartCoroutine(ChangeSky());
 
         maxCams = maxPlayers;
 
@@ -386,6 +372,27 @@ public class MapLoad : MonoBehaviour
         playerImg.sprite = portImages[playerIndex];
         UpdateSextant();
 
+        if (reward > -1)
+        {
+            if (reward == playerNums[playerIndex])
+            {
+                Debug.Log("Player " + reward.ToString() + " has reward.");
+            }
+            else
+            {
+                Debug.Log("Other Player has reward: Player " + reward);
+            }
+
+            reward = -1;
+        }
+
+        if (hazard > -1)
+        {
+            Debug.Log("Monster Index: " + hazard);
+
+            hazard = -1;
+        }
+
         if (rats)
         {
             Debug.Log("Rats");
@@ -449,6 +456,8 @@ public class MapLoad : MonoBehaviour
     {
         GameObject ship = Instantiate(treasureShips[0]);
 
+        ship.transform.parent = objectContainers[2].transform;
+
         ship.SetActive(true);
 
         ship.transform.position = tilemap.GetCellCenterWorld(new Vector3Int(17, -24, 0));
@@ -458,7 +467,9 @@ public class MapLoad : MonoBehaviour
     }
     void SetMonsters()
     {
-        GameObject monsterT = Instantiate(monsters[0]);
+        GameObject monsterT = Instantiate(monsters[1]);
+
+        monsterT.transform.parent = objectContainers[3].transform;
 
         monsterT.SetActive(true);
 
@@ -642,6 +653,7 @@ public class MapLoad : MonoBehaviour
                     {
                         CannonMinigame.setTreasure = true;
                         CannonMinigame.shipsInfo[0] = shipInfo[playerIndex];
+                        CannonMinigame.SetTreasureShip(GetTreasureShip());
 
                         PlayerPrefs.SetString("Enemy", "Treasure");
 
@@ -656,6 +668,7 @@ public class MapLoad : MonoBehaviour
                             CannonMinigame.setMonster = true;
                             CannonMinigame.SetMonster(monsters[0]);
                             CannonMinigame.shipsInfo[0] = shipInfo[playerIndex];
+                            CannonMinigame.SetMonster(GetMonster());
 
                             PlayerPrefs.SetString("Enemy", "Monster");
 
@@ -701,6 +714,33 @@ public class MapLoad : MonoBehaviour
         return null;
     }
 
+    GameObject GetTreasureShip()
+    {
+        for (int i = 0; i < objectContainers[2].transform.childCount; i++)
+        {
+            if (tilemap.WorldToCell(objectContainers[2].transform.GetChild(i).position) == tilemap.WorldToCell(currPos))
+            {
+                return objectContainers[2].transform.GetChild(i).gameObject;
+            }
+        }
+
+        return null;
+    }
+
+    GameObject GetMonster()
+    {
+        for (int i = 0; i < objectContainers[3].transform.childCount; i++)
+        {
+            if (tilemap.WorldToCell(objectContainers[3].transform.GetChild(i).position) == tilemap.WorldToCell(currPos))
+            {
+                return objectContainers[3].transform.GetChild(i).gameObject;
+            }
+        }
+
+        return null;
+    }
+
+
     public void ClearActiveTiles()
     {
         Transform transform = tiles.transform;
@@ -724,6 +764,10 @@ public class MapLoad : MonoBehaviour
         ChangePlayer();
 
         UpdateTurn();
+
+        ShipMovement();
+
+        MonsterMovement();
     }
 
     public void UpdateTurn()
@@ -1198,6 +1242,26 @@ public class MapLoad : MonoBehaviour
 
         ship.rotation = lookRotation;
         players[playerIndex].transform.position = currPos;
+    }
+
+    void ShipMovement()
+    {
+        for (int i = 0; i < objectContainers[2].transform.childCount; i++)
+        {
+            GameObject ship = objectContainers[2].transform.GetChild(i).gameObject;
+
+            ship.GetComponent<ShipAI>().StartMoving();
+        }
+    }
+
+    void MonsterMovement()
+    {
+        for (int i = 0; i < objectContainers[3].transform.childCount; i++)
+        {
+            GameObject monster = objectContainers[3].transform.GetChild(i).gameObject;
+
+            monster.GetComponent<MonsterAI>().StartMoving();
+        }
     }
 
     public void PauseGameScene()

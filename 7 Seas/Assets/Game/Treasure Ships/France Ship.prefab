@@ -99,6 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nation: France
   gold: 450
+  hits: 5
 --- !u!1 &106104
 GameObject:
   m_ObjectHideFlags: 0
