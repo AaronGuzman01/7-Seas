@@ -6,6 +6,7 @@ public class TreasureShip : MonoBehaviour
 {
     public string nation;
     public int gold;
+    public int hits;
 
     // Start is called before the first frame update
     void Start()

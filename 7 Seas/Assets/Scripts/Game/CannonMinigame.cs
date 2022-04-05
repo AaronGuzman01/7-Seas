@@ -85,9 +85,18 @@ public class CannonMinigame : MonoBehaviour
         }
         else if (setTreasure)
         {
+            PlayerPrefs.SetInt("ShipHits", currTreasureShip.GetComponent<TreasureShip>().hits);
+            PlayerPrefs.SetInt("Gold", currTreasureShip.GetComponent<TreasureShip>().gold);
+            PlayerPrefs.SetInt("TimesHit", 0);
+
             setTreasure = false;
 
-            currTreasureShip = Instantiate(treasureShip);
+            target = Instantiate(targets[2], currTreasureShip.transform);
+
+            target.SetActive(true);
+
+            currTreasureShip.AddComponent<ship_movement>();
+            currTreasureShip.GetComponent<ship_movement>().height = 1010;
 
             currTreasureShip.SetActive(true);
 
@@ -113,6 +122,8 @@ public class CannonMinigame : MonoBehaviour
                 target.transform.RotateAround(monster.transform.position, Vector3.up, -90f);
                 target.transform.localScale = new Vector3(1, 2, 1);
 
+                monster.GetComponent<Monstermovement>().enabled = true;
+                monster.GetComponent<Monstermovement>().anim = monster.GetComponent<Animation>();
                 monster.GetComponent<Monstermovement>().slider = healthSlider;
 
                 ButtonManager.GetComponent<ButtonFunctionality>().SetEnemy(monster);
@@ -136,9 +147,20 @@ public class CannonMinigame : MonoBehaviour
         ships[1].transform.position = new Vector3(0, 1010, 0);
     }
 
+    public static void SetTreasureShip(GameObject gameShip)
+    {
+        currTreasureShip = Instantiate(gameShip);
+
+        currTreasureShip.transform.GetChild(0).transform.rotation = Quaternion.Euler(Vector3.zero);
+
+        currTreasureShip.transform.position = new Vector3(0, 1010, 0);
+    }
+
     public static void SetMonster(GameObject gameMonster)
     {
         monster = Instantiate(gameMonster);
+
+        monster.transform.rotation = Quaternion.Euler(new Vector3(0, 90, 0));
 
         monster.transform.position = new Vector3(-50, 1010, 15);
     }
