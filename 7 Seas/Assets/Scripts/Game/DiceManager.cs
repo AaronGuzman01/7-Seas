@@ -304,8 +304,9 @@ public class DiceManager : MonoBehaviour {
         if (num.Equals(faces.Count - 1) && diceIndex != 3)
         {
             MapLoad.diceVals[diceIndex] = -1;
+            MapLoad.ghostCount++;
         }
-        else if (num.Equals(faces.Count - 2) && diceIndex == 1)
+        else if (num.Equals(faces.Count - 2) && diceIndex == 0)
         {
             MapLoad.diceVals[diceIndex] = -1;
             MapLoad.rats = true;
@@ -315,7 +316,6 @@ public class DiceManager : MonoBehaviour {
             MapLoad.diceVals[diceIndex] = -1;
             MapLoad.fog = true;
         }
-
         else if (num.Equals(faces.Count - 2) && diceIndex == 4)
         {
             MapLoad.diceVals[diceIndex] = -1;
@@ -326,6 +326,16 @@ public class DiceManager : MonoBehaviour {
 
             if (diceIndex > 1)
             {
+                if (diceIndex == 3)
+                {
+                    MapLoad.reward = num + 1;
+                }
+
+                if (diceIndex == 4)
+                {
+                    MapLoad.hazard = 12 + num;
+                }
+
                 MapLoad.diceVals[diceIndex] = num + 1;
             }
             else

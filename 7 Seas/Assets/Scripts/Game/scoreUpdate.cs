@@ -59,7 +59,7 @@ public class scoreUpdate : MonoBehaviour
         {
             if (PlayerPrefs.GetInt("TimesHit") >= 0)
             {
-                PlayerPrefs.SetInt("TimesHit", PlayerPrefs.GetInt("TimesHit") + 1);
+                PlayerPrefs.SetInt("TimesHit", PlayerPrefs.GetInt("TimesHit") + PlayerPrefs.GetInt("PlayerHits"));
                 PlayerPrefs.SetInt("ShipHits", PlayerPrefs.GetInt("ShipHits") - PlayerPrefs.GetInt("TimesHit"));
 
                 if (PlayerPrefs.GetInt("ShipHits") < 0)

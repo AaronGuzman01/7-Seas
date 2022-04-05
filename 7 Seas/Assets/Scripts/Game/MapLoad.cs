@@ -79,6 +79,9 @@ public class MapLoad : MonoBehaviour
     List<PlayerShip> shipInfo;
     List<int> playerNums;
 
+    public static int reward = -1;
+    public static int hazard = -1;
+    public static int ghostCount = 0;
     public static bool diceSet = false;
     public static int playerNum;
     public static int[] diceVals;
@@ -161,7 +164,7 @@ public class MapLoad : MonoBehaviour
             int mastCount = 0, cannonCount = 0, crew = 0, damage = 0, treasure = 0;
             int[] masts = new int[3];
             int[] cannons = new int[5];
-            string[] lines = System.IO.File.ReadAllLines(Application.persistentDataPath + "/Player" + (i + 1).ToString() + ".txt");
+            string[] lines = System.IO.File.ReadAllLines(Application.persistentDataPath + "/Player" + playerNums[i].ToString() + ".txt");
 
             foreach (string line in lines)
             {
@@ -278,20 +281,6 @@ public class MapLoad : MonoBehaviour
             }
         }
 
-        /*
-        //Assign active ships and cameras to player numbers
-        int j = 0;
-        for (int i = 0; i < 8; i++)
-        {
-            if (activePlayers[i] == true)
-            {
-                players[j] = ships[i];
-                cams[j] = i;
-                j++;
-            }
-        }
-        */
-
         camNum = cams[0];
         playerNum = playerNums[0] - 1;
         playerIndex = 0;
@@ -310,9 +299,6 @@ public class MapLoad : MonoBehaviour
         SetPlayerShips();
         SetTreasureShips();
         SetMonsters();
-
-        //Testing for switching sky
-        //StartCoroutine(ChangeSky());
 
         maxCams = maxPlayers;
 
@@ -385,6 +371,27 @@ public class MapLoad : MonoBehaviour
         player.text = "Player: " + (playerIndex + 1).ToString();
         playerImg.sprite = portImages[playerIndex];
         UpdateSextant();
+
+        if (reward > -1)
+        {
+            if (reward == playerNums[playerIndex])
+            {
+                Debug.Log("Player " + reward.ToString() + " has reward.");
+            }
+            else
+            {
+                Debug.Log("Other Player has reward: Player " + reward);
+            }
+
+            reward = -1;
+        }
+
+        if (hazard > -1)
+        {
+            Debug.Log("Monster Index: " + hazard);
+
+            hazard = -1;
+        }
 
         if (rats)
         {
