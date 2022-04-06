@@ -39,8 +39,25 @@ public class LoadFiles : MonoBehaviour
                                                                                                      string.Join("\n", damage));
         }
 
+
+        //Save Default Maps to Persistant Folder, if they don't already exist.
+
+        for (int i = 1; i <= 7; i++)
+        {
+            if (!System.IO.File.Exists(defaultMapPath + "/Map " + i + ".txt"))
+            {
+                Debug.Log("Map " + i + " does not exist.");
+
+                var textFile = Resources.Load<TextAsset>("Map " + i);
+
+                File.WriteAllText(defaultMapPath + "/Map " + i + ".txt", textFile.text);
+            }
+        }
+
+        /*
         var textFile = Resources.Load<TextAsset>("Sea of Reward");
 
         File.WriteAllText(defaultMapPath + "/Sea of Reward.txt", textFile.text);
+        */
     }
 }

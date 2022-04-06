@@ -13,6 +13,9 @@ public class CannonMinigame : MonoBehaviour
     public GameObject SceneManager;
     public GameObject[] targets;
     public GameObject treasureShip;
+    public GameObject destroyedShip;
+    public ParticleSystem explosion;
+    public GameObject moving;
     public Slider healthSlider;
     public Color healthColor;
 
@@ -97,6 +100,10 @@ public class CannonMinigame : MonoBehaviour
 
             currTreasureShip.AddComponent<ship_movement>();
             currTreasureShip.GetComponent<ship_movement>().height = 1010;
+            currTreasureShip.GetComponent<TreasureShip>().destroyedShip = destroyedShip;
+            currTreasureShip.GetComponent<TreasureShip>().explosion = explosion;
+            currTreasureShip.GetComponent<TreasureShip>().moving = moving;
+            currTreasureShip.GetComponent<TreasureShip>().clone = true;
 
             currTreasureShip.SetActive(true);
 

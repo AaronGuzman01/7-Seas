@@ -25,6 +25,7 @@ public class MapLoad : MonoBehaviour
     public Text treasureLimit;
     public Text treasureCurrent;
     public Text player;
+    public Text ratsText;
 
     public Camera main;
     public GameObject[] mainGUI;
@@ -51,6 +52,8 @@ public class MapLoad : MonoBehaviour
     public GameObject navMenu;
     public Text[] navTexts;
     public Text[] sextantTexts;
+    public Text[] portTexts;
+    public Text[] moveTexts;
     public Image playerImg;
     public Image[] moveSelection;
     public Text moveDisplay;
@@ -96,6 +99,7 @@ public class MapLoad : MonoBehaviour
     public int playerIndex;
     public static int diceIndex;
     public int moveCount;
+    public int baseMove = 5;
 
     static bool continueGame = false;
     public static int maxPlayers;
@@ -638,6 +642,9 @@ public class MapLoad : MonoBehaviour
                     if (port)
                     {
                         SetGUI(false, diceGUI);
+                        portTexts[0].gameObject.SetActive(false);
+                        portTexts[1].gameObject.SetActive(false);
+                        portTexts[2].gameObject.SetActive(false);
 
                         tiles.gameObject.SetActive(false);
 
@@ -926,6 +933,12 @@ public class MapLoad : MonoBehaviour
                     navSelect.gameObject.SetActive(true);
                     moveDisplay.text = "COMPASS";
 
+                    if (shipInfo[playerIndex].GetCompass() > 0)
+                    {
+                        diceVals[diceIndex] += shipInfo[playerIndex].GetCompass();
+                        moveTexts[0].text = "+ " + shipInfo[playerIndex].GetCompass().ToString();
+                    }
+
                     DisplayMoves(diceVals[diceIndex]);
 
                     diceIndex++;
@@ -933,6 +946,12 @@ public class MapLoad : MonoBehaviour
 
                 if (diceIndex == 1 && positions.Count == 0 && !isMoving && !posSet)
                 {
+                    if ((shipInfo[playerIndex].GetBase() > 0 || baseMove > 0) && moveCount == 0)
+                    {
+                        diceVals[diceIndex] += shipInfo[playerIndex].GetBase() + baseMove;
+                        moveTexts[1].text = "+ " + (shipInfo[playerIndex].GetBase() + baseMove).ToString();
+                    }
+
                     if (moveCount < diceVals[diceIndex])
                     {
                         diceSelect.localPosition = new Vector3(diceSelect.localPosition.x, 134, diceSelect.localPosition.z);
@@ -940,6 +959,8 @@ public class MapLoad : MonoBehaviour
                         diceSelect.gameObject.SetActive(true);
                         navSelect.gameObject.SetActive(true);
                         moveDisplay.text = "NAVIGATE";
+
+                        UpdateNavigationMenu();
 
                         moveCount++;
 
@@ -1271,13 +1292,55 @@ public class MapLoad : MonoBehaviour
         diceSet = false;
 
         ClearActiveTiles();
+        moveTexts[0].text = "";
+        moveTexts[1].text = "";
 
         mainGUI[1].SetActive(false);
     }
 
     public void AddPlayerTreasure()
     {
-        shipInfo[playerIndex].DepositTreasure();
+        portTexts[0].gameObject.SetActive(false);
+        portTexts[1].gameObject.SetActive(false);
+
+        if (shipInfo[playerIndex].GetCurrentTreasure() > 0)
+        {
+            shipInfo[playerIndex].DepositTreasure();
+
+            portTexts[0].text = "YOUR GOLD HAS BEEN ADDED TO YOUR BANK!";
+            portTexts[0].gameObject.SetActive(true);
+        }
+        else
+        {
+            portTexts[0].text = "YOU ARE NOT CARRYING ANY GOLD";
+            portTexts[0].gameObject.SetActive(true);
+        }
+    }
+
+    public void RemoveRats()
+    {
+        portTexts[0].gameObject.SetActive(false);
+        portTexts[1].gameObject.SetActive(false);
+
+        if (shipInfo[playerIndex].GetRats() > 0)
+        {
+            shipInfo[playerIndex].ResetRats();
+
+            portTexts[1].text = "YOUR SHIP HAS BEEN CLEARED OF THOSE PESKY RATS!";
+            portTexts[1].gameObject.SetActive(true);
+        }
+        else
+        {
+            portTexts[1].text = "YOUR SHIP HAS NO RATS";
+            portTexts[1].gameObject.SetActive(true);
+        }
+    }
+
+    public void AddCrew()
+    {
+        portTexts[2].gameObject.SetActive(false);
+
+        Crew.AddCrew(shipInfo[playerIndex], portTexts[2]);
     }
 
     public void SkipShipMovement()

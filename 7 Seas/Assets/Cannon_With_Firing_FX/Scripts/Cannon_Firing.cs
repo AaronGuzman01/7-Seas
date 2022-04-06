@@ -50,6 +50,7 @@ public class Cannon_Firing : MonoBehaviour
     Rigidbody cannonBallRB;
     public Transform shotPos;
     public float firePower;
+    public float powerScale;
     public Slider sliderX;
     public Slider sliderY;
     public Button fireBtn;
@@ -338,7 +339,7 @@ public class Cannon_Firing : MonoBehaviour
             cannonBallCopy.GetComponent<scoreUpdate>().absorbText = absorb;
 
             cannonBallRB = cannonBallCopy.GetComponent<Rigidbody>();
-            cannonBallRB.AddForce(shotPos.transform.forward * (firePower * .5f));
+            cannonBallRB.AddForce(shotPos.transform.forward * (firePower * powerScale));
 
             shotsLeft--;
         }

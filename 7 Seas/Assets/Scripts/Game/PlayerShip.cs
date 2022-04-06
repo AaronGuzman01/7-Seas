@@ -13,9 +13,13 @@ public class PlayerShip : MonoBehaviour
     int[] masts;
     int[] cannons;
     int crew = 0;
+    int rats = 0;
     int treasure = 1;
     int damage = 0;
     int hits = 1;
+    int compass = 0;
+    int baseNav = 0;
+    bool boughtCrew = false;
 
     public PlayerShip (int num, GameObject ship, int[] masts, int[] cannons, int crew, int treasure, int damage)
     {
@@ -130,8 +134,98 @@ public class PlayerShip : MonoBehaviour
         return hits;
     }
 
+    public int GetCompass()
+    {
+        return compass;
+    }
+
+    public int GetBase()
+    {
+        return baseNav;
+    }
+
+    public int GetCrew()
+    {
+        return crew;
+    }
+
+    public int GetRats()
+    {
+        return rats;
+    }
+
+    public void RemoveCrew()
+    {
+        crew--;
+    }
+
     public void AddHits(int hits)
     {
         this.hits += hits;
+    }
+
+    public void AddCompass()
+    {
+        compass += 2;
+    }
+
+    public void AddBase()
+    {
+        baseNav += 2;
+    }
+
+    public void AddCombat()
+    {
+        hits += 2;
+    }
+
+    public bool AddLRCannon()
+    {
+        for (int i = 0; i < cannons.Length; i++)
+        {
+            if (cannons[i] == 0)
+            {
+                cannons[i] = 2;
+
+                return true;
+            }
+        }
+
+        for (int i = 0; i < cannons.Length; i++)
+        {
+            if (cannons[i] == 1)
+            {
+                cannons[i] = 2;
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public void AddRat()
+    {
+        rats++;
+    }
+
+    public void ResetRats()
+    {
+        rats = 0;
+    }
+
+    public bool HasBought()
+    {
+        return boughtCrew;
+    }
+
+    public void SetCrewBought()
+    {
+        boughtCrew = true;
+    }
+
+    public void ResetCrew()
+    {
+        boughtCrew = false;
     }
 }

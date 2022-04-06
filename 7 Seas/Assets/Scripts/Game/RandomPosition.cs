@@ -176,7 +176,6 @@ public class RandomPosition : MonoBehaviour
         int positionX, positionY;
 
         found = false;
-        playerIndex = 0;
 
         for (int i = 1; i <= 5; i++)
         {
@@ -301,7 +300,7 @@ public class RandomPosition : MonoBehaviour
 
             if (playerIndex < players.Count)
             {
-                players[playerIndex].SetPortPosition(tilemap.WorldToCell(newObject.transform.position));
+                players[playerIndex].SetPortPosition(new Vector3Int(-34 + x, (y - 32) * -1, 0));
             }
 
             newObject.transform.position = new Vector3(newObject.transform.position.x + 2, 0.97f, newObject.transform.position.z + 2);
