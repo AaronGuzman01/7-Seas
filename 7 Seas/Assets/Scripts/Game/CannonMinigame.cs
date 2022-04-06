@@ -87,7 +87,6 @@ public class CannonMinigame : MonoBehaviour
         {
             PlayerPrefs.SetInt("ShipHits", currTreasureShip.GetComponent<TreasureShip>().hits);
             PlayerPrefs.SetInt("Gold", currTreasureShip.GetComponent<TreasureShip>().gold);
-            PlayerPrefs.SetInt("TimesHit", 0);
             PlayerPrefs.SetInt("PlayerHits", shipsInfo[0].GetHits());
 
             setTreasure = false;

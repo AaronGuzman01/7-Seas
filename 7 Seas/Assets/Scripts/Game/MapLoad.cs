@@ -52,6 +52,9 @@ public class MapLoad : MonoBehaviour
     public Text[] navTexts;
     public Text[] sextantTexts;
     public Image playerImg;
+    public Image[] moveSelection;
+    public Text moveDisplay;
+    public ParticleSystem fogFX;
 
     public float time;
     public float degrees;
@@ -65,12 +68,14 @@ public class MapLoad : MonoBehaviour
 
     Tilemap tilemap;
 
-    HashSet<Vector3Int> positions;
-    HashSet<Vector3Int> validPos;
-    HashSet<Vector3Int> portPos;
-    HashSet<Vector3Int> playerPos;
-    HashSet<Vector3Int> shipPos;
-    HashSet<Vector3Int> monsterPos;
+    HashSet<Vector3Int> positions = new HashSet<Vector3Int>();
+    HashSet<Vector3Int> validPos = new HashSet<Vector3Int>();
+    HashSet<Vector3Int> portPos = new HashSet<Vector3Int>();
+    HashSet<Vector3Int> playerPos = new HashSet<Vector3Int>();
+    HashSet<Vector3Int> shipPos = new HashSet<Vector3Int>();
+    HashSet<Vector3Int> monsterPos = new HashSet<Vector3Int>();
+    HashSet<int> fogTilesX = new HashSet<int>();
+    HashSet<int> fogTilesY = new HashSet<int>();
 
     GameObject currArrow;
     Vector3Int windDirection;
@@ -116,12 +121,6 @@ public class MapLoad : MonoBehaviour
 
     void Start()
     {
-        positions = new HashSet<Vector3Int>();
-        validPos = new HashSet<Vector3Int>();
-        portPos = new HashSet<Vector3Int>();
-        playerPos = new HashSet<Vector3Int>();
-        shipPos = new HashSet<Vector3Int>();
-        monsterPos = new HashSet<Vector3Int>();
         tilesInMap = new int[80, 80];
         objectsInMap = new int[80, 80];
         shipInfo = new List<PlayerShip>();
@@ -404,6 +403,8 @@ public class MapLoad : MonoBehaviour
         {
             Debug.Log("fog");
 
+            SetFog();
+
             fog = false;
         }
 
@@ -427,6 +428,25 @@ public class MapLoad : MonoBehaviour
             yield return new WaitForSeconds(15);
 
             RenderSettings.skybox = sky;
+        }
+    }
+
+    void SetFog()
+    {
+        Vector3Int playerPos = shipInfo[playerIndex].GetCurrentPosition();
+        int tileX = Mathf.FloorToInt(((playerPos.x + 34) / 16f));
+        int tileY = Mathf.FloorToInt((((playerPos.y - 32) * -1) / 16f));
+
+        if (!fogTilesX.Contains(tileX) || !fogTilesY.Contains(tileY))
+        {
+            ParticleSystem fog = Instantiate(fogFX);
+            fog.transform.position = tilemap.CellToWorld(new Vector3Int(-34 + (16 * tileX) + 8, 32 - (16 * tileY) - 15, 0));
+            fog.transform.position += new Vector3(0, 12, 0);
+            fog.gameObject.SetActive(true);
+            fog.Play();
+
+            fogTilesX.Add(tileX);
+            fogTilesY.Add(tileY);
         }
     }
 
@@ -883,8 +903,15 @@ public class MapLoad : MonoBehaviour
         {
             diceSet = false;
 
+            RectTransform diceSelect = moveSelection[0].rectTransform;
+            RectTransform navSelect = moveSelection[1].rectTransform;
+
             if (diceVals[diceIndex] < 0)
             {
+                diceSelect.gameObject.SetActive(false);
+                navSelect.gameObject.SetActive(false);
+                moveDisplay.text = "NO MOVES";
+
                 diceIndex++;
 
                 diceSet = true;
@@ -893,6 +920,12 @@ public class MapLoad : MonoBehaviour
             {
                 if (diceIndex == 0 && positions.Count == 0 && !isMoving && !posSet)
                 {
+                    diceSelect.localPosition = new Vector3(diceSelect.localPosition.x, 209, diceSelect.localPosition.z);
+                    navSelect.localPosition = new Vector3(navSelect.localPosition.x, -31, navSelect.localPosition.z);
+                    diceSelect.gameObject.SetActive(true);
+                    navSelect.gameObject.SetActive(true);
+                    moveDisplay.text = "COMPASS";
+
                     DisplayMoves(diceVals[diceIndex]);
 
                     diceIndex++;
@@ -902,12 +935,22 @@ public class MapLoad : MonoBehaviour
                 {
                     if (moveCount < diceVals[diceIndex])
                     {
+                        diceSelect.localPosition = new Vector3(diceSelect.localPosition.x, 134, diceSelect.localPosition.z);
+                        navSelect.localPosition = new Vector3(navSelect.localPosition.x, 30, navSelect.localPosition.z);
+                        diceSelect.gameObject.SetActive(true);
+                        navSelect.gameObject.SetActive(true);
+                        moveDisplay.text = "NAVIGATE";
+
                         moveCount++;
 
                         DisplayMoves(1);
                     }
                     else
                     {
+                        diceSelect.gameObject.SetActive(false);
+                        navSelect.gameObject.SetActive(false);
+                        moveDisplay.text = "NO MOVES";
+
                         diceIndex++;
 
                         moveCount = 0;
@@ -918,18 +961,26 @@ public class MapLoad : MonoBehaviour
                 {
                     if (moveCount < diceVals[diceIndex] && diceVals[diceIndex] != 1)
                     {
+                        diceSelect.localPosition = new Vector3(diceSelect.localPosition.x, 59, diceSelect.localPosition.z);
+                        navSelect.localPosition = new Vector3(navSelect.localPosition.x, -1, navSelect.localPosition.z);
+                        diceSelect.gameObject.SetActive(true);
+                        navSelect.gameObject.SetActive(true);
+                        moveDisplay.text = "WIND";
+
                         moveCount++;
 
                         DisplayMoves(-1);
                     }
                     else
                     {
+                        diceSelect.gameObject.SetActive(false);
+                        navSelect.gameObject.SetActive(false);
+                        moveDisplay.text = "NO MOVES";
+
                         diceIndex++;
 
                         moveCount = 0;
                     }
-
-                    Debug.Log("Wind Moves: " + diceVals[diceIndex]);
                 }
             }
         }
