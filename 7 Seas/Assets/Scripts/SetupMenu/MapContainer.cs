@@ -49,22 +49,6 @@ public class MapContainer : MonoBehaviour {
 
         tilemap.transform.parent.SetParent(mapContainer.transform);
 
-        //Save Default Maps to Persistant Folder, if they don't already exist.
-
-        for (int i = 1; i <= 7; i++)
-        {
-            if (!System.IO.File.Exists(defaultMapPath + "/Map #" + i + ".txt"))
-            {
-                Debug.Log("Map #" + i + " does not exist.");
-
-                if (System.IO.File.Exists("Assets/Default Maps/Map #" + i + ".txt"))
-                {
-                    Debug.Log("Map Added.");
-                    FileUtil.CopyFileOrDirectory("Assets/Default Maps/Map #" + i + ".txt", defaultMapPath + "/Map #" + i + ".txt");
-                }
-            }
-        }
-
         files = Directory.GetFiles(defaultMapPath);
 
         foreach (string file in files) {
