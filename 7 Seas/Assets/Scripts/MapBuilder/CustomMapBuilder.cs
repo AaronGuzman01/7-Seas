@@ -33,7 +33,8 @@ public class CustomMapBuilder : MonoBehaviour
     private Tilemap firstMap;
     private Tilemap secondMap;
     private bool firstMapActive;
-    private string mapPath;
+    private string defaultMapPath;
+    private string customMapPath;
     private TileBase currTile;
     private const int originX = 0;
     private const int originY = 0;
@@ -64,6 +65,8 @@ public class CustomMapBuilder : MonoBehaviour
     private int adjustedCol;
     bool isToggled = false;
 
+    public Dropdown defaultMapSelector;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -80,9 +83,11 @@ public class CustomMapBuilder : MonoBehaviour
 
         panel.enabled = false;
 
-        mapPath = Application.persistentDataPath + "/Maps/Custom/";
+        customMapPath = Application.persistentDataPath + "/Maps/Custom/";
+        defaultMapPath = Application.persistentDataPath + "/Maps/Default/";
 
-        Directory.CreateDirectory(mapPath);
+        Directory.CreateDirectory(customMapPath);
+        Directory.CreateDirectory(defaultMapPath);
 
         optionMenus[0].onValueChanged.AddListener(delegate { SetMapMenu(0); });
         optionMenus[1].onValueChanged.AddListener(delegate { SetMapMenu(1); });
@@ -95,6 +100,7 @@ public class CustomMapBuilder : MonoBehaviour
         HideLoadMenu();
         HideDeleteMenu();
         ClearMap();
+        LoadDefaultMap(true);
 
         panels[0].enabled = true;
         currentPanel = panels[0];
@@ -646,9 +652,9 @@ public class CustomMapBuilder : MonoBehaviour
         string fileName = loadMenu.GetComponentInChildren<InputField>().text;
         string mapText;
 
-        if (System.IO.File.Exists(mapPath + fileName + ".txt"))
+        if (System.IO.File.Exists(customMapPath + fileName + ".txt"))
         {
-            mapText = System.IO.File.ReadAllText(mapPath + fileName + ".txt");
+            mapText = System.IO.File.ReadAllText(customMapPath + fileName + ".txt");
 
             mapName = fileName;
 
@@ -664,11 +670,39 @@ public class CustomMapBuilder : MonoBehaviour
         }
     }
 
+    public void LoadDefaultMap(bool start)
+    {
+        int mapNum = 1;
+
+        if (start == false)
+        {
+            mapNum = defaultMapSelector.value + 1;
+        }
+      
+        string fileName = "Map #" + mapNum;
+        string mapText;
+
+        Debug.Log(mapNum);
+
+        if (System.IO.File.Exists(defaultMapPath + fileName + ".txt"))
+        {
+            mapText = System.IO.File.ReadAllText(defaultMapPath + fileName + ".txt");
+
+            mapName = fileName;
+
+            WriteTiles(mapText);
+        }
+        else
+        {
+            errors[1].text = "Map does not exist.";
+        }
+    }
+
     public void WriteMap(string fileName, string mapText)
     {
         if (fileName != "")
         {
-            System.IO.File.WriteAllText(mapPath + fileName + ".txt", mapText);
+            System.IO.File.WriteAllText(customMapPath + fileName + ".txt", mapText);
         }
     }
 
@@ -718,7 +752,7 @@ public class CustomMapBuilder : MonoBehaviour
     {
         if (mapName != null)
         {
-            System.IO.File.Delete(mapPath + mapName + ".txt");
+            System.IO.File.Delete(customMapPath + mapName + ".txt");
 
             mapName = null;
 
