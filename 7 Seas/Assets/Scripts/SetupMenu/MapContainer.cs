@@ -53,7 +53,7 @@ public class MapContainer : MonoBehaviour {
 
         for (int i = 1; i <= 7; i++)
         {
-            if (!System.IO.File.Exists(defaultMapPath + "/Map #" + i))
+            if (!System.IO.File.Exists(defaultMapPath + "/Map #" + i + ".txt"))
             {
                 Debug.Log("Map #" + i + " does not exist.");
 
