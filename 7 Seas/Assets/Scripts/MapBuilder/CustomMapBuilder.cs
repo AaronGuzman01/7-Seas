@@ -679,14 +679,14 @@ public class CustomMapBuilder : MonoBehaviour
             mapNum = defaultMapSelector.value + 1;
         }
       
-        string fileName = "Map #" + mapNum;
+        string fileName = "Map " + mapNum;
         string mapText;
 
         Debug.Log(mapNum);
 
-        if (System.IO.File.Exists(defaultMapPath + fileName + ".txt"))
+        if (File.Exists(defaultMapPath + fileName + ".txt"))
         {
-            mapText = System.IO.File.ReadAllText(defaultMapPath + fileName + ".txt");
+            mapText = File.ReadAllText(defaultMapPath + fileName + ".txt");
 
             mapName = fileName;
 
