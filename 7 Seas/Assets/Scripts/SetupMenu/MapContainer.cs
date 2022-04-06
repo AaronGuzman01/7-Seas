@@ -4,6 +4,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
+using UnityEditor;
 
 public class MapContainer : MonoBehaviour {
 
@@ -47,6 +48,22 @@ public class MapContainer : MonoBehaviour {
         allFiles = new List<string>();
 
         tilemap.transform.parent.SetParent(mapContainer.transform);
+
+        //Save Default Maps to Persistant Folder, if they don't already exist.
+
+        for (int i = 1; i <= 7; i++)
+        {
+            if (!System.IO.File.Exists(defaultMapPath + "/Map #" + i))
+            {
+                Debug.Log("Map #" + i + " does not exist.");
+
+                if (System.IO.File.Exists("Assets/Default Maps/Map #" + i + ".txt"))
+                {
+                    Debug.Log("Map Added.");
+                    FileUtil.CopyFileOrDirectory("Assets/Default Maps/Map #" + i + ".txt", defaultMapPath + "/Map #" + i + ".txt");
+                }
+            }
+        }
 
         files = Directory.GetFiles(defaultMapPath);
 
