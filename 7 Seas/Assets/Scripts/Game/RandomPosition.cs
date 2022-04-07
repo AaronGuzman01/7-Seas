@@ -4,6 +4,9 @@ using UnityEngine.Tilemaps;
 
 public class RandomPosition : MonoBehaviour
 {
+    static List<int> shipMapXPos = new List<int>();
+    static List<int> shipMapYPos = new List<int>();
+    static bool shipsSet = false;
     HashSet<string> tilesUsed = new HashSet<string>();
     Canvas[] containers;
     List<GameObject> ports;
@@ -28,6 +31,10 @@ public class RandomPosition : MonoBehaviour
         this.containers = containers;
 
         SetPortNames();
+        tilesUsed.Clear();
+        shipMapXPos.Clear();
+        shipMapYPos.Clear();
+        shipsSet = false;
     }
 
     void SetPortNames()
@@ -119,6 +126,69 @@ public class RandomPosition : MonoBehaviour
 
             map = map.Remove(0, 1);
         }
+
+        shipsSet = true;
+    }
+
+    public void GeneratePlayerPosition(int[,] mapTiles, int[,] mapObjects)
+    {
+        int tryCount = 0;
+        int tileX, tileY, tilePositionX, tilePositionY;
+        int positionX, positionY;
+
+        found = false;
+
+        foreach (PlayerShip player in players)
+        {
+
+            if (!found && tryCount < 80)
+            {
+                while (!found && tryCount < 80)
+                {
+                    tileX = Random.Range(1, 6);
+                    tileY = Random.Range(1, 6);
+
+                    if (!tilesUsed.Contains(tileX.ToString() + ' ' + tileY.ToString()))
+                    {
+                        tilesUsed.Add(tileX.ToString() + ' ' + tileY.ToString());
+
+                        tilePositionX = 16 * tileX;
+                        tilePositionY = 16 * tileY;
+
+                        while (tryCount < 25 && !found)
+                        {
+                            positionX = Random.Range(tilePositionX - 16, tilePositionX);
+                            positionY = Random.Range(tilePositionY - 16, tilePositionY);
+
+                            SetPlayer(player, mapTiles, mapObjects, positionX, positionY);
+
+                            tryCount++;
+                        }
+
+                        tryCount = 0;
+                    }
+                }
+            }
+
+            found = false;
+        }
+
+        tilesUsed.Clear();
+    }
+
+    void SetPlayer(PlayerShip player, int[,] mapTiles, int[,] mapObjects, int x, int y)
+    {
+        if (mapTiles[x, y] < 2 && mapTiles[x, y] > -1 && mapObjects[x, y] == 0)
+        {
+            player.GetShip().transform.position = tilemap.GetCellCenterWorld(new Vector3Int(-34 + x, (y - 32) * -1, 0));
+
+            player.SetCurrentPosition(tilemap.WorldToCell(player.GetShip().transform.position));
+            player.SetPreviousPosition(tilemap.WorldToCell(player.GetShip().transform.position));
+
+            mapObjects[x, y] = -1;
+
+            found = true;
+        }
     }
 
     public void GenerateHomePortPositions(int[,] mapTiles, int[,] mapObjects) 
@@ -172,7 +242,7 @@ public class RandomPosition : MonoBehaviour
     public void GeneratePortPositions(int[,] mapTiles, int[,] mapObjects)
     {
         int tryCount = 0;
-        int tileX, tileY, tilePositionX, tilePositionY;
+        int tilePositionX, tilePositionY;
         int positionX, positionY;
 
         found = false;
@@ -206,11 +276,6 @@ public class RandomPosition : MonoBehaviour
         }
 
         tilesUsed.Clear();
-    }
-
-    public void GeneratePlayerPosition(int[,] mapTiles, int[,] mapObjects)
-    {
-
     }
 
     public void GenerateSirenPosition(int[,] mapTiles, int[,] mapObjects)
@@ -250,6 +315,16 @@ public class RandomPosition : MonoBehaviour
         tilesUsed.Clear();
     }
 
+    public void SetNewShips(int[,] mapTiles, int[,] mapObjects)
+    {
+        for (int i = 0; i < shipMapXPos.Count; i++)
+        {
+            int index = Random.Range(0, ships.Count);
+
+            SetShipOrMonster(ships[index], mapTiles, mapObjects, shipMapXPos[i], shipMapYPos[i], 1);
+        }
+    }
+
     void SetShipOrMonster(GameObject tileObject, int[,] mapTiles, int[,] mapObjects, int x, int y, int type)
     {
         if (mapTiles[x, y] < 2 && mapTiles[x, y] > -1 && mapObjects[x, y] == 0)
@@ -278,6 +353,11 @@ public class RandomPosition : MonoBehaviour
                 gameObject.transform.position = new Vector3(gameObject.transform.position.x, 0, gameObject.transform.position.z);
 
                 mapObjects[x, y] = 1;
+
+                if (!shipsSet) {
+                    shipMapYPos.Add(x);
+                    shipMapYPos.Add(y);
+                }
             }
 
             found = true;
