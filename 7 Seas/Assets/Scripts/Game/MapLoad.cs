@@ -84,7 +84,7 @@ public class MapLoad : MonoBehaviour
     Vector3Int windDirection;
 
     GameObject[] players;
-    List<PlayerShip> shipInfo;
+    public static List<PlayerShip> shipInfo;
     List<int> playerNums;
 
     public static int reward = -1;
