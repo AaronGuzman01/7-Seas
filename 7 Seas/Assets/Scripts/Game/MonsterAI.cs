@@ -5,9 +5,10 @@ using UnityEngine.Tilemaps;
 
 public class MonsterAI : MonoBehaviour
 {
+    public static Canvas monsterContainer;
+    public int index;
     HashSet<int> positionsOccupied = new HashSet<int>();
     List<GameObject> players;
-    List<GameObject> monsters;
     Tilemap tilemap;
     int tileIndex = 0;
     int x, y, newX, newY;
@@ -201,5 +202,69 @@ public class MonsterAI : MonoBehaviour
         moved = true;
 
         transform.position = tilemap.GetCellCenterWorld(new Vector3Int(-34 + newX, (newY - 32) * -1, 0));
+    }
+
+    public static bool FindMonster(Vector3Int playerPos, Tilemap map, int index)
+    {
+        bool found = false;
+
+        for (int i = 1; i <= 7; i++)
+        {
+            found = CheckInPosition(playerPos + new Vector3Int(i, 0, 0), map, index);
+            if (found)
+                break;
+
+            found = CheckInPosition(playerPos + new Vector3Int(-i, 0, 0), map, index);
+            if (found)
+                break;
+
+            found = CheckInPosition(playerPos + new Vector3Int(0, i, 0), map, index);
+            if (found)
+                break;
+
+            found = CheckInPosition(playerPos + new Vector3Int(0, -i, 0), map, index);
+            if (found)
+                break;
+
+            found = CheckInPosition(playerPos + new Vector3Int(i, i, 0), map, index);
+            if (found)
+                break;
+
+            found = CheckInPosition(playerPos + new Vector3Int(-i, -i, 0), map, index);
+            if (found)
+                break;
+
+            if (found)
+                break;
+
+            found = CheckInPosition(playerPos + new Vector3Int(-i, i, 0), map, index);
+            if (found)
+                break;
+
+            found = CheckInPosition(playerPos + new Vector3Int(i, -i, 0), map, index);
+            if (found)
+                break;
+
+        }
+
+        return found;
+    }
+
+    static bool CheckInPosition(Vector3Int pos, Tilemap map, int index)
+    {
+        for (int i = 0; i < monsterContainer.transform.childCount; i++)
+        {
+            GameObject monster = monsterContainer.transform.GetChild(i).gameObject;
+
+            if (map.WorldToCell(monster.transform.position) == pos)
+            {
+                if (monster.GetComponent<MonsterAI>().index == index)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }

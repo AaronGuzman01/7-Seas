@@ -59,10 +59,14 @@ public class MapLoad : MonoBehaviour
     public Text moveDisplay;
     public ParticleSystem fogFX;
 
+    public float winAmount;
     public float time;
     public float degrees;
     
     float accel;
+
+    int rounds = 1;
+    int shipRounds = 1;
 
     int leftBound;
     int rightBound;
@@ -139,6 +143,7 @@ public class MapLoad : MonoBehaviour
         ResultsManager.skyBox = skyBox[0];
 
         treasureGoal.text = "Treasure Goal: " + PlayerPrefs.GetFloat("End").ToString();
+        winAmount = PlayerPrefs.GetFloat("End");
 
         //Gets selected players
         for (int i = 0; i < 8; i++)
@@ -299,15 +304,18 @@ public class MapLoad : MonoBehaviour
 
         LoadMap();
 
-        SetPlayerShips();
-        SetTreasureShips();
-        SetMonsters();
+        //SetPlayerShips();
+        //SetTreasureShips();
+        //SetMonsters();
+
+        MonsterAI.monsterContainer = objectContainers[3];
 
         maxCams = maxPlayers;
 
         objectGenerator = new RandomPosition(shipInfo, ports, treasureShips, monsters, sirenObj, objectContainers);
         objectGenerator.SetTilemap(tilemap);
         objectGenerator.SetMapObjects(tilesInMap, objectsInMap);
+        objectGenerator.GeneratePlayerPosition(tilesInMap, objectsInMap);
         objectGenerator.GenerateHomePortPositions(tilesInMap, objectsInMap);
         objectGenerator.GeneratePortPositions(tilesInMap, objectsInMap);
         objectGenerator.GenerateSirenPosition(tilesInMap, objectsInMap);
@@ -372,41 +380,52 @@ public class MapLoad : MonoBehaviour
         treasureTotal.text = "Total Treasure: " + shipInfo[playerIndex].GetTotalTreasure().ToString();
         treasureLimit.text = "Carry Limit: " + shipInfo[playerIndex].GetTreasureLimit().ToString();
         player.text = "Player: " + (playerIndex + 1).ToString();
+        ratsText.text = "RATS ON SHIP: " + shipInfo[playerIndex].GetRats().ToString();
         playerImg.sprite = portImages[playerIndex];
-        UpdateSextant();
+        UpdateSextant(); 
+        
+        if (shipInfo[playerIndex].GetRats() >= 10)
+        {
+            ratsText.transform.GetChild(0).gameObject.SetActive(true);
+        }
+        else
+        {
+            ratsText.transform.GetChild(0).gameObject.SetActive(false);
+        }
 
         if (reward > -1)
         {
             if (reward == playerNums[playerIndex])
             {
-                Debug.Log("Player " + reward.ToString() + " has reward.");
+                moveTexts[2].gameObject.SetActive(true);
+
+                PlayerPrefs.SetInt("Double", 1);
             }
             else
             {
-                Debug.Log("Other Player has reward: Player " + reward);
+                PlayerPrefs.SetInt("Double", 0);
             }
 
             reward = -1;
         }
 
+        /*
         if (hazard > -1)
         {
             Debug.Log("Monster Index: " + hazard);
 
             hazard = -1;
-        }
+        }*/
 
         if (rats)
         {
-            Debug.Log("Rats");
+            shipInfo[playerIndex].AddRat();
 
             rats = false;
         }
 
         if (fog)
         {
-            Debug.Log("fog");
-
             SetFog();
 
             fog = false;
@@ -443,7 +462,7 @@ public class MapLoad : MonoBehaviour
 
         if (!fogTilesX.Contains(tileX) || !fogTilesY.Contains(tileY))
         {
-            ParticleSystem fog = Instantiate(fogFX);
+            ParticleSystem fog = Instantiate(fogFX, objectContainers[5].transform);
             fog.transform.position = tilemap.CellToWorld(new Vector3Int(-34 + (16 * tileX) + 8, 32 - (16 * tileY) - 15, 0));
             fog.transform.position += new Vector3(0, 12, 0);
             fog.gameObject.SetActive(true);
@@ -454,6 +473,18 @@ public class MapLoad : MonoBehaviour
         }
     }
 
+    void RemoveFog()
+    {
+        foreach (Transform fog in objectContainers[5].transform)
+        {
+            Destroy(fog.gameObject);
+
+            fogTilesX.Clear();
+            fogTilesY.Clear();
+        }
+    }
+
+    /*
     void SetPlayerShips()
     {
         int count = 0;
@@ -475,6 +506,7 @@ public class MapLoad : MonoBehaviour
            // }
         }
     }
+    */
 
     void SetTreasureShips()
     {
@@ -788,18 +820,19 @@ public class MapLoad : MonoBehaviour
 
     public void EndTurn()
     {
+        CheckPlayer();
+
         ChangePlayer();
 
         UpdateTurn();
-
-        ShipMovement();
-
-        MonsterMovement();
     }
 
     public void UpdateTurn()
     {
         ClearActiveTiles();
+        RemoveFog();
+        fogTilesX.Clear();
+        fogTilesY.Clear();
 
         SetGUI(false, diceGUI);
     }
@@ -1079,7 +1112,7 @@ public class MapLoad : MonoBehaviour
     void SetSelected(Vector3Int pos)
     {
         if ((pos.x + 34 < 80) && ((pos.y - 32) * -1) < 80 &&
-            (pos.x + 34 > 0) && ((pos.y - 32) * -1) > 0) {
+            (pos.x + 34 >= 0) && ((pos.y - 32) * -1) >= 0) {
             int tilePlaced = tilesInMap[pos.x + 34, (pos.y - 32) * -1];
             int objectPlaced = objectsInMap[pos.x + 34, (pos.y - 32) * -1];
 
@@ -1101,25 +1134,28 @@ public class MapLoad : MonoBehaviour
 
             if ((tilePlaced <= 1 && tilePlaced > -1) || (objectPlaced < 0 && objectPlaced > -2 && tilePlaced > -1) || (objectPlaced == 0 && tilePlaced == -1))
             {
-                validPos.Add(pos);
 
-                if (tilePlaced == -1)
-                {
-                    portPos.Add(pos);
-                }
-                else if (objectPlaced == -1)
-                {
-                    playerPos.Add(pos);
-                }
-                else if (objectPlaced == 1)
-                {
-                    shipPos.Add(pos);
-                }
-                else
-                {
-                    if (objectPlaced == 2)
+                if (shipInfo[playerIndex].GetRats() < 10 || tilePlaced == -1) {
+                    validPos.Add(pos);
+
+                    if (tilePlaced == -1)
                     {
-                        monsterPos.Add(pos);
+                        portPos.Add(pos);
+                    }
+                    else if (objectPlaced == -1)
+                    {
+                        playerPos.Add(pos);
+                    }
+                    else if (objectPlaced == 1)
+                    {
+                        shipPos.Add(pos);
+                    }
+                    else
+                    {
+                        if (objectPlaced == 2)
+                        {
+                            monsterPos.Add(pos);
+                        }
                     }
                 }
             }
@@ -1172,14 +1208,28 @@ public class MapLoad : MonoBehaviour
         }
     }
 
+    public void CheckPlayer()
+    {
+        CheckMonsters();
+        CheckForWin();
+    }
+
     public void ChangePlayer()
     {
+        shipInfo[playerIndex].ResetCrew();
+
         if (playerIndex + 1 >= maxPlayers && !isMoving)
         {
             playerIndex = 0;
             playerNum = playerNums[playerIndex] - 1;
             camNum = cams[0];
 
+            rounds++;
+            shipRounds++;
+
+            CheckShips();
+            ShipMovement();
+            MonsterMovement();
         }
         else
         {
@@ -1191,16 +1241,27 @@ public class MapLoad : MonoBehaviour
             }
         }
 
-        treasureCurrent.text = "Player Treasure: " + shipInfo[playerIndex].GetCurrentTreasure().ToString();
-        treasureTotal.text = "Total Treasure: " + shipInfo[playerIndex].GetTotalTreasure().ToString();
-        treasureLimit.text = "Carry Limit: " + shipInfo[playerIndex].GetTreasureLimit().ToString();
-        player.text = "Player: " + (playerIndex + 1).ToString();
-        UpdateSextant();
-
         navMenu.SetActive(false);
         mainGUI[1].SetActive(true);
+        ratsText.transform.GetChild(0).gameObject.SetActive(false);
+        moveTexts[2].gameObject.SetActive(false);
+    }
 
-        Debug.Log("Active Camera: " + (camNum + 1));
+    void CheckForWin()
+    {
+        if (shipInfo[playerIndex].GetTotalTreasure() >= winAmount)
+        {
+            WinManager.player = shipInfo[playerIndex];
+
+            hiddenBtns[3].onClick.Invoke();
+        }
+    }
+
+    public void Add()
+    {
+        shipInfo[playerIndex].AddToTreasure(100);
+
+        shipInfo[playerIndex].DepositTreasure();
     }
 
     void SetGUI(bool enable, GameObject[] GUI)
@@ -1258,31 +1319,6 @@ public class MapLoad : MonoBehaviour
                 arrowRot = 135f;
                 return new Vector3Int(1, -1, 0);
         }
-    }
-
-    //Movement Coroutine for Arrow Key movement
-    private IEnumerator MovePlayer(GameObject player, Vector3 direction)
-    {
-        isMoving = true;
-
-        float elapsedTime = 0;
-
-        original = player.transform.position;
-
-        target = original + direction;
-
-        player.transform.forward = direction;
-
-        while (elapsedTime < moveTime)
-        {
-            player.transform.position = Vector3.Lerp(original, target, (elapsedTime / moveTime));
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-
-        player.transform.position = target;
-
-        isMoving = false;
     }
 
     public void ResetRoll()
@@ -1358,8 +1394,32 @@ public class MapLoad : MonoBehaviour
         players[playerIndex].transform.position = currPos;
     }
 
+    void CheckMonsters()
+    {
+        if (hazard != -1)
+        {
+            bool found = MonsterAI.FindMonster(shipInfo[playerIndex].GetCurrentPosition(), tilemap, hazard);
+
+            if (found)
+            {
+                Debug.Log("Monster found");
+            }
+
+            hazard = -1;
+        }
+    }
+
+    void CheckShips()
+    {
+        Debug.Log("New ships have been added");
+
+        objectGenerator.SetNewShips(tilesInMap, objectsInMap);
+    }
+    
     void ShipMovement()
     {
+        Debug.Log("Ships have moved");
+
         for (int i = 0; i < objectContainers[2].transform.childCount; i++)
         {
             GameObject ship = objectContainers[2].transform.GetChild(i).gameObject;
@@ -1370,6 +1430,8 @@ public class MapLoad : MonoBehaviour
 
     void MonsterMovement()
     {
+        Debug.Log("Monsters have moved");
+
         for (int i = 0; i < objectContainers[3].transform.childCount; i++)
         {
             GameObject monster = objectContainers[3].transform.GetChild(i).gameObject;
