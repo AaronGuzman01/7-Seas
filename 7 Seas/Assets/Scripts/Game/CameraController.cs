@@ -40,6 +40,14 @@ public class CameraController : MonoBehaviour
     //Camera Tilt
     private int xTilt = 0;
 
+    //Camera Position Display
+    public Text[] positionTexts;
+    Vector3Int cameraPos;
+    public GameObject PanDirection;
+    public GameObject TiltDirection;
+    private Vector3 pan;
+    private Vector3 tilt;
+
     void Start()
     {
         int count = 0;
@@ -100,6 +108,7 @@ public class CameraController : MonoBehaviour
         }
 
         ghostDummy.transform.rotation = dummy.transform.rotation;
+
     }
 
     public void ChangeView()
@@ -217,6 +226,9 @@ public class CameraController : MonoBehaviour
                 if (dummy.transform.position.x - ship[playerNum].transform.position.x > -120)
                 {
                     dummy.transform.Translate(-12.0f, 0.0f, 0.0f, Space.World);
+
+                    cameraPos.x -= 1;
+                    positionTexts[0].text = (cameraPos.x + 34).ToString();
                 }
             }
 
@@ -238,6 +250,9 @@ public class CameraController : MonoBehaviour
                 if (dummy.transform.position.x - ship[playerNum].transform.position.x < 120)
                 {
                     dummy.transform.Translate(12.0f, 0.0f, 0.0f, Space.World);
+
+                    cameraPos.x += 1;
+                    positionTexts[0].text = (cameraPos.x + 34).ToString();
                 }
             }
 
@@ -258,6 +273,9 @@ public class CameraController : MonoBehaviour
                 if (dummy.transform.position.z - ship[playerNum].transform.position.z < 120)
                 {
                     dummy.transform.Translate(0.0f, 0.0f, 12.0f, Space.World);
+
+                    cameraPos.y -= 1;
+                    positionTexts[1].text = ((cameraPos.y - 32) * -1).ToString();
                 }
             }
 
@@ -278,6 +296,9 @@ public class CameraController : MonoBehaviour
                 if (dummy.transform.position.z - ship[playerNum].transform.position.z > -120)
                 {
                     dummy.transform.Translate(0.0f, 0.0f, -12.0f, Space.World);
+
+                    cameraPos.y += 1;
+                    positionTexts[1].text = ((cameraPos.y - 32) * -1).ToString();
                 }
             }
 
@@ -301,6 +322,9 @@ public class CameraController : MonoBehaviour
         if (dummy.transform.position.y - ship[playerNum].transform.position.y < 60)
         {
             dummy.transform.Translate(0.0f, 12.0f, 0.0f, Space.World);
+            
+            cameraPos.z += 1;
+            positionTexts[2].text = cameraPos.z.ToString();
         }
     }
 
@@ -309,6 +333,9 @@ public class CameraController : MonoBehaviour
         if (dummy.transform.position.y - ship[playerNum].transform.position.y > 13)
         {
             dummy.transform.Translate(0.0f, -12.0f, 0.0f, Space.World);
+            
+            cameraPos.z -= 1;
+            positionTexts[2].text = cameraPos.z.ToString();
         }
     }
 
@@ -317,6 +344,10 @@ public class CameraController : MonoBehaviour
         playerOverhead[playerNum].m_LookAt = dummy.transform;
 
         dummy.transform.Rotate(0.0f, 10.0f, 0.0f, Space.World);
+
+        //Update Pan Direction Display
+        PanDirection.transform.Rotate(0.0f, 0.0f, -10.0f);
+
     }
 
     public void PanRight()
@@ -324,6 +355,9 @@ public class CameraController : MonoBehaviour
         playerOverhead[playerNum].m_LookAt = dummy.transform;
 
         dummy.transform.Rotate(0.0f, -10.0f, 0.0f, Space.World);
+
+        //Update Pan Direction Display
+        PanDirection.transform.Rotate(0.0f, 0.0f, 10.0f);
     }
 
     public void TiltDown()
@@ -334,6 +368,7 @@ public class CameraController : MonoBehaviour
         {
             dummy.transform.Rotate(10.0f, 0.0f, 0.0f, Space.Self);
             xTilt += 10;
+            TiltDirection.transform.Rotate(0.0f, 0.0f, 20.0f);
         }
 
     }
@@ -346,6 +381,7 @@ public class CameraController : MonoBehaviour
         {
             dummy.transform.Rotate(-10.0f, 0.0f, 0.0f, Space.Self);
             xTilt -= 10;
+            TiltDirection.transform.Rotate(0.0f, 0.0f, -20.0f);
         }
     }
 
@@ -353,11 +389,21 @@ public class CameraController : MonoBehaviour
     public void ResetDummy()
     {
         playerOverhead[playerNum].m_LookAt = dummy.transform;
+
         dummy.transform.position = ship[playerNum].transform.position;
         dummy.transform.Translate(0.0f, 12.0f, 0.0f, Space.World);
+
         dummy.transform.rotation = ship[playerNum].transform.rotation;
         playerOverhead[playerNum].m_Lens.FieldOfView = 60;
         xTilt = 0;
+
+        //Update Position Text
+        cameraPos = MapLoad.shipInfo[playerNum].GetCurrentPosition();
+        positionTexts[0].text = (cameraPos.x + 34).ToString();
+        positionTexts[1].text = ((cameraPos.y - 32) * -1).ToString();
+        positionTexts[2].text = cameraPos.z.ToString();
+
+        ResetCompass();
     }
 
     //Reset Dummy to Next Player
@@ -404,6 +450,24 @@ public class CameraController : MonoBehaviour
         //Disable GUI and Reset Tilt
         GUI = false;
         xTilt = 0;
+
+        //Update Position Text
+        cameraPos = MapLoad.shipInfo[playerNum].GetCurrentPosition();
+
+        positionTexts[0].text = (cameraPos.x + 34).ToString();
+        positionTexts[1].text = ((cameraPos.y - 32) * -1).ToString();
+        positionTexts[2].text = cameraPos.z.ToString();
+
+        ResetCompass();
+    }
+
+    public void ResetCompass()
+    {
+        pan = ship[playerNum].transform.rotation.eulerAngles;
+        PanDirection.transform.rotation = Quaternion.identity;
+        PanDirection.transform.Rotate(0.0f, 0.0f, -pan.y);
+
+        TiltDirection.transform.rotation = Quaternion.identity;
     }
 
     //Camera zooming function
