@@ -24,19 +24,52 @@ public class LoadFiles : MonoBehaviour
         string[] damage = { "damage 1:", "damage 2:" };
 
 
-        if (!File.Exists(Application.persistentDataPath + "/Players.txt"))
+        if (!File.Exists(Application.persistentDataPath + "/Swabie.txt"))
+            File.WriteAllText(Application.persistentDataPath + "/Swabie.txt", Swabie.toString());
+        else
+            Swabie.load();
+
+        if (!File.Exists(Application.persistentDataPath + "/Captain.txt"))
+            File.WriteAllText(Application.persistentDataPath + "/Captain.txt", Captain.toString());
+        else
+            Captain.load();
+
+        if (!File.Exists(Application.persistentDataPath + "/Seaman.txt"))
+            File.WriteAllText(Application.persistentDataPath + "/Seaman.txt", Seaman.toString());
+        else
+            Seaman.load();    
+
+        
+        File.WriteAllText(Application.persistentDataPath + "/Players.txt", string.Join("\n", players));
+
+        if (!File.Exists(Application.persistentDataPath + "/Difficulty.txt"))
         {
-            System.IO.File.WriteAllText(Application.persistentDataPath + "/Players.txt", string.Join("\n", players));
+            File.WriteAllText(Application.persistentDataPath + "/Difficulty.txt", "200");
+            PlayerPrefs.SetString("Difficulty", "Easy");
         }
-        System.IO.File.WriteAllText(Application.persistentDataPath + "/Difficulty.txt", "");
+        else
+        {
+            foreach(string points in File.ReadLines(Application.persistentDataPath + "/Difficulty.txt"))
+            {
+                if (points.Equals("200"))
+                    PlayerPrefs.SetString("Difficulty", "Easy");
+                else if (points.Equals("150"))
+                    PlayerPrefs.SetString("Difficulty", "Normal");
+                else if (points.Equals("100"))
+                    PlayerPrefs.SetString("Difficulty", "Hard");
+            }
+            
+
+        }
+        
         for (int i = 1; i <= 8; i++)
         {
             if(!File.Exists(Application.persistentDataPath + "/Player" + i.ToString() + ".txt"))
                 File.WriteAllText(Application.persistentDataPath + "/Player" + i.ToString() + ".txt", string.Join("\n", mast) + "\n" +
-                                                                                                     string.Join("\n", cannon) + "\n" +
-                                                                                                     string.Join("\n", crew) + "\n" +
-                                                                                                     string.Join("\n", treasure) + "\n" +
-                                                                                                     string.Join("\n", damage));
+                                                                                                      string.Join("\n", cannon) + "\n" +
+                                                                                                      string.Join("\n", crew) + "\n" +
+                                                                                                      string.Join("\n", treasure) + "\n" +
+                                                                                                      string.Join("\n", damage));
         }
 
         var textFile = Resources.Load<TextAsset>("Sea of Reward");

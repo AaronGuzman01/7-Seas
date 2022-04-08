@@ -32,6 +32,7 @@ public class SaveAndReset : MonoBehaviour
             {
                 Swabie.creature[i] = System.Int32.Parse(parent.transform.GetChild(i).Find("NumberBG").GetChild(0).GetComponent<Text>().text);
             }
+            Swabie.save();//save to file
         }
         if (diceNcupController.cups[1])//seaman
         {
@@ -58,6 +59,7 @@ public class SaveAndReset : MonoBehaviour
             {
                 Seaman.creature[i] = System.Int32.Parse(parent.transform.GetChild(i).Find("NumberBG").GetChild(0).GetComponent<Text>().text);
             }
+            Seaman.save();//save to file
         }
         if (diceNcupController.cups[2])//captain
         {
@@ -84,6 +86,7 @@ public class SaveAndReset : MonoBehaviour
             {
                 Captain.creature[i] = System.Int32.Parse(parent.transform.GetChild(i).Find("NumberBG").GetChild(0).GetComponent<Text>().text);
             }
+            Captain.save();
         }
     }
     public void reset()
@@ -117,6 +120,7 @@ public class SaveAndReset : MonoBehaviour
                 Swabie.creature[i] = 1;
                 parent.transform.GetChild(i).Find("NumberBG").GetChild(0).GetComponent<Text>().text = Swabie.creature[i].ToString();
             }
+            Swabie.save();
         }
         if (diceNcupController.cups[1])//seaman
         {
@@ -147,6 +151,7 @@ public class SaveAndReset : MonoBehaviour
                 Seaman.creature[i] = 1;
                 parent.transform.GetChild(i).Find("NumberBG").GetChild(0).GetComponent<Text>().text = Seaman.creature[i].ToString();
             }
+            Seaman.save();
         }
         if (diceNcupController.cups[2])//captain
         {
@@ -177,6 +182,7 @@ public class SaveAndReset : MonoBehaviour
                 Captain.creature[i] = 1;
                 parent.transform.GetChild(i).Find("NumberBG").GetChild(0).GetComponent<Text>().text = Captain.creature[i].ToString();
             }
+            Captain.save();
         }
     }
 }
