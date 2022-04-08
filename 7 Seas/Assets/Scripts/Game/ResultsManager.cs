@@ -72,6 +72,16 @@ public class ResultsManager : MonoBehaviour
 
         ship.SetActive(false);
 
-        cannonLoader.ExitResultsScene();
+        players[0].ResetMonsterCombat();
+        MapLoad.monsterFound = false;
+
+        if (PlayerPrefs.GetString("Enemy").Equals("Monster"))
+        {
+            cannonLoader.ExitMonsterResults();
+        }
+        else
+        {
+            cannonLoader.ExitResultsScene();
+        }
     }
 }

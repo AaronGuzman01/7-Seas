@@ -34,4 +34,9 @@ public class CannonLoader : MonoBehaviour
 
         SceneManager.UnloadSceneAsync("CannonResults");
     }
+
+    public void ExitMonsterResults()
+    {
+        SceneManager.UnloadSceneAsync("CannonResults");
+    }
 }

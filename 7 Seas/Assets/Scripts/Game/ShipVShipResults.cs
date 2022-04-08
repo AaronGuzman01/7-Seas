@@ -10,6 +10,7 @@ public class ShipVShipResults : MonoBehaviour
     public Text Player1ScoreText;
     public Text Player2ScoreText;
     public Text WinnerResults;
+    public Text reward;
     private int P1Score;
     private int P2Score;
     // Start is called before the first frame update
@@ -26,6 +27,12 @@ public class ShipVShipResults : MonoBehaviour
             {
                 WinnerText.text = "Player " + ResultsManager.players[0].GetPlayerNum().ToString() + " Wins!".ToUpper();
                 WinnerResults.text = "Player " + ResultsManager.players[0].GetPlayerNum().ToString() + " gets: ".ToUpper() + results + " gold!".ToUpper();
+
+                if (PlayerPrefs.GetInt("Doubled") == 1)
+                {
+                    reward.gameObject.SetActive(true);
+                   results = results * 2;
+                }
 
                 ResultsManager.players[0].AddToTreasure(results);
                 ResultsManager.ships[0].SetActive(true);

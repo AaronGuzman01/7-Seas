@@ -6,9 +6,9 @@ using UnityEngine.Tilemaps;
 public class MonsterAI : MonoBehaviour
 {
     public static Canvas monsterContainer;
+    public static List<PlayerShip> players;
     public int index;
     HashSet<int> positionsOccupied = new HashSet<int>();
-    List<GameObject> players;
     Tilemap tilemap;
     int tileIndex = 0;
     int x, y, newX, newY;
@@ -51,11 +51,24 @@ public class MonsterAI : MonoBehaviour
         found = false;
         searchType = 0;
 
-        while(positionsOccupied.Count < 8 || found)
+        while (positionsOccupied.Count < 8 && !found)
         {
             tileIndex = Random.Range(0, 8);
 
             SetDirection(tileIndex);
+        }
+
+        if (found)
+        {
+            foreach (PlayerShip player in players)
+            {
+                if (player.GetCurrentPosition() == tilemap.WorldToCell(transform.position))
+                {
+                    player.SetMonsterCombat();
+
+                    break;
+                }
+            }
         }
 
         positionsOccupied.Clear();
@@ -97,7 +110,7 @@ public class MonsterAI : MonoBehaviour
 
     bool CheckPlayerPosition(int x, int y)
     {
-        if ((x >= 0 && x < 80 && y >= 0 && y < 80) && tiles[x,y] < 2 && objects[x, y] == -1)
+        if ((x >= 0 && x < 80 && y >= 0 && y < 80) && tiles[x,y] <= 2 && objects[x, y] == -1)
         {
             newX = x;
             newY = y;
@@ -109,7 +122,7 @@ public class MonsterAI : MonoBehaviour
     }
     bool CheckMapPosition(int x, int y)
     {
-        if ((x >= 0 && x < 80 && y >= 0 && y < 80) && tiles[x, y] < 2 && objects[x, y] == 0)
+        if ((x >= 0 && x < 80 && y >= 0 && y < 80) && tiles[x, y] <= 2 && objects[x, y] == 0)
         {
             newX = x;
             newY = y;

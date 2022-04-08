@@ -8,6 +8,7 @@ public class RandomPosition : MonoBehaviour
     static List<int> shipMapYPos = new List<int>();
     static bool shipsSet = false;
     HashSet<string> tilesUsed = new HashSet<string>();
+    HashSet<string> tilesUsedSiren = new HashSet<string>();
     Canvas[] containers;
     List<GameObject> ports;
     List<GameObject> monsters;
@@ -86,7 +87,7 @@ public class RandomPosition : MonoBehaviour
                         }
                         else
                         {
-                            tileY = (int)Mathf.Ceil(i / 16f);
+                            tileY = (int)Mathf.Ceil(j / 16f);
                         }
 
                         tilesUsed.Add(tileX.ToString() + ' ' + tileY.ToString());
@@ -101,6 +102,37 @@ public class RandomPosition : MonoBehaviour
                         int index = Random.Range(0, ships.Count);
 
                         SetShipOrMonster(ships[index], mapTiles, mapObjects, i, j, 1);
+                    }
+
+                    if (tile == 11)
+                    {
+                        int tileX, tileY;
+
+                        if (i + 1 <= 16)
+                        {
+                            tileX = 1;
+                        }
+                        else
+                        {
+                            tileX = (int)Mathf.Ceil(i / 16f);
+                        }
+
+                        if (j + 1 <= 16)
+                        {
+                            tileY = 1;
+                        }
+                        else
+                        {
+                            tileY = (int)Mathf.Ceil(j / 16f);
+                        }
+
+
+                        if (!tilesUsedSiren.Contains(i.ToString() + ' ' + j.ToString()))
+                        {
+                            tilesUsedSiren.Add(i.ToString() + ' ' + j.ToString());
+                        }
+
+                        SetPortOrSiren(siren, mapTiles, mapObjects, i, j, 1);
                     }
 
                     if (tile >= 12 && tile <= 15)
@@ -178,7 +210,7 @@ public class RandomPosition : MonoBehaviour
 
     void SetPlayer(PlayerShip player, int[,] mapTiles, int[,] mapObjects, int x, int y)
     {
-        if (mapTiles[x, y] < 2 && mapTiles[x, y] > -1 && mapObjects[x, y] == 0)
+        if (mapTiles[x, y] <= 2 && mapTiles[x, y] > -1 && mapObjects[x, y] == 0)
         {
             player.GetShip().transform.position = tilemap.GetCellCenterWorld(new Vector3Int(-34 + x, (y - 32) * -1, 0));
 
@@ -238,7 +270,6 @@ public class RandomPosition : MonoBehaviour
         }
     }
 
-
     public void GeneratePortPositions(int[,] mapTiles, int[,] mapObjects)
     {
         int tryCount = 0;
@@ -288,9 +319,9 @@ public class RandomPosition : MonoBehaviour
         {
             for (int j = 1; j <= 5; j++)
             {
-                if (!tilesUsed.Contains(i.ToString() + ' ' + j.ToString()))
+                if (!tilesUsedSiren.Contains(i.ToString() + ' ' + j.ToString()))
                 {
-                    tilesUsed.Add(i.ToString() + ' ' + j.ToString());
+                    tilesUsedSiren.Add(i.ToString() + ' ' + j.ToString());
 
                     tilePositionX = 16 * i;
                     tilePositionY = 16 * j;
@@ -327,7 +358,7 @@ public class RandomPosition : MonoBehaviour
 
     void SetShipOrMonster(GameObject tileObject, int[,] mapTiles, int[,] mapObjects, int x, int y, int type)
     {
-        if (mapTiles[x, y] < 2 && mapTiles[x, y] > -1 && mapObjects[x, y] == 0)
+        if (mapTiles[x, y] <= 2 && mapTiles[x, y] > -1 && mapObjects[x, y] == 0)
         {
             GameObject gameObject = Instantiate(tileObject);
 
@@ -355,7 +386,7 @@ public class RandomPosition : MonoBehaviour
                 mapObjects[x, y] = 1;
 
                 if (!shipsSet) {
-                    shipMapYPos.Add(x);
+                    shipMapXPos.Add(x);
                     shipMapYPos.Add(y);
                 }
             }
@@ -366,7 +397,7 @@ public class RandomPosition : MonoBehaviour
 
     void SetPortOrSiren(GameObject gameObject, int[,] mapTiles, int[,] mapObjects, int x, int y, int type)
     {
-        if (type == 0 && mapTiles[x, y] < 2 && mapObjects[x, y] == 0)
+        if (type == 0 && mapTiles[x, y] <= 2 && mapObjects[x, y] == 0)
         {
             mapTiles[x, y] = -1; 
                 

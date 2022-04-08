@@ -114,7 +114,7 @@ public class Monstermovement : MonoBehaviour
                     transform.Translate(0, 0, moveTowardspeed * Time.deltaTime);
                     transform.position = new Vector3(transform.position.x, height, transform.position.z);
 
-                    if (x >= -5)
+                    if (x >= 2)
                     {
                         movingForward = false;
                     }
@@ -162,7 +162,7 @@ public class Monstermovement : MonoBehaviour
             }
             else if (attacking)
             {
-                if (x < -5)
+                if (x < 2)
                 {
                     movingForward = true;
                 }

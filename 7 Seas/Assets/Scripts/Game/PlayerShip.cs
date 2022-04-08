@@ -20,6 +20,7 @@ public class PlayerShip : MonoBehaviour
     int compass = 0;
     int baseNav = 0;
     bool boughtCrew = false;
+    bool monsterCombat = false;
 
     public PlayerShip (int num, GameObject ship, int[] masts, int[] cannons, int crew, int treasure, int damage)
     {
@@ -112,6 +113,11 @@ public class PlayerShip : MonoBehaviour
     public Vector3Int GetCurrentPosition()
     {
         return currPosition;
+    }
+
+    public Vector3Int GetPreviousPosition()
+    {
+        return prevPosition;
     }
 
     public Vector3Int GetPortPosition()
@@ -227,5 +233,20 @@ public class PlayerShip : MonoBehaviour
     public void ResetCrew()
     {
         boughtCrew = false;
+    }
+
+    public void SetMonsterCombat()
+    {
+        monsterCombat = true;
+    }
+
+    public bool HasMonsterCombat()
+    {
+        return monsterCombat;
+    }
+
+    public void ResetMonsterCombat()
+    {
+        monsterCombat = false;
     }
 }

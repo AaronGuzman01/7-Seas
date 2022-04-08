@@ -34,7 +34,10 @@ public class Siren : MonoBehaviour
 
             if (playerPos.x > left && playerPos.x < right && playerPos.y < upper && playerPos.y > lower)
             {
-                MapLoad.playersHit.Add(count);
+                if (!MapLoad.playersHit.Contains(count))
+                {
+                    MapLoad.playersHit.Add(count);
+                }
             }
 
             count++;
