@@ -163,11 +163,20 @@ public class CannonMinigame : MonoBehaviour
         currTreasureShip.transform.GetChild(0).transform.rotation = Quaternion.Euler(Vector3.zero);
 
         currTreasureShip.transform.position = new Vector3(0, 1010, 0);
+
+        Destroy(gameShip);
     }
 
-    public static void SetMonster(GameObject gameMonster)
+    public static void SetMonster(GameObject gameMonster, bool canDestroy)
     {
-        monster = Instantiate(gameMonster);
+        if (canDestroy)
+        {
+            monster = gameMonster;
+        }
+        else
+        {
+            monster = Instantiate(gameMonster);
+        }
 
         monster.transform.rotation = Quaternion.Euler(new Vector3(0, 90, 0));
 

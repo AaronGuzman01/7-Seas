@@ -11,6 +11,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera[] playerOverhead;
     [SerializeField] private CinemachineVirtualCamera diceAndCups;
 
+    public static int index;
     private static bool overhead = true;
     public static bool cups = false;
     static int playerNum;
@@ -398,7 +399,7 @@ public class CameraController : MonoBehaviour
         xTilt = 0;
 
         //Update Position Text
-        cameraPos = MapLoad.shipInfo[playerNum].GetCurrentPosition();
+        cameraPos = MapLoad.shipInfo[index].GetCurrentPosition();
         positionTexts[0].text = (cameraPos.x + 34).ToString();
         positionTexts[1].text = ((cameraPos.y - 32) * -1).ToString();
         positionTexts[2].text = cameraPos.z.ToString();
@@ -452,7 +453,7 @@ public class CameraController : MonoBehaviour
         xTilt = 0;
 
         //Update Position Text
-        cameraPos = MapLoad.shipInfo[playerNum].GetCurrentPosition();
+        cameraPos = MapLoad.shipInfo[index].GetCurrentPosition();
 
         positionTexts[0].text = (cameraPos.x + 34).ToString();
         positionTexts[1].text = ((cameraPos.y - 32) * -1).ToString();

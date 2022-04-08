@@ -13,7 +13,6 @@ public class ShipAI : MonoBehaviour
     int x, y, newX, newY;
     int[,] tiles;
     int[,] objects;
-    int searchType = 0;
     bool found = false;
     bool moved = false;
 
@@ -69,7 +68,7 @@ public class ShipAI : MonoBehaviour
 
     bool CheckMapPosition(int x, int y)
     {
-        if ((x >= 0 && x < 80 && y >= 0 && y < 80) && tiles[x, y] < 2 && objects[x, y] == 0)
+        if ((x >= 0 && x < 80 && y >= 0 && y < 80) && tiles[x, y] <= 2 && objects[x, y] == 0)
         {
             newX = x;
             newY = y;

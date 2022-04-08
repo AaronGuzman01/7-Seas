@@ -33,6 +33,7 @@ public class MapLoad : MonoBehaviour
     public GameObject[] cameraGUI;
     public GameObject[] portGUI;
     public Button[] skipButtons;
+    public GameObject[] displays;
 
     public GameObject[] ships;
     public Sprite[] mapObjects;
@@ -50,6 +51,7 @@ public class MapLoad : MonoBehaviour
     public GameObject arrow;
     public GameObject movingFX;
     public GameObject navMenu;
+    public GameObject pauseMenu;
     public Text[] navTexts;
     public Text[] sextantTexts;
     public Text[] portTexts;
@@ -67,6 +69,7 @@ public class MapLoad : MonoBehaviour
 
     int rounds = 1;
     int shipRounds = 1;
+    int origIndex;
 
     int leftBound;
     int rightBound;
@@ -105,8 +108,9 @@ public class MapLoad : MonoBehaviour
     public int moveCount;
     public int baseMove = 5;
 
-    static bool continueGame = false;
     public static int maxPlayers;
+    public static bool monsterFound = false;
+    static bool continueGame = false;
     float arrowRot;
     bool posSet = false;
     bool rotate = false;
@@ -115,6 +119,7 @@ public class MapLoad : MonoBehaviour
     bool shipCombat = false;
     bool monsterCombat = false;
     bool movingSkip = false;
+    bool eventTriggered = false;
     Vector3 currPos;
 
     int[,] tilesInMap;
@@ -309,6 +314,7 @@ public class MapLoad : MonoBehaviour
         //SetMonsters();
 
         MonsterAI.monsterContainer = objectContainers[3];
+        MonsterAI.players = shipInfo;
 
         maxCams = maxPlayers;
 
@@ -323,19 +329,10 @@ public class MapLoad : MonoBehaviour
 
     void Update()
     {
-        if (playersHit.Count > 0)
-        {
-            foreach (int index in playersHit)
-            {
-                Debug.Log("Player " + shipInfo[index].GetPlayerNum().ToString() + " has been hit by Siren.");
-            }
-
-            playersHit.Clear();
-        }
-
+        mainGUI[10].GetComponent<Text>().text = "Round: " + rounds.ToString();
         MoveShip(players[playerIndex]);
 
-        if (!isMoving && !isRolling && !playerCombat && !shipCombat && !monsterCombat && !port)
+        if (!isMoving && !isRolling && !playerCombat && !shipCombat && !monsterCombat && !port && !eventTriggered)
         {
             SetGUI(true, mainGUI);
             SetGUI(true, cameraGUI);
@@ -409,13 +406,10 @@ public class MapLoad : MonoBehaviour
             reward = -1;
         }
 
-        /*
         if (hazard > -1)
         {
-            Debug.Log("Monster Index: " + hazard);
-
-            hazard = -1;
-        }*/
+            monsterFound = FindMonster();
+        }
 
         if (rats)
         {
@@ -431,16 +425,28 @@ public class MapLoad : MonoBehaviour
             fog = false;
         }
 
+        if (ghostCount >= 3 && !eventTriggered && !isRolling)
+        {
+            ghostCount = 0;
+
+            StartGhostShip();
+        }
+
         if (siren)
         {
-            Debug.Log("siren");
-
             for (int i = 0; i < objectContainers[4].transform.childCount; i++)
             {
                 objectContainers[4].transform.GetChild(i).GetComponent<Siren>().CheckPlayersHit();
             }
 
             siren = false;
+        }
+
+        if (playersHit.Contains(playerIndex) && !eventTriggered && !isRolling) 
+        {
+            playersHit.Remove(playerIndex);
+
+            StartSirenHit();
         }
     }
 
@@ -482,59 +488,6 @@ public class MapLoad : MonoBehaviour
             fogTilesX.Clear();
             fogTilesY.Clear();
         }
-    }
-
-    /*
-    void SetPlayerShips()
-    {
-        int count = 0;
-        Transform transform;
-
-        foreach (GameObject player in players) {
-            transform = player.transform;
-
-           // if (objectsInMap[13 + 34, (2 + count - 32) * -1] == 0)
-           // {
-                transform.position = tilemap.GetCellCenterWorld(new Vector3Int(18, -24 + count, 0));
-
-                objectsInMap[18 + 34, (-24 + count - 32) * -1] = -1;
-
-                shipInfo[count].SetCurrentPosition(tilemap.WorldToCell(transform.position));
-                shipInfo[count].SetPreviousPosition(tilemap.WorldToCell(transform.position));
-
-                count++;
-           // }
-        }
-    }
-    */
-
-    void SetTreasureShips()
-    {
-        GameObject ship = Instantiate(treasureShips[0]);
-
-        ship.transform.parent = objectContainers[2].transform;
-
-        ship.SetActive(true);
-
-        ship.transform.position = tilemap.GetCellCenterWorld(new Vector3Int(17, -24, 0));
-        ship.transform.position = ship.transform.position + (Vector3.up / 2);
-
-        objectsInMap[17 + 34, (-24 - 32) * -1] = 1;
-    }
-    void SetMonsters()
-    {
-        GameObject monsterT = Instantiate(monsters[1]);
-
-        monsterT.transform.parent = objectContainers[3].transform;
-
-        monsterT.SetActive(true);
-
-        monsterT.GetComponent<Monstermovement>().enabled = false;
-
-        monsterT.transform.position = tilemap.GetCellCenterWorld(new Vector3Int(19, -24, 0));
-        monsterT.transform.position = monsterT.transform.position + Vector3.up;
-
-        objectsInMap[19 + 34, (-24 - 32) * -1] = 2;
     }
 
     public void LoadMap()
@@ -674,6 +627,7 @@ public class MapLoad : MonoBehaviour
                     if (port)
                     {
                         SetGUI(false, diceGUI);
+                        moveSelection[0].rectTransform.gameObject.SetActive(false);
                         portTexts[0].gameObject.SetActive(false);
                         portTexts[1].gameObject.SetActive(false);
                         portTexts[2].gameObject.SetActive(false);
@@ -696,6 +650,7 @@ public class MapLoad : MonoBehaviour
                     }
                     else if (playerCombat)
                     {
+                        moveSelection[0].rectTransform.gameObject.SetActive(false);
                         CannonMinigame.setPlayer = true;
                         CannonMinigame.currShip = 1;
                         CannonMinigame.shipsInfo[0] = shipInfo[playerIndex];
@@ -710,6 +665,7 @@ public class MapLoad : MonoBehaviour
                     }
                     else if (shipCombat)
                     {
+                        moveSelection[0].rectTransform.gameObject.SetActive(false);
                         CannonMinigame.setTreasure = true;
                         CannonMinigame.shipsInfo[0] = shipInfo[playerIndex];
                         CannonMinigame.SetTreasureShip(GetTreasureShip());
@@ -719,22 +675,6 @@ public class MapLoad : MonoBehaviour
                         RenderSettings.skybox = skyBox[5];
 
                         hiddenBtns[2].onClick.Invoke();
-                    }
-                    else
-                    {
-                        if (monsterCombat)
-                        {
-                            CannonMinigame.setMonster = true;
-                            CannonMinigame.SetMonster(monsters[0]);
-                            CannonMinigame.shipsInfo[0] = shipInfo[playerIndex];
-                            CannonMinigame.SetMonster(GetMonster());
-
-                            PlayerPrefs.SetString("Enemy", "Monster");
-
-                            RenderSettings.skybox = skyBox[2];
-
-                            hiddenBtns[2].onClick.Invoke();
-                        }
                     }
                 }
                 else
@@ -775,9 +715,13 @@ public class MapLoad : MonoBehaviour
 
     GameObject GetTreasureShip()
     {
+        Vector2Int playerPos = (Vector2Int)tilemap.WorldToCell(shipInfo[playerIndex].GetShip().transform.position);
+
         for (int i = 0; i < objectContainers[2].transform.childCount; i++)
         {
-            if (tilemap.WorldToCell(objectContainers[2].transform.GetChild(i).position) == tilemap.WorldToCell(currPos))
+            Vector2Int shipPos = (Vector2Int)tilemap.WorldToCell(objectContainers[2].transform.GetChild(i).position);
+
+            if (shipPos == playerPos)
             {
                 return objectContainers[2].transform.GetChild(i).gameObject;
             }
@@ -788,15 +732,26 @@ public class MapLoad : MonoBehaviour
 
     GameObject GetMonster()
     {
+        Vector2Int playerPos = (Vector2Int)tilemap.WorldToCell(shipInfo[playerIndex].GetShip().transform.position);
+
         for (int i = 0; i < objectContainers[3].transform.childCount; i++)
         {
-            if (tilemap.WorldToCell(objectContainers[3].transform.GetChild(i).position) == tilemap.WorldToCell(currPos))
+            Vector2Int monsterPos = (Vector2Int)tilemap.WorldToCell(objectContainers[3].transform.GetChild(i).position);
+
+            if (monsterPos == playerPos)
             {
                 return objectContainers[3].transform.GetChild(i).gameObject;
             }
         }
 
         return null;
+    }
+
+    GameObject GetMonsterFromDice()
+    {
+        int index = origIndex - 12;
+
+        return monsters[index];
     }
 
 
@@ -820,11 +775,20 @@ public class MapLoad : MonoBehaviour
 
     public void EndTurn()
     {
-        CheckPlayer();
+        if (!monsterFound)
+        {
+            CheckPlayer();
 
-        ChangePlayer();
+            ChangePlayer();
 
-        UpdateTurn();
+            UpdateTurn();
+
+            main.GetComponent<CameraController>().UpdateDummy();
+        }
+        else
+        {
+            StartMonsterCombat(1);
+        }
     }
 
     public void UpdateTurn()
@@ -895,18 +859,22 @@ public class MapLoad : MonoBehaviour
                             clickable = false;
                         }
 
-                        if (monsterPos.Contains(gridPos))
-                        {
-                            objectsInMap[gridPos.x + 34, (gridPos.y - 32) * -1] = -1;
-
-                            monsterCombat = true;
-                            clickable = false;
-                        }
+                        CheckPreviousPosition();
 
                         UpdateNavigationMenu();
                     }
                 }
             }
+        }
+    }
+
+    void CheckPreviousPosition()
+    {
+        Vector3Int prevGridPos = shipInfo[playerIndex].GetPreviousPosition();
+
+        if (objectsInMap[prevGridPos.x + 34, (prevGridPos.y - 32) * -1] != -1)
+        {
+            objectsInMap[prevGridPos.x + 34, (prevGridPos.y - 32) * -1] = 0;
         }
     }
 
@@ -1088,6 +1056,7 @@ public class MapLoad : MonoBehaviour
             if (moveCount == 1)
             {
                 windDirection = RandomDirection();
+                moveTexts[4].gameObject.SetActive(true);
             }
 
             SetSelected(playerPos + windDirection);
@@ -1132,10 +1101,9 @@ public class MapLoad : MonoBehaviour
                 temp = Instantiate(positionTiles[0], tiles.transform);
             }
 
-            if ((tilePlaced <= 1 && tilePlaced > -1) || (objectPlaced < 0 && objectPlaced > -2 && tilePlaced > -1) || (objectPlaced == 0 && tilePlaced == -1))
+            if ((tilePlaced <= 2 && tilePlaced > -1) || (objectPlaced < 0 && objectPlaced > -2 && tilePlaced > -1) || (objectPlaced == 0 && tilePlaced == -1))
             {
-
-                if (shipInfo[playerIndex].GetRats() < 10 || tilePlaced == -1) {
+                if ((shipInfo[playerIndex].GetRats() < 10 || tilePlaced == -1) && objectPlaced < 2) {
                     validPos.Add(pos);
 
                     if (tilePlaced == -1)
@@ -1149,13 +1117,6 @@ public class MapLoad : MonoBehaviour
                     else if (objectPlaced == 1)
                     {
                         shipPos.Add(pos);
-                    }
-                    else
-                    {
-                        if (objectPlaced == 2)
-                        {
-                            monsterPos.Add(pos);
-                        }
                     }
                 }
             }
@@ -1210,13 +1171,13 @@ public class MapLoad : MonoBehaviour
 
     public void CheckPlayer()
     {
-        CheckMonsters();
         CheckForWin();
     }
 
     public void ChangePlayer()
     {
         shipInfo[playerIndex].ResetCrew();
+        CheckPreviousPosition();
 
         if (playerIndex + 1 >= maxPlayers && !isMoving)
         {
@@ -1227,9 +1188,20 @@ public class MapLoad : MonoBehaviour
             rounds++;
             shipRounds++;
 
-            CheckShips();
+            if (shipRounds >= 5)
+            {
+                shipRounds = 1;
+
+                AddShips();
+            }
+
             ShipMovement();
-            MonsterMovement();
+            MonsterMovement(); 
+            
+            if (shipInfo[playerIndex].HasMonsterCombat() && !monsterCombat)
+            {
+                StartMonsterCombat(0);
+            }
         }
         else
         {
@@ -1238,13 +1210,147 @@ public class MapLoad : MonoBehaviour
                 playerIndex++;
                 playerNum = playerNums[playerIndex] - 1;
                 camNum = cams[playerNum - 1];
+
+                if (shipInfo[playerIndex].HasMonsterCombat() && !monsterCombat)
+                {
+                    StartMonsterCombat(0);
+                }
             }
         }
 
+        ghostCount = 0;
+        CameraController.index = playerIndex;
+
         navMenu.SetActive(false);
-        mainGUI[1].SetActive(true);
         ratsText.transform.GetChild(0).gameObject.SetActive(false);
-        moveTexts[2].gameObject.SetActive(false);
+        moveTexts[2].gameObject.SetActive(false); 
+        moveTexts[3].gameObject.SetActive(false);
+        moveTexts[4].gameObject.SetActive(false);
+
+        if (!monsterCombat)
+        {
+            mainGUI[1].SetActive(true);
+        }
+    }
+
+    void StartMonsterCombat(int type)
+    {
+        monsterCombat = true;
+        clickable = false;
+        SetGUI(false, mainGUI);
+        mainGUI[1].SetActive(false);
+        displays[0].SetActive(true);
+        tiles.gameObject.SetActive(false);
+        moveSelection[0].rectTransform.gameObject.SetActive(false);
+        CannonMinigame.setMonster = true;
+        ResultsManager.players[0] = shipInfo[playerIndex];
+        CannonMinigame.shipsInfo[0] = shipInfo[playerIndex];
+
+        if (type == 0)
+        {
+
+            CannonMinigame.SetMonster(GetMonster(), false);
+            StartCoroutine(WaitForCombat(type));
+        }
+        else
+        {
+            SetGUI(false, diceGUI);
+            CannonMinigame.SetMonster(GetMonsterFromDice(), true);
+            StartCoroutine(WaitForCombat(type));
+        }
+
+        PlayerPrefs.SetString("Enemy", "Monster");
+
+        RenderSettings.skybox = skyBox[2];
+    }
+
+    IEnumerator WaitForCombat(int type)
+    {
+        yield return new WaitForSeconds(5);
+
+        hiddenBtns[2].onClick.Invoke();
+        displays[0].SetActive(false);
+
+        if (type == 0)
+        {
+            yield return new WaitUntil(() => !shipInfo[playerIndex].HasMonsterCombat());
+        }
+        else
+        {
+            yield return new WaitUntil(() => !monsterFound);
+        }
+
+        main.enabled = true;
+        monsterCombat = false;
+        clickable = true;
+        tiles.gameObject.SetActive(true);
+        RenderSettings.skybox = skyBox[0];
+        CannonMinigame.DestroyObjects();
+
+        if (type == 1)
+        {
+            SetGUI(true, diceGUI);
+        }
+        else
+        {
+            mainGUI[1].SetActive(true);
+        }
+    }
+
+    void StartSirenHit()
+    {
+        clickable = false;
+        mainGUI[1].SetActive(false);
+        tiles.gameObject.SetActive(false);
+        eventTriggered = true;
+        SetGUI(false, diceGUI);
+        displays[1].SetActive(true);
+        moveSelection[0].rectTransform.gameObject.SetActive(false);
+
+        StartCoroutine(WaitForSirenHit());
+    }
+
+    IEnumerator WaitForSirenHit()
+    {
+        yield return new WaitForSeconds(6);
+
+        clickable = true;
+        mainGUI[1].SetActive(true);
+        tiles.gameObject.SetActive(true);
+        displays[1].SetActive(false);
+        eventTriggered = false;
+        SetGUI(true, diceGUI);
+        moveSelection[0].rectTransform.gameObject.SetActive(true);
+
+        EndTurn();
+    }
+
+    void StartGhostShip()
+    {
+        clickable = false;
+        mainGUI[1].SetActive(false);
+        tiles.gameObject.SetActive(false);
+        eventTriggered = true;
+        SetGUI(false, diceGUI);
+        displays[2].SetActive(true);
+        moveSelection[0].rectTransform.gameObject.SetActive(false);
+
+        StartCoroutine(WaitForGhostShip());
+    }
+
+    IEnumerator WaitForGhostShip()
+    {
+        yield return new WaitForSeconds(6);
+
+        clickable = true;
+        mainGUI[1].SetActive(true);
+        tiles.gameObject.SetActive(true);
+        displays[2].SetActive(false);
+        eventTriggered = false;
+        SetGUI(true, diceGUI);
+        moveSelection[0].rectTransform.gameObject.SetActive(true);
+
+        EndTurn();
     }
 
     void CheckForWin()
@@ -1296,27 +1402,35 @@ public class MapLoad : MonoBehaviour
         {
             case 0:
                 arrowRot = 90f;
+                moveTexts[4].text = "E";
                 return new Vector3Int(1, 0, 0);
             case 1:
                 arrowRot = -90f;
+                moveTexts[4].text = "W";
                 return new Vector3Int(-1, 0, 0);
             case 3:
                 arrowRot = 0f;
+                moveTexts[4].text = "N";
                 return new Vector3Int(0, 1, 0);
             case 4:
                 arrowRot = 180f;
+                moveTexts[4].text = "S";
                 return new Vector3Int(0, -1, 0);
             case 5:
                 arrowRot = 45f;
+                moveTexts[4].text = "NE";
                 return new Vector3Int(1, 1, 0);
             case 6:
                 arrowRot = -135f;
+                moveTexts[4].text = "SW";
                 return new Vector3Int(-1, -1, 0);
             case 7:
                 arrowRot = -45;
+                moveTexts[4].text = "NW";
                 return new Vector3Int(-1, 1, 0);
             default:
                 arrowRot = 135f;
+                moveTexts[4].text = "SE";
                 return new Vector3Int(1, -1, 0);
         }
     }
@@ -1394,22 +1508,26 @@ public class MapLoad : MonoBehaviour
         players[playerIndex].transform.position = currPos;
     }
 
-    void CheckMonsters()
+    bool FindMonster()
     {
-        if (hazard != -1)
-        {
-            bool found = MonsterAI.FindMonster(shipInfo[playerIndex].GetCurrentPosition(), tilemap, hazard);
+        bool found = MonsterAI.FindMonster(shipInfo[playerIndex].GetCurrentPosition(), tilemap, hazard);
+        origIndex = hazard;
 
-            if (found)
-            {
-                Debug.Log("Monster found");
-            }
+        if (found)
+        {
+            moveTexts[3].gameObject.SetActive(true);
 
             hazard = -1;
+
+            return true;
         }
+
+        hazard = -1;
+
+        return false;
     }
 
-    void CheckShips()
+    void AddShips()
     {
         Debug.Log("New ships have been added");
 
@@ -1445,6 +1563,32 @@ public class MapLoad : MonoBehaviour
         SetGUI(false, diceGUI);
         main.enabled = false;
         tiles.gameObject.SetActive(false);
+    }
+
+    public void SetPauseScreen()
+    {
+        pauseMenu.SetActive(true);
+        PauseGameScreen();
+    }
+
+    public void PauseGameScreen()
+    {
+        eventTriggered = true;
+        clickable = false;
+        SetGUI(false, mainGUI);
+        mainGUI[1].SetActive(false);
+        tiles.gameObject.SetActive(false);
+    }
+
+    public void UnpauseGameScreen()
+    {
+        eventTriggered = false;
+        clickable = true;
+        SetGUI(true, mainGUI);
+        mainGUI[1].SetActive(true);
+        tiles.gameObject.SetActive(true);
+        pauseMenu.SetActive(false);
+        mainGUI[11].SetActive(true);
     }
 
     public static void ContinueGame()

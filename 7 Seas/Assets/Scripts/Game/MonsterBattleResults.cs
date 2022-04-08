@@ -20,7 +20,7 @@ public class MonsterBattleResults : MonoBehaviour
             }
             else
             {
-                MonsterStatusText.text = "THE MONSTER GOT AWAY! YOUR CREW LOSES HOPE AFTER SUCH A DEFEAT. \n GOLD LOST: " 
+                MonsterStatusText.text = "THE MONSTER GOT AWAY! YOUR CREW LOSES HOPE AFTER SUCH A DEFEAT. \n\n GOLD LOST: " 
                     + ResultsManager.players[0].GetCurrentTreasure().ToString();
 
                 ResultsManager.players[0].ClearTreasure();
