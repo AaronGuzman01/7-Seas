@@ -22,7 +22,7 @@ public class ShipvTreasureResults : MonoBehaviour
                 shipStatus.color = Color.green;
                 goldEarned.color = Color.yellow;
 
-                if (PlayerPrefs.GetInt("Doubled") == 1)
+                if (PlayerPrefs.GetInt("Double") == 1)
                 {
                     reward.gameObject.SetActive(true);
                     gold = gold * 2;

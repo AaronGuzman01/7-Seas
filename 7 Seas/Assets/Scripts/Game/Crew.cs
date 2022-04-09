@@ -24,9 +24,11 @@ public class Crew : MonoBehaviour
                 ProcessCrew(num);
             }
 
+            added = false;
+
             player.SetCrewBought();
         }
-        else if (player.HasBought())
+        else if (player.GetCrew() > 0 && player.HasBought())
         {
             crewText.text = "YOU CAN ONLY GET 1 CREW MEMBER PER TURN";
         }

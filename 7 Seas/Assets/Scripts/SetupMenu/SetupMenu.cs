@@ -292,15 +292,15 @@ public class SetupMenu : MonoBehaviour {
     {
         if (difficulty == 0)
         {
-            PlayerPrefs.SetFloat("End", 250f);
+            PlayerPrefs.SetFloat("End", 2500f);
         }
         else if (difficulty == 1)
         {
-            PlayerPrefs.SetFloat("End", 500f);
+            PlayerPrefs.SetFloat("End", 5000f);
         }
         else
         {
-            PlayerPrefs.SetFloat("End", 1000f);
+            PlayerPrefs.SetFloat("End", 10000f);
         }
     }
 

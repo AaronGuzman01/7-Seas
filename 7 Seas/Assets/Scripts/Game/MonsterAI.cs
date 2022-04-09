@@ -91,7 +91,7 @@ public class MonsterAI : MonoBehaviour
 
     void SearchDirection(int row, int col)
     {
-        for(int i = 1; i <= 3; i++)
+        for (int i = 1; i <= 3; i++)
         {
             if (searchType == 0 && CheckPlayerPosition(x + (i * row), y + (i * col)))
             {
@@ -110,7 +110,7 @@ public class MonsterAI : MonoBehaviour
 
     bool CheckPlayerPosition(int x, int y)
     {
-        if ((x >= 0 && x < 80 && y >= 0 && y < 80) && tiles[x,y] <= 2 && objects[x, y] == -1)
+        if ((x >= 0 && x < 80 && y >= 0 && y < 80) && tiles[x, y] <= 2 && tiles[x, y] >-1 && objects[x, y] == -1)
         {
             newX = x;
             newY = y;
@@ -122,7 +122,7 @@ public class MonsterAI : MonoBehaviour
     }
     bool CheckMapPosition(int x, int y)
     {
-        if ((x >= 0 && x < 80 && y >= 0 && y < 80) && tiles[x, y] <= 2 && objects[x, y] == 0)
+        if ((x >= 0 && x < 80 && y >= 0 && y < 80) && tiles[x, y] <= 2 && tiles[x, y] > -1 && objects[x, y] == 0)
         {
             newX = x;
             newY = y;

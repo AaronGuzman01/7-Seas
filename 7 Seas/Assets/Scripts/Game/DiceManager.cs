@@ -7,6 +7,9 @@ public class DiceManager : MonoBehaviour {
     public int num = 0;
     public int ghostDiceTotal = 0;
 
+    public AudioSource cameraSource;
+    public AudioSource diceSource;
+    public AudioClip[] clips;
     public GameObject basicDiceSprite;
     public GameObject movementDiceSprite;
     public GameObject windDiceSprite;
@@ -37,8 +40,6 @@ public class DiceManager : MonoBehaviour {
     public LoseTurn loseTurn;
 
     public static bool diceStart = false;
-
-    bool firstRound = true;
 
     List<int> diceVals = new List<int>();
 
@@ -392,11 +393,20 @@ public class DiceManager : MonoBehaviour {
         explosion.gameObject.SetActive(true);
 
         explosion.Play();
+        diceSource.PlayOneShot(clips[0], 0.3f);
 
         if (diceIndex == 4)
         {
             SetNavigationMenu();
+            StartCoroutine(WaitForDice());
         }
+    }
+
+    IEnumerator WaitForDice()
+    {
+        yield return new WaitForSeconds(1);
+        diceSource.Stop();
+        cameraSource.UnPause();
     }
 
     int GetRandomFace(List<int> distribution)
@@ -406,134 +416,10 @@ public class DiceManager : MonoBehaviour {
         return distribution[index];
     }
 
-    /*
-    void AddRats()
+    public void PlayDiceMusic()
     {
-        foreach (var item in inventorySystem.GetComponent<InventorySystem>().ResourceDice)
-        {
-            if (item.Image.name == resourceDiceSprite.GetComponent<Image>().sprite.name)
-            {
-                if (item.Name == "Rat")
-                {
-                    var currentPlayer = gameLoop.players.playersList[gameLoop.playersTurn - 1];
-                    currentPlayer.ratCount += Random.Range(1, 4);
-                    break;
-                }
-            }
-        }
+        cameraSource.Pause();
+        diceSource.Play();
     }
 
-    public void AddFog()
-    {
-        //loop through wind dice, if fog is showing then show run the fog system
-        foreach (var item in inventorySystem.GetComponent<InventorySystem>().WindDice)
-        {
-            if (item.Image.name == windDiceSprite.GetComponent<Image>().sprite.name)
-            {
-                if (item.Name == "Fog")
-                {
-                    timeOfDay.ChangeTimeOfDay(3);
-                    gameLoop.lighthouse.ChangeLhLight();
-                    fog.SetActive(true);
-                    fogDice = true;
-                    break;
-                }
-                else
-                {
-                    timeOfDay.ChangeTimeOfDay(gameLoop.timeOfDayNumber);
-                    fog.SetActive(false);
-                    fogDice = false;
-                }
-            }
-        }
-        gameLoop.lighthouse.ChangeLhLight(); //turn on the lighthouse lights
-    }
-
-    //loop through dice and see how many ghost ships we have
-    void FindTotalGhostShips()
-    {
-        foreach(var item in inventorySystem.GetComponent<InventorySystem>().TarShipDice)
-        {
-            if(item.Image.name == shipDiceSprite.GetComponent<Image>().sprite.name)
-            {
-                if(item.Name == "Ghost")
-                {
-                    ghostDiceTotal++;
-                }
-            }
-        }
-
-        foreach (var item in inventorySystem.GetComponent<InventorySystem>().NumberDice)
-        {
-            if (item.Image.name == movementDiceSprite.GetComponent<Image>().sprite.name)
-            {
-                if (item.Name == "Ghost")
-                {
-                    ghostDiceTotal++;
-                }
-            }
-        }
-
-        foreach (var item in inventorySystem.GetComponent<InventorySystem>().ResourceDice)
-        {
-            if (item.Image.name == resourceDiceSprite.GetComponent<Image>().sprite.name)
-            {
-                if (item.Name == "Ghost")
-                {
-                    ghostDiceTotal++;
-                }
-            }
-        }
-
-        foreach (var item in inventorySystem.GetComponent<InventorySystem>().WindDice)
-        {
-            if (item.Image.name == windDiceSprite.GetComponent<Image>().sprite.name)
-            {
-                if (item.Name == "Ghost")
-                {
-                    ghostDiceTotal++;
-                }
-            }
-        }
-
-        foreach (var item in inventorySystem.GetComponent<InventorySystem>().ParrotDice)
-        {
-            if (item.Image.name == colorDiceSprite.GetComponent<Image>().sprite.name)
-            {
-                if (item.Name == "Ghost")
-                {
-                    ghostDiceTotal++;
-                }
-            }
-        }
-
-        ghostDiceTotal += gameLoop.players.playersList[gameLoop.playersTurn - 1].ghostDice;
-
-    }
-
-
-    //punish the player if he has 3, 4, or 5 ghost dice
-    public void PunishPlayer()
-    {
-      var currentPlayer = gameLoop.players.playersList[gameLoop.playersTurn - 1];
-        if (ghostDiceTotal == 5)
-        {
-            Debug.Log("You Lose The Game!");
-        }
-
-        else if (ghostDiceTotal == 4)
-        {
-            currentPlayer.gold = 0;
-            Debug.Log("You Lose Your Gold!");
-        }
-
-        else if (ghostDiceTotal == 3)
-        {
-            //gameLoop.newTurn();
-            //loseTurn.GetComponent<LoseTurn>().ShowWindow();
-            loseTurn.CheckTurnLoss();
-            Debug.Log("You Lose Your Turn!");
-        }     
-    }
-    */
     }
