@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class CannonMinigame : MonoBehaviour
 {
+    public AudioSource cannonAudio;
+    public AudioClip[] clips;
     public static PlayerShip[] shipsInfo = new PlayerShip[2];
     public static GameObject[] ships = new GameObject[2];
     public static int currShip = 1;
@@ -24,6 +26,7 @@ public class CannonMinigame : MonoBehaviour
     public static bool setMonster;
 
     public Text damage;
+    
 
     static GameObject currTreasureShip;
     static GameObject monster;
@@ -64,6 +67,9 @@ public class CannonMinigame : MonoBehaviour
             ButtonManager.GetComponent<ButtonFunctionality>().SetEnemy(ships[1]);
 
             RenderSettings.skybox = skyBox[0];
+
+            cannonAudio.clip = clips[0];
+            cannonAudio.Play();
         }
         else if (setPlayer && currShip == 2)
         {
@@ -85,6 +91,9 @@ public class CannonMinigame : MonoBehaviour
             ButtonManager.GetComponent<ButtonFunctionality>().SetEnemy(ships[0]);
 
             RenderSettings.skybox = skyBox[0];
+
+            cannonAudio.clip = clips[0];
+            cannonAudio.Play();
         }
         else if (setTreasure)
         {
@@ -109,7 +118,15 @@ public class CannonMinigame : MonoBehaviour
 
             ButtonManager.GetComponent<ButtonFunctionality>().SetEnemy(currTreasureShip);
 
+            if (shipsInfo[0].GetHits() > 1)
+            {
+                damage.text = "+ " + (shipsInfo[0].GetHits() - 1).ToString() + " Hits";
+            }
+
             RenderSettings.skybox = skyBox[0];
+
+            cannonAudio.clip = clips[1];
+            cannonAudio.Play();
         }
         else
         {
@@ -137,7 +154,15 @@ public class CannonMinigame : MonoBehaviour
 
                 ButtonManager.GetComponent<ButtonFunctionality>().SetEnemy(monster);
 
+                if (shipsInfo[0].GetHits() > 1)
+                {
+                    damage.text = "+ " + (shipsInfo[0].GetHits() - 1).ToString() + " Hits";
+                }
+
                 RenderSettings.skybox = skyBox[1];
+
+                cannonAudio.clip = clips[2];
+                cannonAudio.Play();
 
                 skyIndex = 1;
             }
@@ -167,16 +192,9 @@ public class CannonMinigame : MonoBehaviour
         Destroy(gameShip);
     }
 
-    public static void SetMonster(GameObject gameMonster, bool canDestroy)
+    public static void SetMonster(GameObject gameMonster)
     {
-        if (canDestroy)
-        {
-            monster = gameMonster;
-        }
-        else
-        {
-            monster = Instantiate(gameMonster);
-        }
+        monster = Instantiate(gameMonster);
 
         monster.transform.rotation = Quaternion.Euler(new Vector3(0, 90, 0));
 

@@ -17,11 +17,13 @@ public class MonsterBattleResults : MonoBehaviour
             if (PlayerPrefs.GetString("MonsterStatus") == "Dead")
             {
                 MonsterStatusText.text = "THE MONSTER HAS BEEN SLAIN! YOUR TREASURE IS SAFE.";
+                MonsterStatusText.color = Color.green;
             }
             else
             {
                 MonsterStatusText.text = "THE MONSTER GOT AWAY! YOUR CREW LOSES HOPE AFTER SUCH A DEFEAT. \n\n GOLD LOST: " 
                     + ResultsManager.players[0].GetCurrentTreasure().ToString();
+                MonsterStatusText.color = Color.red;
 
                 ResultsManager.players[0].ClearTreasure();
             }

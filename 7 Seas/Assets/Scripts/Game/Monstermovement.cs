@@ -81,6 +81,11 @@ public class Monstermovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (slider)
+        {
+            slider.transform.GetComponentInChildren<Text>().text = "Damage Per Hit: " + cannonDmg.ToString();
+        }
+
         if(health<=0 && !died)
         {
             Image fill = slider.transform.GetChild(1).GetChild(0).GetComponent<Image>();
@@ -313,28 +318,25 @@ public class Monstermovement : MonoBehaviour
 
     public void MonsterHit()
     {
-        int val = PlayerPrefs.GetInt("Hit");
+        int val = PlayerPrefs.GetInt("PlayerHits");
 
-        if (val > 0)
-        {
-            anim.Play("Hit1");
-            health = health - cannonDmg;
-            justHit = true;
+        anim.Play("Hit1");
+        health = health - (val * cannonDmg);
+        justHit = true;
 
-            explosion.transform.position = transform.position;
-            explosionEffect.startSize = 9;
-            explosionSFX.Play();
-            explosionEffect.Stop();
-            explosionEffect.Clear();
-            explosionEffect.Play();
+        explosion.transform.position = transform.position;
+        explosionEffect.startSize = 9;
+        explosionSFX.Play();
+        explosionEffect.Stop();
+        explosionEffect.Clear();
+        explosionEffect.Play();
 
-            movingForward = false;
-            movingBackward = false;
-            movingLeft = false;
-            movingRight = false;
-            hiding = false;
-            standing = false;
-        }
+        movingForward = false;
+        movingBackward = false;
+        movingLeft = false;
+        movingRight = false;
+        hiding = false;
+        standing = false;
     }
 
     IEnumerator Wait()

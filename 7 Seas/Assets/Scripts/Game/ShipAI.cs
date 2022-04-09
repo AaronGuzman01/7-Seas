@@ -68,7 +68,7 @@ public class ShipAI : MonoBehaviour
 
     bool CheckMapPosition(int x, int y)
     {
-        if ((x >= 0 && x < 80 && y >= 0 && y < 80) && tiles[x, y] <= 2 && objects[x, y] == 0)
+        if ((x >= 0 && x < 80 && y >= 0 && y < 80) && tiles[x, y] <= 2 && tiles[x, y] > -1 && objects[x, y] == 0)
         {
             newX = x;
             newY = y;

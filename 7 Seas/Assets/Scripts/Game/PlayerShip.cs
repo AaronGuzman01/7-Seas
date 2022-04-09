@@ -30,10 +30,20 @@ public class PlayerShip : MonoBehaviour
         this.masts = masts;
         this.cannons = cannons;
         this.crew = crew;
-        this.treasure = 100 * treasure;
+        this.treasure = 500 * treasure;
         this.damage = damage;
         totalTreasure = 0;
         currTreasure = 0;
+
+        SetBaseMoves();
+    }
+
+    void SetBaseMoves()
+    {
+        foreach (int val in masts)
+        {
+            baseNav += val;
+        }
     }
 
     public int GetPlayerNum()

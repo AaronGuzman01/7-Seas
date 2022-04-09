@@ -28,7 +28,7 @@ public class ShipVShipResults : MonoBehaviour
                 WinnerText.text = "Player " + ResultsManager.players[0].GetPlayerNum().ToString() + " Wins!".ToUpper();
                 WinnerResults.text = "Player " + ResultsManager.players[0].GetPlayerNum().ToString() + " gets: ".ToUpper() + results + " gold!".ToUpper();
 
-                if (PlayerPrefs.GetInt("Doubled") == 1)
+                if (PlayerPrefs.GetInt("Double") == 1)
                 {
                     reward.gameObject.SetActive(true);
                    results = results * 2;

@@ -47,6 +47,7 @@ public class MapLoad : MonoBehaviour
     public List<GameObject> ports;
     public List<GameObject> treasureShips;
     public List<GameObject> monsters;
+    public GameObject diceSelector;
     public GameObject sirenObj;
     public GameObject arrow;
     public GameObject movingFX;
@@ -111,6 +112,7 @@ public class MapLoad : MonoBehaviour
     public static int maxPlayers;
     public static bool monsterFound = false;
     static bool continueGame = false;
+    float fogTime;
     float arrowRot;
     bool posSet = false;
     bool rotate = false;
@@ -359,6 +361,7 @@ public class MapLoad : MonoBehaviour
             continueGame = false;
             RenderSettings.skybox = skyBox[0];
             CannonMinigame.DestroyObjects();
+            UnPauseMusic();
 
             if (currArrow)
             {
@@ -476,6 +479,30 @@ public class MapLoad : MonoBehaviour
 
             fogTilesX.Add(tileX);
             fogTilesY.Add(tileY);
+
+            StartCoroutine(StartFog());
+        }
+    }
+
+    IEnumerator StartFog()
+    {
+        yield return new WaitUntil(() => !isRolling && !eventTriggered);
+        displays[3].SetActive(true);
+
+        StartCoroutine(WaitOnFog());
+
+        yield return new WaitUntil(() => eventTriggered || fogTime > 5 || isMoving);
+
+        displays[3].SetActive(false);
+        fogTime = 0;
+    }
+
+    IEnumerator WaitOnFog()
+    {
+        while(fogTime < 6)
+        {
+            yield return new WaitForSeconds(1);
+            fogTime++;
         }
     }
 
@@ -627,7 +654,7 @@ public class MapLoad : MonoBehaviour
                     if (port)
                     {
                         SetGUI(false, diceGUI);
-                        moveSelection[0].rectTransform.gameObject.SetActive(false);
+                        diceSelector.SetActive(false);
                         portTexts[0].gameObject.SetActive(false);
                         portTexts[1].gameObject.SetActive(false);
                         portTexts[2].gameObject.SetActive(false);
@@ -650,7 +677,7 @@ public class MapLoad : MonoBehaviour
                     }
                     else if (playerCombat)
                     {
-                        moveSelection[0].rectTransform.gameObject.SetActive(false);
+                        diceSelector.SetActive(false);
                         CannonMinigame.setPlayer = true;
                         CannonMinigame.currShip = 1;
                         CannonMinigame.shipsInfo[0] = shipInfo[playerIndex];
@@ -661,11 +688,12 @@ public class MapLoad : MonoBehaviour
 
                         RenderSettings.skybox = skyBox[5];
 
+                        PauseMusic();
                         hiddenBtns[2].onClick.Invoke();
                     }
                     else if (shipCombat)
                     {
-                        moveSelection[0].rectTransform.gameObject.SetActive(false);
+                        diceSelector.SetActive(false);
                         CannonMinigame.setTreasure = true;
                         CannonMinigame.shipsInfo[0] = shipInfo[playerIndex];
                         CannonMinigame.SetTreasureShip(GetTreasureShip());
@@ -674,6 +702,7 @@ public class MapLoad : MonoBehaviour
 
                         RenderSettings.skybox = skyBox[5];
 
+                        PauseMusic();
                         hiddenBtns[2].onClick.Invoke();
                     }
                 }
@@ -794,11 +823,19 @@ public class MapLoad : MonoBehaviour
     public void UpdateTurn()
     {
         ClearActiveTiles();
-        RemoveFog();
-        fogTilesX.Clear();
-        fogTilesY.Clear();
 
         SetGUI(false, diceGUI);
+        navMenu.SetActive(false);
+        ratsText.transform.GetChild(0).gameObject.SetActive(false);
+        moveTexts[2].gameObject.SetActive(false);
+        moveTexts[3].gameObject.SetActive(false);
+        moveTexts[4].gameObject.SetActive(false);
+        displays[3].SetActive(false);
+
+        if (!monsterCombat)
+        {
+            mainGUI[1].SetActive(true);
+        }
     }
 
     public void ProcessShip(GameObject ship)
@@ -1005,6 +1042,11 @@ public class MapLoad : MonoBehaviour
                     }
                 }
             }
+
+            if (port || playerCombat || shipCombat || monsterCombat || eventTriggered)
+            {
+                diceSelect.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -1196,8 +1238,11 @@ public class MapLoad : MonoBehaviour
             }
 
             ShipMovement();
-            MonsterMovement(); 
-            
+            MonsterMovement();
+            RemoveFog();
+            fogTilesX.Clear();
+            fogTilesY.Clear();
+
             if (shipInfo[playerIndex].HasMonsterCombat() && !monsterCombat)
             {
                 StartMonsterCombat(0);
@@ -1220,17 +1265,6 @@ public class MapLoad : MonoBehaviour
 
         ghostCount = 0;
         CameraController.index = playerIndex;
-
-        navMenu.SetActive(false);
-        ratsText.transform.GetChild(0).gameObject.SetActive(false);
-        moveTexts[2].gameObject.SetActive(false); 
-        moveTexts[3].gameObject.SetActive(false);
-        moveTexts[4].gameObject.SetActive(false);
-
-        if (!monsterCombat)
-        {
-            mainGUI[1].SetActive(true);
-        }
     }
 
     void StartMonsterCombat(int type)
@@ -1241,7 +1275,7 @@ public class MapLoad : MonoBehaviour
         mainGUI[1].SetActive(false);
         displays[0].SetActive(true);
         tiles.gameObject.SetActive(false);
-        moveSelection[0].rectTransform.gameObject.SetActive(false);
+        diceSelector.SetActive(false);
         CannonMinigame.setMonster = true;
         ResultsManager.players[0] = shipInfo[playerIndex];
         CannonMinigame.shipsInfo[0] = shipInfo[playerIndex];
@@ -1249,13 +1283,13 @@ public class MapLoad : MonoBehaviour
         if (type == 0)
         {
 
-            CannonMinigame.SetMonster(GetMonster(), false);
+            CannonMinigame.SetMonster(GetMonster());
             StartCoroutine(WaitForCombat(type));
         }
         else
         {
             SetGUI(false, diceGUI);
-            CannonMinigame.SetMonster(GetMonsterFromDice(), true);
+            CannonMinigame.SetMonster(GetMonsterFromDice());
             StartCoroutine(WaitForCombat(type));
         }
 
@@ -1268,6 +1302,7 @@ public class MapLoad : MonoBehaviour
     {
         yield return new WaitForSeconds(5);
 
+        PauseMusic();
         hiddenBtns[2].onClick.Invoke();
         displays[0].SetActive(false);
 
@@ -1286,10 +1321,11 @@ public class MapLoad : MonoBehaviour
         tiles.gameObject.SetActive(true);
         RenderSettings.skybox = skyBox[0];
         CannonMinigame.DestroyObjects();
+        UnPauseMusic();
 
         if (type == 1)
         {
-            SetGUI(true, diceGUI);
+            EndTurn();
         }
         else
         {
@@ -1305,7 +1341,7 @@ public class MapLoad : MonoBehaviour
         eventTriggered = true;
         SetGUI(false, diceGUI);
         displays[1].SetActive(true);
-        moveSelection[0].rectTransform.gameObject.SetActive(false);
+        diceSelector.SetActive(false);
 
         StartCoroutine(WaitForSirenHit());
     }
@@ -1320,7 +1356,6 @@ public class MapLoad : MonoBehaviour
         displays[1].SetActive(false);
         eventTriggered = false;
         SetGUI(true, diceGUI);
-        moveSelection[0].rectTransform.gameObject.SetActive(true);
 
         EndTurn();
     }
@@ -1333,7 +1368,7 @@ public class MapLoad : MonoBehaviour
         eventTriggered = true;
         SetGUI(false, diceGUI);
         displays[2].SetActive(true);
-        moveSelection[0].rectTransform.gameObject.SetActive(false);
+        diceSelector.SetActive(false);
 
         StartCoroutine(WaitForGhostShip());
     }
@@ -1348,7 +1383,6 @@ public class MapLoad : MonoBehaviour
         displays[2].SetActive(false);
         eventTriggered = false;
         SetGUI(true, diceGUI);
-        moveSelection[0].rectTransform.gameObject.SetActive(true);
 
         EndTurn();
     }
@@ -1594,6 +1628,18 @@ public class MapLoad : MonoBehaviour
     public static void ContinueGame()
     {
         continueGame = true;
+    }
+
+    void PauseMusic()
+    {
+        main.GetComponent<AudioListener>().enabled = false;
+        main.GetComponent<AudioSource>().Pause();
+    }
+
+    void UnPauseMusic()
+    {
+        main.GetComponent<AudioListener>().enabled = true;
+        main.GetComponent<AudioSource>().UnPause();
     }
 
     //TEST FUNCTION

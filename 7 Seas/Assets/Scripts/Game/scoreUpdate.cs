@@ -47,6 +47,7 @@ public class scoreUpdate : MonoBehaviour
             
         }
         */
+
         if (PlayerPrefs.GetString("Enemy").Equals("Player") && absorb > 0 && 
             (other.CompareTag("+1") || other.CompareTag("+2") || other.CompareTag("+3") || other.CompareTag("+4")))
         {

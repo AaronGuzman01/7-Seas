@@ -5,6 +5,7 @@ using System.IO;
 public class ShipCustomizationBtns : MonoBehaviour
 {
     // Start is called before the first frame update
+    public Text saveText;
     public Button emptyMastBtn;
     public Sprite[] mastImages;
 
@@ -68,10 +69,18 @@ public class ShipCustomizationBtns : MonoBehaviour
             {
                 GameObject.Find("save").GetComponent<Button>().enabled = false;
                 GameObject.Find("save").GetComponent<Image>().enabled = true;
-                GameObject.Find("save").GetComponent<Button>().GetComponentInChildren<Text>().text = "1 MAST & TREASURE NEEDED";
+                GameObject.Find("save").GetComponent<Button>().GetComponentInChildren<Text>().text = "1 CANNON & TREASURE REQUIRED";
             }
         }
         GameObject.Find("coins").GetComponent<Text>().text = points.ToString();
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (saveText)
+            {
+                saveText.gameObject.SetActive(false);
+            }
+        }
     }
 
     public void exit()
@@ -841,6 +850,8 @@ public class ShipCustomizationBtns : MonoBehaviour
                 System.Array.Copy(treasure, Player8.treasure, treasure.Length);
                 System.Array.Copy(damage, Player8.damage, damage.Length);
             }
+
+            saveText.gameObject.SetActive(true);
         }
     }
 }

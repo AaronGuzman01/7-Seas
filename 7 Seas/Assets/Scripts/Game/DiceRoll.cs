@@ -5,6 +5,8 @@ public class DiceRoll : MonoBehaviour
 {
     public Animator[] cups;
     public GameObject[] die;
+    public AudioSource diceAudio;
+    public AudioClip[] clips;
 
     GameObject[] currDie;
     int cupIndex;
@@ -44,6 +46,7 @@ public class DiceRoll : MonoBehaviour
             MapLoad.isRolling = true;
 
             StartCoroutine(ProcessDice());
+            StartCoroutine(DiceSounds());
         }
 
         if (currPlayer != MapLoad.playerNum)
@@ -54,7 +57,23 @@ public class DiceRoll : MonoBehaviour
         }
     }
 
-    private IEnumerator ProcessDice()
+    IEnumerator DiceSounds()
+    {
+        yield return new WaitForSeconds(1.2f);
+        diceAudio.PlayOneShot(clips[0]);
+        yield return new WaitForSeconds(2.22f);
+        diceAudio.PlayOneShot(clips[1], 0.3f);
+        yield return new WaitForSeconds(1.18f);
+        diceAudio.PlayOneShot(clips[1], 0.3f);
+        yield return new WaitForSeconds(1.18f);
+        diceAudio.PlayOneShot(clips[1], 0.3f);
+        yield return new WaitForSeconds(1.18f);
+        diceAudio.PlayOneShot(clips[1], 0.3f);
+        yield return new WaitForSeconds(1.18f);
+        diceAudio.PlayOneShot(clips[1], 0.3f);
+    }
+
+    IEnumerator ProcessDice()
     {
         Transform transform;
         GameObject currDice;
