@@ -154,7 +154,7 @@ public class ShipAI : MonoBehaviour
     void MoveToPosition()
     {
         objects[x, y] = 0;
-        objects[newX, newY] = 2;
+        objects[newX, newY] = 1;
 
         x = newX;
         y = newY;
