@@ -23,7 +23,7 @@ public class SetupMenu : MonoBehaviour {
     // Use this for initialization
     void Start () {
         Screen.orientation = ScreenOrientation.Landscape;
-
+        Debug.Log(PlayerPrefs.GetString("Difficulty"));
         if (resetSetup && btn != null)
         {
             PlayerPrefs.SetInt(btn.name, 0);
@@ -42,19 +42,20 @@ public class SetupMenu : MonoBehaviour {
 
         if (difficultyBtn != null)
         {
-            if (PlayerPrefs.GetString("Difficulty").Equals("Easy") && difficultyBtn.name.Equals("EasyButton") && !resetSetup)
+            if (PlayerPrefs.GetString("Difficulty").Equals("Easy") && difficultyBtn.name.Equals("EasyButton")) //&& !resetSetup)
             {
                 SelectDifficulty();
             }
-            else if (PlayerPrefs.GetString("Difficulty").Equals("Normal") && difficultyBtn.name.Equals("NormalButton") && !resetSetup)
+            else if (PlayerPrefs.GetString("Difficulty").Equals("Normal") && difficultyBtn.name.Equals("NormalButton"))// && !resetSetup)
             {
                 SelectDifficulty();
             }
-            else if (PlayerPrefs.GetString("Difficulty").Equals("Hard") && difficultyBtn.name.Equals("HardButton") && !resetSetup)
+            else if (PlayerPrefs.GetString("Difficulty").Equals("Hard") && difficultyBtn.name.Equals("HardButton"))// && !resetSetup)
             {
                 SelectDifficulty();
             }
         }
+        //loadPlayers();
         /*
         PlayerPrefs.SetString("wheelSpun", "false");
         isPressed = false;
