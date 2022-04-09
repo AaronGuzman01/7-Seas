@@ -27,6 +27,9 @@ public class CameraController : MonoBehaviour
     public float maxZoom = 145f;
     public float zoomSpeed = 0.05f;
 
+    private float navCount;
+    private int dice;
+
     //GUI
     private bool GUI = false;
     public GameObject buttons;
@@ -174,6 +177,8 @@ public class CameraController : MonoBehaviour
 
         GUI = true;
 
+        navCount = MapLoad.diceVals[0];
+
         DetermineZoom();
     }
 
@@ -275,7 +280,7 @@ public class CameraController : MonoBehaviour
                 {
                     dummy.transform.Translate(0.0f, 0.0f, 12.0f, Space.World);
 
-                    cameraPos.y -= 1;
+                    cameraPos.y += 1;
                     positionTexts[1].text = ((cameraPos.y - 32) * -1).ToString();
                 }
             }
@@ -298,7 +303,7 @@ public class CameraController : MonoBehaviour
                 {
                     dummy.transform.Translate(0.0f, 0.0f, -12.0f, Space.World);
 
-                    cameraPos.y += 1;
+                    cameraPos.y -= 1;
                     positionTexts[1].text = ((cameraPos.y - 32) * -1).ToString();
                 }
             }
@@ -484,24 +489,47 @@ public class CameraController : MonoBehaviour
         {
             playerDefault[playerNum].m_Lens.FieldOfView = Mathf.Clamp(playerDefault[playerNum].m_Lens.FieldOfView - (increment * 10), minZoom, maxZoom);
         }
+
+        Debug.Log("Zoom = " + playerOverhead[playerNum].m_Lens.FieldOfView);
     }
 
     //Dice-Based Zooming
     public void DetermineZoom()
     {
-        float diceAmount = (float)MapLoad.diceVals[MapLoad.diceIndex];
+        float diceAmount = (float)MapLoad.diceVals[1];
 
-        if (MapLoad.diceVals[MapLoad.diceIndex] == -1)      //If Ghost Dice
+        if (MapLoad.diceVals[0] <= 0)
+        {
+            dice = 1;
+        }
+
+        if (MapLoad.diceIndex == 0 && navCount > 0)             //Nav Dice
         {
             Zoom(0.0f);
+
+            navCount--;
+
+            if (navCount <= 0)
+            {
+                dice = 1;
+            }
         }
-        else if (MapLoad.diceIndex == 0)                    //First Dice
+        else if (dice == 1)                                 //Compass Dice
         {
-            Zoom(-diceAmount * 1.5f);
+            if (MapLoad.diceVals[1] <= 0)
+            {
+                Zoom(0.0f);
+            }
+            else
+            {
+                Zoom(-diceAmount * 1.5f);
+            }
+            
+            dice = 2;
         }
         else                                                //Other Dice
         {
-            Zoom(-1.5f);
+            Zoom(0.0f);
         }
     }
 }
