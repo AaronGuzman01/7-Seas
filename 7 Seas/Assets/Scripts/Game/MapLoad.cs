@@ -965,34 +965,17 @@ public class MapLoad : MonoBehaviour
             {
                 if (diceIndex == 0 && positions.Count == 0 && !isMoving && !posSet)
                 {
-                    diceSelect.localPosition = new Vector3(diceSelect.localPosition.x, 209, diceSelect.localPosition.z);
-                    navSelect.localPosition = new Vector3(navSelect.localPosition.x, -31, navSelect.localPosition.z);
-                    diceSelect.gameObject.SetActive(true);
-                    navSelect.gameObject.SetActive(true);
-                    moveDisplay.text = "COMPASS";
-
-                    if (shipInfo[playerIndex].GetCompass() > 0)
+                    if (moveCount == 0 && shipInfo[playerIndex].GetBase() > 0)
                     {
-                        diceVals[diceIndex] += shipInfo[playerIndex].GetCompass();
-                        moveTexts[0].text = "+ " + shipInfo[playerIndex].GetCompass().ToString();
-                    }
+                        diceVals[diceIndex] += shipInfo[playerIndex].GetBase();
+                        moveTexts[1].text = "+ " + shipInfo[playerIndex].GetBase().ToString();
 
-                    DisplayMoves(diceVals[diceIndex]);
-
-                    diceIndex++;
-                }
-
-                if (diceIndex == 1 && positions.Count == 0 && !isMoving && !posSet)
-                {
-                    if ((shipInfo[playerIndex].GetBase() > 0 || baseMove > 0) && moveCount == 0)
-                    {
-                        diceVals[diceIndex] += shipInfo[playerIndex].GetBase() + baseMove;
-                        moveTexts[1].text = "+ " + (shipInfo[playerIndex].GetBase() + baseMove).ToString();
+                        UpdateNavigationMenu();
                     }
 
                     if (moveCount < diceVals[diceIndex])
                     {
-                        diceSelect.localPosition = new Vector3(diceSelect.localPosition.x, 134, diceSelect.localPosition.z);
+                        diceSelect.localPosition = new Vector3(diceSelect.localPosition.x, 209, diceSelect.localPosition.z);
                         navSelect.localPosition = new Vector3(navSelect.localPosition.x, 30, navSelect.localPosition.z);
                         diceSelect.gameObject.SetActive(true);
                         navSelect.gameObject.SetActive(true);
@@ -1012,11 +995,30 @@ public class MapLoad : MonoBehaviour
 
                         diceIndex++;
 
+                        diceSet = true;
+
                         moveCount = 0;
                     }
                 }
+                else if (diceIndex == 1 && positions.Count == 0 && !isMoving && !posSet)
+                {
+                    diceSelect.localPosition = new Vector3(diceSelect.localPosition.x, 134, diceSelect.localPosition.z);
+                    navSelect.localPosition = new Vector3(navSelect.localPosition.x, -31, navSelect.localPosition.z);
+                    diceSelect.gameObject.SetActive(true);
+                    navSelect.gameObject.SetActive(true);
+                    moveDisplay.text = "COMPASS";
 
-                if (diceIndex == 2 && positions.Count == 0 && !isMoving && !posSet)
+                    if (shipInfo[playerIndex].GetCompass() > 0 || baseMove > 0)
+                    {
+                        diceVals[diceIndex] += shipInfo[playerIndex].GetCompass() + baseMove;
+                        moveTexts[0].text = "+ " + (shipInfo[playerIndex].GetCompass() + baseMove).ToString();
+                    }
+
+                    DisplayMoves(diceVals[diceIndex]);
+
+                    diceIndex++;
+                }
+                else if (diceIndex == 2 && positions.Count == 0 && !isMoving && !posSet)
                 {
                     if (moveCount < diceVals[diceIndex] && diceVals[diceIndex] != 1)
                     {
@@ -1052,10 +1054,8 @@ public class MapLoad : MonoBehaviour
 
     void UpdateNavigationMenu()
     {
-        if (diceIndex == 1)
+        if (diceIndex == 0)
         {
-            navTexts[2].text = 0.ToString();
-
             if (diceVals[diceIndex] - moveCount >= 0)
             {
                 navTexts[0].text = (diceVals[diceIndex] - moveCount).ToString();
@@ -1063,14 +1063,14 @@ public class MapLoad : MonoBehaviour
         }
         else if (diceIndex == 2 && diceVals[diceIndex] != 1)
         {
-            navTexts[0].text = 0.ToString();
+            navTexts[1].text = 0.ToString();
 
             if (diceVals[diceIndex] - moveCount >= 0)
             {
                 navTexts[1].text = (diceVals[diceIndex] - moveCount).ToString();
             }
         }
-        else if (diceIndex == 0 && diceVals[diceIndex] != 1)
+        else if (diceIndex == 1 && diceVals[diceIndex] != 1)
         {
             navTexts[1].text = 0.ToString();
         }

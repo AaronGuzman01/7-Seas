@@ -88,46 +88,6 @@ public class DiceManager : MonoBehaviour {
         SetDistribution(moveDist, move);
         SetDistribution(windDist, wind);
         SetDistribution(creatureDist, creature);
-
-        /*
-        //if the dice cup menu setting files exist, then load them into the gameboard arrays
-        if (ES2.Exists(PlayerPrefs.GetString("Difficulty") + "targetShipDice"))
-        {
-            //load all the arrays from the dice cup saves
-            shipDiceArray = new List<Sprite>();
-            shipDiceArray = ES2.LoadList<Sprite>(PlayerPrefs.GetString("Difficulty") + "targetShipDice");
-            shipDiceArray.Reverse();
-
-
-            resourceDiceArray = new List<Sprite>();
-            resourceDiceArray = ES2.LoadList<Sprite>(PlayerPrefs.GetString("Difficulty") + "resourceDice");
-            resourceDiceArray.Reverse();
-
-            movementDiceArray = new List<Sprite>();
-            movementDiceArray = ES2.LoadList<Sprite>(PlayerPrefs.GetString("Difficulty") + "movementNumDice");
-            movementDiceArray.Reverse();
-
-            windDiceArray = new List<Sprite>();
-            windDiceArray = ES2.LoadList<Sprite>(PlayerPrefs.GetString("Difficulty") + "windMovementDice");
-            windDiceArray.Reverse();
-
-            colorDiceArray = new List<Sprite>();
-            colorDiceArray = ES2.LoadList<Sprite>(PlayerPrefs.GetString("Difficulty") + "colorDice");
-            colorDiceArray.Reverse();
-        }
-
-        //go through the parrot dice and the dice list and add the matching parrot tiles
-        foreach (var item in diceList.GetComponent<MasterDiceList>().diceClassList)
-        {
-            foreach(var item2 in colorDiceArray)
-            {
-                if(item2.name == item.DiceImage.name)
-                {
-                    parrotTileArray.Add(item.ChildDiceImage);
-                }
-            }
-        }
-        */
     }
     
     void SetDistribution(int[] distribution, List<int> dice)
@@ -166,86 +126,24 @@ public class DiceManager : MonoBehaviour {
 
         diceImage.transform.GetChild(2).GetComponent<MeshRenderer>().material.mainTexture = diceDefaultTexture;
 
-        /*
-        //pick a random die from each dice array
-        num = Random.Range(0, shipDiceArray.Count);
-        shipDiceSprite.GetComponent<Image>().sprite = shipDiceArray[num];
 
-        num = Random.Range(0, resourceDiceArray.Count);
-        resourceDiceSprite.GetComponent<Image>().sprite = resourceDiceArray[num];
 
-        num = Random.Range(0, movementDiceArray.Count);
-        movementDiceSprite.GetComponent<Image>().sprite = movementDiceArray[num];
-        */
+        StartCoroutine(GetDiceValue(movementDiceArray, movementDiceSprite, 0));
 
-        /*
-        do
-        {
-            num = Random.Range(0, windDiceArray.Count);
-
-            foreach (var item in inventorySystem.WindDice)
-            {
-                if (item.Image.name == windDiceArray[num].name)
-                {
-                    if (item.Name == "Fog")
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        firstRound = false;
-                    }
-                }
-            }
-
-        } while (firstRound);
-        */
-
-        StartCoroutine(GetDiceValue(basicDiceArray, basicDiceSprite, 0));
-
-        StartCoroutine(GetDiceValue(movementDiceArray, movementDiceSprite, 1));
+        StartCoroutine(GetDiceValue(basicDiceArray, basicDiceSprite, 1));
 
         StartCoroutine(GetDiceValue(windDiceArray, windDiceSprite, 2));
 
         StartCoroutine(GetDiceValue(rewardDiceArray, rewardDiceSprite, 3));
 
         StartCoroutine(GetDiceValue(hazardDiceArray, hazardDiceSprite, 4));
-        
-        //num = Random.Range(0, windDiceArray.Count);
-       
-        //windDiceSprite.GetComponent<Image>().sprite = windDiceArray[num];
-
-        /*
-
-        //while we roll a parrot the same color as the player, roll again til it isn't
-        //this will avoid anchors and parrots the same color
-        Color tempColor = new Color();
-        do {
-            num = Random.Range(0, colorDiceArray.Count);
-
-            foreach (var item in diceList.GetComponent<MasterDiceList>().diceClassList)
-            {
-                if (item.DiceImage.name == colorDiceArray[num].name)
-                {
-                    tempColor = item.DiceColor;
-                }
-            }
-        } while (tempColor == gameLoop.players.playersList[gameLoop.playersTurn - 1].safeColor);
-
-        colorDiceSprite.GetComponent<Image>().sprite = colorDiceArray[num];
-
-        
-        AddRats();
-        FindTotalGhostShips();
-        PunishPlayer();
-        */
     }
 
     public void SetNavigationMenu()
     {
         Text[] navTexts = navMenu.GetComponentsInChildren<Text>();
 
-        if (diceVals[0] != -1)
+        if (diceVals[1] != -1)
         {
             navTexts[2].text = 1.ToString();
         }
@@ -254,9 +152,9 @@ public class DiceManager : MonoBehaviour {
             navTexts[2].text = 0.ToString();
         }
 
-        if (diceVals[1] != -1)
+        if (diceVals[0] != -1)
         {
-            navTexts[0].text = diceVals[1].ToString();
+            navTexts[0].text = diceVals[0].ToString();
         }
         else
         {
@@ -283,11 +181,11 @@ public class DiceManager : MonoBehaviour {
 
         if (diceIndex == 0)
         {
-            num = GetRandomFace(move);
+            num = GetRandomFace(nav);
         }
         else if (diceIndex == 1)
         {
-            num = GetRandomFace(nav);
+            num = GetRandomFace(move);
         }
         else if (diceIndex == 2)
         {
@@ -307,7 +205,7 @@ public class DiceManager : MonoBehaviour {
             MapLoad.diceVals[diceIndex] = -1;
             MapLoad.ghostCount++;
         }
-        else if (num.Equals(faces.Count - 2) && diceIndex == 0)
+        else if (num.Equals(faces.Count - 2) && diceIndex == 1)
         {
             MapLoad.diceVals[diceIndex] = -1;
             MapLoad.rats = true;
@@ -345,7 +243,7 @@ public class DiceManager : MonoBehaviour {
             }
         }
 
-        if (diceIndex == 0)
+        if (diceIndex == 1)
         {
             if (MapLoad.diceVals[diceIndex] == -1)
             {
@@ -356,7 +254,7 @@ public class DiceManager : MonoBehaviour {
                 diceVals.Add(1);
             }
         }
-        else if (diceIndex == 1)
+        else if (diceIndex == 0)
         {
             if (MapLoad.diceVals[diceIndex] == -1)
             {
