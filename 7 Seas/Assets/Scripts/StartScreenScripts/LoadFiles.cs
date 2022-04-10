@@ -46,6 +46,7 @@ public class LoadFiles : MonoBehaviour
         {
             File.WriteAllText(Application.persistentDataPath + "/Difficulty.txt", "200");
             PlayerPrefs.SetString("Difficulty", "Easy");
+            PlayerPrefs.SetFloat("End", 2500f);
         }
         else
         {
