@@ -27,7 +27,6 @@ public class SetupMenu : MonoBehaviour {
         if (resetSetup && btn != null)
         {
             PlayerPrefs.SetInt(btn.name, 0);
-            PlayerPrefs.SetFloat("End", 0f);
         }
 
         if (btn != null && PlayerPrefs.GetInt(btn.name).Equals(1))
@@ -42,54 +41,19 @@ public class SetupMenu : MonoBehaviour {
 
         if (difficultyBtn != null)
         {
-            if (PlayerPrefs.GetString("Difficulty").Equals("Easy") && difficultyBtn.name.Equals("EasyButton")) //&& !resetSetup)
+            if (PlayerPrefs.GetString("Difficulty").Equals("Easy") && difficultyBtn.name.Equals("EasyButton"))
             {
                 SelectDifficulty();
             }
-            else if (PlayerPrefs.GetString("Difficulty").Equals("Normal") && difficultyBtn.name.Equals("NormalButton"))// && !resetSetup)
+            else if (PlayerPrefs.GetString("Difficulty").Equals("Normal") && difficultyBtn.name.Equals("NormalButton"))
             {
                 SelectDifficulty();
             }
-            else if (PlayerPrefs.GetString("Difficulty").Equals("Hard") && difficultyBtn.name.Equals("HardButton"))// && !resetSetup)
+            else if (PlayerPrefs.GetString("Difficulty").Equals("Hard") && difficultyBtn.name.Equals("HardButton"))
             {
                 SelectDifficulty();
             }
         }
-        //loadPlayers();
-        /*
-        PlayerPrefs.SetString("wheelSpun", "false");
-        isPressed = false;
-
-        if (btn != null)
-        {
-            btn = btn.GetComponent<Button>();
-            loadPlayers();
-        }
-
-        //initialize this player as selected false
-        PlayerPrefs.SetInt(this.name, 0);
-
-        //initialize player pref values to zero each game
-        PlayerPrefs.SetInt("TreasureSet", 0);
-        PlayerPrefs.SetInt("TreasureAmount", 0);
-        //PlayerPrefs.SetInt("PlayerCount", 0);
-        //PlayerPrefs.SetString("Difficulty", "Seaman");
-
-        PlayerPrefs.SetString("cannonVisited", "false");
-
-
-        //determine whether we have a game to load or not
-        if (PlayerPrefs.GetInt("LoadGame") == 0)
-        {
-            GameObject.Find("LoadGameButton").GetComponent<Button>().interactable = true;
-        }
-        else
-        {
-            GameObject.Find("LoadGameButton").GetComponent<Button>().interactable = false;
-        }
-        if (difficultyBtn != null)
-           loadDifficulty();
-        */
     }
 
     private void Update()
@@ -102,6 +66,7 @@ public class SetupMenu : MonoBehaviour {
         if (resetSetup)
         {
             resetSetup = false;
+            num = 0;
         }
     }
 
