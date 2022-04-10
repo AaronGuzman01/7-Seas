@@ -52,11 +52,20 @@ public class LoadFiles : MonoBehaviour
             foreach(string points in File.ReadLines(Application.persistentDataPath + "/Difficulty.txt"))
             {
                 if (points.Equals("200"))
+                {
                     PlayerPrefs.SetString("Difficulty", "Easy");
+                    PlayerPrefs.SetFloat("End", 2500f);
+                }
                 else if (points.Equals("150"))
+                {
                     PlayerPrefs.SetString("Difficulty", "Normal");
+                    PlayerPrefs.SetFloat("End", 5000f);
+                }
                 else if (points.Equals("100"))
+                {
                     PlayerPrefs.SetString("Difficulty", "Hard");
+                    PlayerPrefs.SetFloat("End", 10000f);
+                }
             }
             
 

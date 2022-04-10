@@ -72,6 +72,7 @@ public class Cannon_Firing : MonoBehaviour
 
     void Start()
     {
+        /*
         if (CannonMinigame.currShip == 1)
         {
             cannonType = CannonMinigame.shipsInfo[0].GetCannons();
@@ -79,7 +80,9 @@ public class Cannon_Firing : MonoBehaviour
         else
         {
             cannonType = CannonMinigame.shipsInfo[1].GetCannons();
-        }
+        }*/
+
+        cannonType = new int[] { 1, 1, 1, 2, 2 };
 
         MuzzleFlashLight.intensity = 0;
         fuseObjectRenderer = FuseObject.GetComponent<Renderer>();
@@ -199,7 +202,7 @@ public class Cannon_Firing : MonoBehaviour
         {
             FireCannon();
         }
-       // }
+        // }
     }
 
     public void CannonSelected(bool selected)
