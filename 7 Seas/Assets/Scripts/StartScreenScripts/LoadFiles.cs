@@ -5,9 +5,14 @@ using System.IO;
 
 public class LoadFiles : MonoBehaviour
 {
+    public GameObject[] ships;
+    public Camera main;
+
     // Start is called before the first frame update
     void Start()
     {
+        LoadShip();
+
         string defaultMapPath = Application.persistentDataPath + "/Maps/Default";
         string customMapPath = Application.persistentDataPath + "/Maps/Custom";
 
@@ -82,9 +87,6 @@ public class LoadFiles : MonoBehaviour
                                                                                                       string.Join("\n", damage));
         }
 
-
-        //Save Default Maps to Persistant Folder, if they don't already exist.
-
         for (int i = 1; i <= 7; i++)
         {
             if (!System.IO.File.Exists(defaultMapPath + "/Map " + i + ".txt"))
@@ -96,11 +98,18 @@ public class LoadFiles : MonoBehaviour
                 File.WriteAllText(defaultMapPath + "/Map " + i + ".txt", textFile.text);
             }
         }
+    }
 
-        /*
-        var textFile = Resources.Load<TextAsset>("Sea of Reward");
+    void LoadShip()
+    {
+        int num = Random.Range(0, 8);
 
-        File.WriteAllText(defaultMapPath + "/Sea of Reward.txt", textFile.text);
-        */
+        GameObject ship1 = Instantiate(ships[num]);
+
+        ship1.transform.position = new Vector3(0, 0, 0);
+        ship1.transform.localScale = new Vector3(1, 1, 1);
+
+        main.GetComponent<MovePirate>().ships = ships;
+        main.GetComponent<MovePirate>().staticShipIndex = num;
     }
 }
