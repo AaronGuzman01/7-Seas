@@ -64,6 +64,7 @@ public class MapLoad : MonoBehaviour
     public AudioSource sirenSong;
     public AudioSource monsterSound;
     public AudioSource ghostSound;
+    public AudioSource moving;
 
     public float winAmount;
     public float time;
@@ -596,6 +597,11 @@ public class MapLoad : MonoBehaviour
 
             if (rotate && !movingSkip)
             {
+                if (!moving.isPlaying)
+                {
+                    moving.Play();
+                }
+
                 isMoving = true;
 
                 float currDeg = degrees + accel;
@@ -613,6 +619,8 @@ public class MapLoad : MonoBehaviour
                     movingFX.SetActive(false);
 
                     accel = 0;
+
+                    moving.Stop();
                 }
                 else
                 {
@@ -629,6 +637,11 @@ public class MapLoad : MonoBehaviour
             }
             else
             {
+                if (!moving.isPlaying)
+                {
+                    moving.Play();
+                }
+
                 if (Vector3.Distance(ship.transform.position, currPos) < 0.01f || movingSkip)
                 {
                     if (rotate)
@@ -649,6 +662,8 @@ public class MapLoad : MonoBehaviour
 
                     isMoving = false;
                     movingSkip = false;
+
+                    moving.Stop();
 
                     hiddenBtns[1].onClick.Invoke();
 
