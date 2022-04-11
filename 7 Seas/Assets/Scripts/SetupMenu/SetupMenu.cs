@@ -58,7 +58,15 @@ public class SetupMenu : MonoBehaviour {
 
     private void Update()
     {
-        if (num > 0 && selectedDifficulty != null)
+        bool pointsMatch = false;
+        if (PlayerPrefs.GetString("Difficulty").Equals("Easy"))
+            pointsMatch = (200 - ShipCustomizationBtns.pontsSpent) >= 0;
+        else if (PlayerPrefs.GetString("Difficulty").Equals("Normal"))
+            pointsMatch = (150 - ShipCustomizationBtns.pontsSpent) >= 0;
+        else if (PlayerPrefs.GetString("Difficulty").Equals("Hard"))
+            pointsMatch = (100 - ShipCustomizationBtns.pontsSpent) >= 0;
+
+        if (num > 0 && selectedDifficulty != null && pointsMatch)
             GameObject.Find("PlayGameButton").GetComponent<Button>().interactable = true;
         else
             GameObject.Find("PlayGameButton").GetComponent<Button>().interactable = false;
