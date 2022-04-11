@@ -22,7 +22,7 @@ public class WinManager : MonoBehaviour
         ship.transform.position = new Vector3(0, 0, 0);
         ship.transform.GetChild(0).rotation = Quaternion.Euler(new Vector3(0, -90, 0));
 
-        winner.text = "Player " + player.GetPlayerNum().ToString() + "is the Winner!";
+        winner.text = "Player " + player.GetPlayerNum().ToString() + " is the Winner!";
         gold.text = "Treasure Collected: " + player.GetTotalTreasure().ToString();
     }
 

@@ -25,14 +25,14 @@ public class ShipVShipResults : MonoBehaviour
             int results = CalculateWinner() * 100;
             if (P1Score > P2Score)
             {
-                WinnerText.text = "Player " + ResultsManager.players[0].GetPlayerNum().ToString() + " Wins!".ToUpper();
-                WinnerResults.text = "Player " + ResultsManager.players[0].GetPlayerNum().ToString() + " gets: ".ToUpper() + results + " gold!".ToUpper();
-
                 if (PlayerPrefs.GetInt("Double") == 1)
                 {
                     reward.gameObject.SetActive(true);
-                   results = results * 2;
+                    results = results * 2;
                 }
+
+                WinnerText.text = "Player " + ResultsManager.players[0].GetPlayerNum().ToString() + " Wins!".ToUpper();
+                WinnerResults.text = "Player " + ResultsManager.players[0].GetPlayerNum().ToString() + " gets: ".ToUpper() + results + " gold!".ToUpper();
 
                 ResultsManager.players[0].AddToTreasure(results);
                 ResultsManager.ships[0].SetActive(true);
@@ -49,6 +49,7 @@ public class ShipVShipResults : MonoBehaviour
             {
                 WinnerText.text = "Yar...tis a draw!".ToUpper();
                 WinnerResults.text = "No booty for either of you powder monkeys!".ToUpper();
+                WinnerResults.fontSize = 55;
             }
 
             Player1ScoreText.text = "Player " + ResultsManager.players[0].GetPlayerNum().ToString() + " Score: " + P1Score;
