@@ -24,6 +24,7 @@ public class ShipCustomizationBtns : MonoBehaviour
     private static bool readingPlayerFile = false;
     private static bool ranSavedChoices = false;
     private static int points;
+    public static int pontsSpent;
     void Start()
     {
         if (!ranSavedChoices)
@@ -776,6 +777,13 @@ public class ShipCustomizationBtns : MonoBehaviour
                                                                                                                                                  string.Join("\n", crew) + "\n" +
                                                                                                                                                  string.Join("\n", treasure) + "\n" +
                                                                                                                                                  string.Join("\n", damage));
+            if (PlayerPrefs.GetString("Difficulty").Equals("Easy"))
+                pontsSpent = 200 - points;
+            if(PlayerPrefs.GetString("Difficulty").Equals("Normal"))
+                pontsSpent = 150 - points;
+            if (PlayerPrefs.GetString("Difficulty").Equals("Hard"))
+                pontsSpent = 100 - points;
+
             int shipNum = System.Int32.Parse(GameObject.Find("shipNum").GetComponent<Text>().text);
             if (shipNum == 1)
             {
